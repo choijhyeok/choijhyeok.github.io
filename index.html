@@ -1,0 +1,35 @@
+---
+layout: default
+---
+
+
+{% include career-profile.html %}
+
+{% unless site.data.data.sidebar.education %}
+  {% include education.html %}
+{% endunless %}
+
+
+{% unless site.data.data.sidebar.awards %}
+  {% include awards.html %}
+{% endunless %}
+
+
+{% unless site.data.data.sidebar.certificate %}
+  {% include certificate.html %}
+{% endunless %}
+
+{% include experiences.html %}
+
+{% include projec.html %}
+
+{% include projec2.html %}
+
+{% include projects.html %}
+
+{% include oss-contributions.html %}
+
+{% include publications.html %}
+
+{% include skills.html %}
+

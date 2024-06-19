@@ -1,0 +1,52 @@
+---
+#Add "layout: compress" here to compress the html code
+---
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+{% include head.html %}
+
+<body>
+  <div class="wrapper h-wrapper">
+    <div class="sidebar-wrapper">
+
+      <div class="profile-container">
+    
+        {% if site.data.data.sidebar.avatar %}
+        <img class="avatar" src="{{ site.baseurl }}/assets/images/{{ site.data.data.sidebar.avatar }}" alt="profile picture" />
+        {% endif %}
+    
+      </div><!--//profile-container-->
+
+    </div>
+
+    <div class="main-wrapper">
+
+      <div class="profile-container">
+    
+        {% if site.data.data.sidebar.name %}
+        <h1 class="name">{{ site.data.data.sidebar.name }}</h1>
+        {% endif %}
+    
+        {% if site.data.data.sidebar.tagline %}
+        <h3 class="tagline">{{ site.data.data.sidebar.tagline }}</h3>
+        {% endif %}
+    
+      </div><!--//profile-container-->
+
+    </div>
+  </div>
+  <div class="wrapper b-wrapper">
+    {% include sidebar.html %}
+
+    <div class="main-wrapper">
+        {{ content }}
+    </div>
+  </div>
+
+{% include scripts.html %}
+</body>
+
+</html>
+

@@ -1,0 +1,25 @@
+{% assign sidebar = site.data.data.sidebar %}
+<div class="sidebar-wrapper">
+
+  {% include contact.html %}
+
+  {% if sidebar.education %}
+    {% include education.html %}
+  {% endif %}
+
+  {% if sidebar.awards %}
+    {% include awards.html %}
+  {% endif %}
+
+  {% if sidebar.certificate %}
+    {% include certificate.html %}
+  {% endif %}
+
+  {% include language.html %}
+  {% include interests.html %}
+
+  {% if sidebar.about %}
+    {% include about.html %}
+  {% endif %}
+
+</div><!--//sidebar-wrapper-->

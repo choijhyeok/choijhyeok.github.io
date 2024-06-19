@@ -1,0 +1,33 @@
+{% assign projec = site.data.data.projec %}
+{% if projec %}
+<section class="section experiences-section">
+  <h2 class="section-title">
+    {{ projec.title }}
+  </h2>
+
+  {% for projec in projec.info %}
+  <div class="item">
+
+    <div class="meta">
+
+      <div class="upper-row">
+        <h3 class="job-title">{{ projec.role }}</h3>
+        <div class="time">{{ projec.time }}</div>
+      </div><!--//upper-row-->
+
+      <div class="company">{{ projec.company }}</div>
+
+    </div><!--//meta-->
+
+    {% if projec.details %}
+    <div class="details">
+      {{ projec.details | markdownify }}
+    </div><!--//details-->
+    {% endif %}
+
+  </div><!--//item-->
+  {% endfor %}
+
+</section><!--//section-->
+{% endif %}
+
