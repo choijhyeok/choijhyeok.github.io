@@ -94,21 +94,27 @@ certificate:
 experiences:
     title: Experiences
     info:
+      - role: AI Engineer
+        time: 2024.07.15 ~ 재직중
+        company: KT
+        details: |
+
+
       - role: DataScientist
         time: 2022.04.11 ~ 2024.05.15
         company: AIFactory
-        details: |
-            - 인공지능 경진대회 출제 및 검증
-            - LLM 튜닝 및 RAG 시스템 구축
-            - 병렬학습 pipeline 설계
+        # details: |
+        #     - 인공지능 경진대회 출제 및 검증
+        #     - LLM 튜닝 및 RAG 시스템 구축
+        #     - 병렬학습 pipeline 설계
 
       - role: DataScientist
         time: 2021.07.26 ~ 2022.01.28 
         company: GSITM
-        details: |
-            - AI 알고리즘 연구
-            - 편의점별 제고량 관리 프로세스 설계
-            - 물류매칭 알고리즘 개발
+        # details: |
+        #     - AI 알고리즘 연구
+        #     - 편의점별 제고량 관리 프로세스 설계
+        #     - 물류매칭 알고리즘 개발
 
 
 # certifications:
