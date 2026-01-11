@@ -457,6 +457,26 @@
                 </div>
             `;
             contentArea.appendChild(certDiv);
+            await wait(300);
+
+            // Awards
+            const awardsDiv = document.createElement('div');
+            awardsDiv.className = 'mt-4 fade-in';
+            awardsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-trophy mr-2"></i>수상 경력</h3>
+                <div class="grid gap-2">
+                    ${resumeData.awards.map(a => `
+                        <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                            <div>
+                                <span class="font-medium text-gray-800">${a.title}</span>
+                                <span class="text-xs text-gray-500 ml-2">${a.org}</span>
+                            </div>
+                            <span class="text-xs text-gray-400">${a.period}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(awardsDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
             await wait(500);
 
@@ -536,7 +556,7 @@
                 case 'showProjects':
                     await typeText(contentArea, `**주요 프로젝트 목록**입니다.`);
                     await showProjects(contentArea);
-                    await typeText(contentArea, `\n**프로젝트 기반 핵심 역량**\n\n✅ **LLM & RAG 전문성**: QLora Fine-tuning, Ragas 평가, VectorDB 구축 등 LLM 전 주기 경험\n\n✅ **MLOps 설계 능력**: Docker 기반 자동화 파이프라인, Task Scheduler 연동으로 실무 배포 경험\n\n✅ **CV & 시계열 다양성**: Object Detection, Instance Segmentation, Prophet 등 다양한 도메인 경험\n\n✅ **대회 설계 & 평가 능력**: 10개 이상의 AI 경진대회 문제 출제 및 평가 시스템 설계`);
+                    await typeText(contentArea, `\n**프로젝트 기반 핵심 역량**\n\n1️⃣ **LLM & RAG 전문성**: QLora Fine-tuning, Ragas 평가, VectorDB 구축 등 LLM 전 주기 경험\n\n2️⃣ **MLOps 설계 능력**: Docker 기반 자동화 파이프라인, Task Scheduler 연동으로 실무 배포 경험\n\n3️⃣ **CV & 시계열 다양성**: Object Detection, Instance Segmentation, Prophet 등 다양한 도메인 경험\n\n4️⃣ **대회 설계 & 평가 능력**: 10개 이상의 AI 경진대회 문제 출제 및 평가 시스템 설계`);
                     await wait(800);
                     await askQuestion(contentArea, '\n개인 프로젝트도 확인하시겠습니까?', 'showPersonalProjects');
                     break;
@@ -544,7 +564,7 @@
                 case 'showPersonalProjects':
                     await typeText(contentArea, `**개인 프로젝트 및 발표 활동**입니다.`);
                     await showPersonalProjects(contentArea);
-                    await typeText(contentArea, `\n**개인 프로젝트 기반 차별화 포인트**\n\n🌟 **기술 공유 & 커뮤니티 기여**: LangChain KR 밋업 발표, YouTube 튜토리얼 제작 등 적극적인 지식 공유\n\n🌟 **실생활 문제 해결 능력**: Gemma 비서(카카오톡 연동), 점메추 챗봇 등 실용적인 AI 서비스 개발\n\n🌟 **자기주도 학습**: 업무 외 시간에도 지속적으로 신기술 학습 및 프로젝트화\n\n🌟 **End-to-End 구현 능력**: 모델 학습부터 Gradio/Streamlit 배포까지 전 과정 독립 수행`);
+                    await typeText(contentArea, `\n**개인 프로젝트 기반 차별화 포인트**\n\n1️⃣ **기술 공유 & 커뮤니티 기여**: LangChain KR 밋업 발표, YouTube 튜토리얼 제작 등 적극적인 지식 공유\n\n2️⃣ **실생활 문제 해결 능력**: Gemma 비서(카카오톡 연동), 점메추 챗봇 등 실용적인 AI 서비스 개발\n\n3️⃣ **자기주도 학습**: 업무 외 시간에도 지속적으로 신기술 학습 및 프로젝트화\n\n4️⃣ **End-to-End 구현 능력**: 모델 학습부터 Gradio/Streamlit 배포까지 전 과정 독립 수행`);
                     await wait(800);
                     await askQuestion(contentArea, '\n연락처와 기술 스택도 확인하시겠습니까?', 'showContact');
                     break;
@@ -631,11 +651,13 @@
 
         // --- Show Contact Info ---
         async function showContactInfo(contentArea) {
-            await typeText(contentArea, `**연락처 및 기술 스택**입니다.`);
+            await typeText(contentArea, `**최재혁님의 연락처 및 기술 스택**입니다.`);
             
+            // Contact info
             const contactDiv = document.createElement('div');
             contactDiv.className = 'bg-gray-900 text-white p-4 rounded-xl mt-3 fade-in shadow-md';
             contactDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-blue-300"><i class="fa-solid fa-address-card mr-2"></i>연락처</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400"></i> <a href="mailto:${resumeData.contact.email}" class="hover:text-blue-300 transition">${resumeData.contact.email}</a></div>
                     <div class="flex items-center gap-3"><i class="fa-solid fa-phone text-gray-400"></i> ${resumeData.contact.phone}</div>
@@ -644,15 +666,55 @@
                 </div>
             `;
             contentArea.appendChild(contactDiv);
-            
+            await wait(300);
+
+            // Skills
             const skillsDiv = document.createElement('div');
             skillsDiv.className = 'mt-4 fade-in';
             skillsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-code mr-2"></i>기술 스택</h3>
                 <div class="flex flex-wrap gap-2">
                     ${resumeData.skills.map(s => `<span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">${s}</span>`).join('')}
                 </div>
             `;
             contentArea.appendChild(skillsDiv);
+            await wait(300);
+
+            // Certificates
+            const certDiv = document.createElement('div');
+            certDiv.className = 'mt-4 fade-in';
+            certDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-certificate mr-2"></i>자격증</h3>
+                <div class="grid gap-2">
+                    ${resumeData.certificates.map(c => `
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                            <span class="font-medium text-gray-800">${c.name}</span>
+                            <span class="text-xs text-gray-400">${c.id}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(certDiv);
+            await wait(300);
+
+            // Awards
+            const awardsDiv = document.createElement('div');
+            awardsDiv.className = 'mt-4 fade-in';
+            awardsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-trophy mr-2"></i>수상 경력</h3>
+                <div class="grid gap-2">
+                    ${resumeData.awards.map(a => `
+                        <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                            <div>
+                                <span class="font-medium text-gray-800">${a.title}</span>
+                                <span class="text-xs text-gray-500 ml-2">${a.org}</span>
+                            </div>
+                            <span class="text-xs text-gray-400">${a.period}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(awardsDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
             await wait(300);
         }
