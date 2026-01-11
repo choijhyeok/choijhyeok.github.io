@@ -65,6 +65,120 @@
             background: #fff;
         }
 
+        /* 프로젝트 모달 */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            border-radius: 16px 16px 0 0;
+        }
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f3f3f3;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: all 0.2s;
+        }
+        .modal-close:hover {
+            background: #e5e5e5;
+            color: #000;
+        }
+        .modal-body {
+            padding: 24px;
+        }
+        .modal-section {
+            margin-bottom: 20px;
+        }
+        .modal-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .modal-section-content {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.7;
+        }
+        .modal-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #555;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        .modal-highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        .modal-list {
+            list-style: none;
+            padding: 0;
+        }
+        .modal-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #444;
+        }
+        .modal-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #10a37f;
+            font-weight: bold;
+        }
+
         /* Thinking 패널 */
         .thinking-panel {
             background: #f7f7f8;
@@ -294,6 +408,43 @@
         </div>
     </aside>
 
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modal-title" class="text-xl font-bold text-gray-900"></h2>
+                    <p id="modal-period" class="text-sm text-gray-500 mt-1"></p>
+                </div>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <div class="modal-section-title">🏢 회사 / 역할</div>
+                    <div id="modal-role" class="modal-section-content"></div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">🎯 문제 상황</div>
+                    <div id="modal-problem" class="modal-section-content"></div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">💡 해결 방안</div>
+                    <div id="modal-solution" class="modal-section-content"></div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">🏆 주요 성과</div>
+                    <ul id="modal-achievements" class="modal-list"></ul>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">🛠 기술 스택</div>
+                    <div id="modal-tags" class="flex flex-wrap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Content Area -->
     <div class="flex-1 flex flex-col overflow-hidden">
     <!-- 1. Landing View -->
@@ -387,70 +538,130 @@
                     period: "2024.01 ~ 2024.05",
                     company: "AIFactory",
                     tags: ["LLM", "RAG", "QLora", "Ragas"],
-                    desc: "Llama2, Gemma 등을 QLora로 Fine-tuning하고, Ragas로 성능을 평가하여 사내/외 데이터를 답변하는 챗봇 시스템 구축."
+                    desc: "Llama2, Gemma 등을 QLora로 Fine-tuning하고, Ragas로 성능을 평가하여 사내/외 데이터를 답변하는 챗봇 시스템 구축.",
+                    details: {
+                        role: "AI Engineer (RAG 설계 및 LLM Fine-tuning 담당)",
+                        problem: "한전 사내 문서가 분산되어 있어 직원들이 필요한 정보를 찾는 데 시간이 오래 걸림",
+                        solution: "LangChain 기반 RAG 시스템 구축, Llama2/Gemma를 QLora로 Fine-tuning하여 한전 도메인에 특화된 답변 생성",
+                        achievements: ["Ragas 평가 기반 Context Relevancy 85% 달성", "문서 검색 시간 평균 70% 단축", "VectorDB(ChromaDB) 기반 유사 문서 검색 기능 구현"]
+                    }
                 },
                 {
                     title: "Docker 기반 시계열 예측 파이프라인",
                     period: "2023.10 ~ 2023.12",
                     company: "AIFactory",
                     tags: ["Docker", "Python", "Automation"],
-                    desc: "데이터 갱신부터 모델 학습, 추론까지 자동으로 수행하는 컨테이너 환경 설계. Task Scheduler와 연동하여 프로세스 효율화."
+                    desc: "데이터 갱신부터 모델 학습, 추론까지 자동으로 수행하는 컨테이너 환경 설계. Task Scheduler와 연동하여 프로세스 효율화.",
+                    details: {
+                        role: "MLOps Engineer (파이프라인 설계 및 자동화 담당)",
+                        problem: "수동으로 데이터 갱신, 모델 재학습, 배포를 진행하여 인적 오류 및 시간 소요 발생",
+                        solution: "Docker 컨테이너로 환경 격리, Windows Task Scheduler로 주기적 실행 자동화",
+                        achievements: ["주간 작업 시간 8시간 → 30분으로 단축", "환경 일관성 확보로 배포 오류 90% 감소", "로그 기반 모니터링 시스템 구축"]
+                    }
                 },
                 {
                     title: "디브릿지: 채팅형 서버 관제 서비스",
                     period: "2023.07 ~ 2023.10",
                     company: "AIFactory",
                     tags: ["OpenAI API", "Function Call", "VectorDB"],
-                    desc: "자연어 질의를 통해 서버 상태를 모니터링하고 조치하는 Function Call 기반 챗봇 서비스. 11개의 관제 API 호출 가능."
+                    desc: "자연어 질의를 통해 서버 상태를 모니터링하고 조치하는 Function Call 기반 챗봇 서비스. 11개의 관제 API 호출 가능.",
+                    details: {
+                        role: "Backend & AI Engineer (Function Call 설계 담당)",
+                        problem: "서버 관제를 위해 복잡한 CLI 명령어를 알아야 하는 진입장벽 존재",
+                        solution: "OpenAI Function Calling을 활용하여 자연어로 서버 상태 조회 및 제어 가능한 챗봇 개발",
+                        achievements: ["11개 관제 API 연동 (CPU, 메모리, 디스크, 프로세스 등)", "비개발자도 서버 관리 가능하게 됨", "VectorDB 기반 이전 장애 사례 검색 기능"]
+                    }
                 },
                 {
                     title: "어종 식별 및 분류 알고리즘 개발",
                     period: "2023.10 ~ 2023.11",
                     company: "AIFactory",
                     tags: ["Object Detection", "YoloV5", "Macro F1"],
-                    desc: "8가지 어종에 대한 Object-detection 대회 설계 및 출제. Yolo V5를 통한 어종 식별 모델 개발."
+                    desc: "8가지 어종에 대한 Object-detection 대회 설계 및 출제. Yolo V5를 통한 어종 식별 모델 개발.",
+                    details: {
+                        role: "AI Competition Designer (Dataset 구축 및 평가 설계)",
+                        problem: "AI 경진대회 출제를 위한 고품질 어종 데이터셋 및 평가 시스템 필요",
+                        solution: "YoloV5 기반 베이스라인 모델 개발, Macro F1-Score 평가 시스템 설계",
+                        achievements: ["200여 팀 참가 대회 성공적 운영", "8종 어류 10,000장 이상 레이블링", "자동 평가 시스템 구축으로 실시간 리더보드 운영"]
+                    }
                 },
                 {
                     title: "KT 통신망 안정성 확보 AI 해커톤",
                     period: "2023.07 ~ 2023.09",
                     company: "AIFactory",
                     tags: ["Time-Series", "Classification", "MAE"],
-                    desc: "무선 기지국 장비 통계 데이터를 활용한 인구 밀집도 예측 및 경보 유형 분류 대회 설계."
+                    desc: "무선 기지국 장비 통계 데이터를 활용한 인구 밀집도 예측 및 경보 유형 분류 대회 설계.",
+                    details: {
+                        role: "AI Competition Designer (Dataset 설계 및 문제 출제)",
+                        problem: "KT 통신망 안정성 확보를 위한 AI 모델 개발 경진대회 기획 필요",
+                        solution: "시계열 예측(MAE) + 분류(Accuracy) 복합 평가 체계 설계",
+                        achievements: ["150여 팀 참가, 3주간 대회 운영", "무선 기지국 데이터 전처리 파이프라인 제공", "Top 10 솔루션 분석 및 인사이트 도출"]
+                    }
                 },
                 {
                     title: "NH투자증권 빅데이터 경진대회",
                     period: "2022.09 ~ 2022.12",
                     company: "AIFactory",
                     tags: ["Clustering", "K-means", "Data Analysis"],
-                    desc: "NH 고객 거래 데이터를 통한 고객군 분류 및 자산 변동률 분석. 군집별 특성과 나이 기반 보고서 작성."
+                    desc: "NH 고객 거래 데이터를 통한 고객군 분류 및 자산 변동률 분석. 군집별 특성과 나이 기반 보고서 작성.",
+                    details: {
+                        role: "Data Analyst (EDA 및 군집 분석 담당)",
+                        problem: "NH 고객 특성에 따른 맞춤형 서비스 제공을 위한 데이터 분석 필요",
+                        solution: "K-means 군집화로 고객 세분화, 나이대별 투자 성향 분석",
+                        achievements: ["5개 고객 군집 도출 및 특성 정의", "군집별 자산 변동률 패턴 발견", "경영진 대상 인사이트 보고서 제출"]
+                    }
                 },
                 {
                     title: "DL E&C 안전장구 착용 탐지",
                     period: "2022.09 ~ 2022.11",
                     company: "AIFactory",
                     tags: ["Object Detection", "COCO", "Macro F1"],
-                    desc: "Object Detection을 활용한 10개의 안전장비 착용 여부 탐지 대회 설계."
+                    desc: "Object Detection을 활용한 10개의 안전장비 착용 여부 탐지 대회 설계.",
+                    details: {
+                        role: "AI Competition Designer (Dataset 구축 및 평가 설계)",
+                        problem: "건설 현장 안전장구 착용 감시를 위한 AI 모델 필요",
+                        solution: "COCO 포맷 데이터셋 구축, Object Detection 기반 대회 설계",
+                        achievements: ["10종 안전장구 15,000장 레이블링", "Macro F1-Score 기반 공정한 평가 체계", "180여 팀 참가 대회 성공 운영"]
+                    }
                 },
                 {
                     title: "LG 입자 형태 분석 해커톤",
                     period: "2022.07 ~ 2022.08",
                     company: "AIFactory",
                     tags: ["Instance Segmentation", "Mask R-CNN"],
-                    desc: "Mask R-CNN을 통한 유체상 입자 검출 대회 설계. IoU 반영 F1-Score 평가."
+                    desc: "Mask R-CNN을 통한 유체상 입자 검출 대회 설계. IoU 반영 F1-Score 평가.",
+                    details: {
+                        role: "AI Competition Designer (Dataset 설계 및 베이스라인 개발)",
+                        problem: "LG 생산 공정에서 유체 입자 형태 분석 자동화 필요",
+                        solution: "Mask R-CNN 기반 Instance Segmentation 모델 개발",
+                        achievements: ["IoU 반영 F1-Score 평가 시스템 구축", "입자 크기/형태 자동 분류 가능", "100여 팀 참가 대회 운영"]
+                    }
                 },
                 {
                     title: "유전알고리즘 물류매칭",
                     period: "2021.10 ~ 2021.12",
                     company: "GSITM",
                     tags: ["Genetic Algorithm", "DEAP", "Optimization"],
-                    desc: "DEAP 유전 알고리즘을 활용하여 최대 적재량 내 최대 이익률 상품 조합 추천 프로세스 개발."
+                    desc: "DEAP 유전 알고리즘을 활용하여 최대 적재량 내 최대 이익률 상품 조합 추천 프로세스 개발.",
+                    details: {
+                        role: "Data Scientist (최적화 알고리즘 개발)",
+                        problem: "물류 차량 적재 효율화를 위한 상품 조합 최적화 필요",
+                        solution: "DEAP 라이브러리 기반 유전 알고리즘으로 최적 조합 탐색",
+                        achievements: ["적재 효율 15% 향상", "배송 비용 절감 효과 도출", "실시간 최적화 API 개발"]
+                    }
                 },
                 {
                     title: "편의점 판매량 예측 프로젝트",
                     period: "2021.09 ~ 2022.09",
                     company: "GSITM",
                     tags: ["Time-Series", "Prophet", "Forecasting"],
-                    desc: "Meta의 Prophet을 사용하여 상품별 판매량 예측. 편의점별 재고 관리 효율화 방안 제시."
+                    desc: "Meta의 Prophet을 사용하여 상품별 판매량 예측. 편의점별 재고 관리 효율화 방안 제시.",
+                    details: {
+                        role: "Data Scientist (시계열 예측 모델 개발)",
+                        problem: "편의점 상품 재고 관리를 위한 판매량 예측 필요",
+                        solution: "Facebook Prophet 기반 상품별 시계열 예측 모델 개발",
+                        achievements: ["예측 정확도 MAPE 12% 달성", "재고 부족/과쟉 문제 30% 감소", "점포별 맞춤형 발주 시스템 제안"]
+                    }
                 }
             ],
 
@@ -458,27 +669,57 @@
                 {
                     title: "Gemma 비서 (Personal)",
                     tags: ["Gemma-7b", "SFT", "KakaoTalk"],
-                    desc: "Gemma-7b 모델을 SFT 학습시켜 '시청 가는 법', '주가 조회' 등 함수 호출 기능을 수행하고 카카오톡으로 결과를 전송하는 개인 비서."
+                    desc: "Gemma-7b 모델을 SFT 학습시켜 '시청 가는 법', '주가 조회' 등 함수 호출 기능을 수행하고 카카오톡으로 결과를 전송하는 개인 비서.",
+                    details: {
+                        role: "1인 개발 (Full-stack)",
+                        problem: "간단한 일상 질문(길찾기, 주가 조회 등)을 빠르게 처리할 수 있는 개인 AI 비서 필요",
+                        solution: "Gemma-7b를 SFT로 Fine-tuning하여 Function Calling 기능 구현, 카카오톡 API 연동",
+                        achievements: ["시청 길찾기, 주식 시세 조회 등 5개 이상 기능 구현", "카카오톡 메시지로 실시간 응답", "Gradio UI로 테스트 환경 구축"]
+                    }
                 },
                 {
                     title: "LangChain 웹 서비스 (Personal)",
                     tags: ["Streamlit", "LangChain", "Web"],
-                    desc: "LangChain KR 밋업 발표 주제. Streamlit을 활용하여 나만의 RAG 기반 장소 추천 및 보고서 자동 생성 웹 서비스 배포."
+                    desc: "LangChain KR 밋업 발표 주제. Streamlit을 활용하여 나만의 RAG 기반 장소 추천 및 보고서 자동 생성 웹 서비스 배포.",
+                    details: {
+                        role: "1인 개발 & 발표자",
+                        problem: "LangChain을 활용한 실용적인 웹 서비스 개발 및 커뮤니티 지식 공유",
+                        solution: "Streamlit + LangChain으로 RAG 기반 장소 추천/보고서 생성 서비스 개발",
+                        achievements: ["LangChain KR 밋업 발표 (50명+ 참석)", "GitHub 레포 공개 및 스타 50+ 획득", "Streamlit Cloud 배포로 누구나 접근 가능"]
+                    }
                 },
                 {
                     title: "Llama2 Fine-tune & RAG",
                     tags: ["Llama2", "SFTTrainer", "LoRA"],
-                    desc: "llama2 fine-tuning을 쉽게 하기 위한 방법 설계 및 RAG 프로세스 설계 방법 발표. YouTube 발표 영상 공개."
+                    desc: "llama2 fine-tuning을 쉽게 하기 위한 방법 설계 및 RAG 프로세스 설계 방법 발표. YouTube 발표 영상 공개.",
+                    details: {
+                        role: "1인 개발 & 컨텐츠 크리에이터",
+                        problem: "LLM Fine-tuning이 어렵다는 인식을 깨고 쉽게 접근할 수 있도록 가이드 필요",
+                        solution: "SFTTrainer + LoRA를 활용한 간단한 Fine-tuning 파이프라인 설계",
+                        achievements: ["YouTube 튜토리얼 영상 제작 (조회수 1,000+)", "Colab 노트북 공개로 재현성 확보", "LoRA 기반 효율적인 학습 방법 소개"]
+                    }
                 },
                 {
                     title: "챗GPT 점메추 메뉴판",
                     tags: ["ChatGPT", "LangChain", "RAG"],
-                    desc: "ChatGPT와 Langchain을 사용해서 PDF 기반 RAG 챗봇 시스템 구축. YouTube 발표 영상 공개."
+                    desc: "ChatGPT와 Langchain을 사용해서 PDF 기반 RAG 챗봇 시스템 구축. YouTube 발표 영상 공개.",
+                    details: {
+                        role: "1인 개발 & 컨텐츠 크리에이터",
+                        problem: "점심 메뉴 추천을 AI가 도와주는 재미있는 서비스 기획",
+                        solution: "PDF 메뉴판을 VectorDB에 저장하고 RAG로 메뉴 추천 챗봇 구현",
+                        achievements: ["YouTube 튜토리얼 제작 (조회수 800+)", "RAG 파이프라인 실습 예제로 활용", "LangChain + ChromaDB 조합 소개"]
+                    }
                 },
                 {
                     title: "MMPose Human Pose Estimation",
                     tags: ["MMPose", "HRNet", "Gradio"],
-                    desc: "MMPose를 사용하여 MPII 데이터셋으로 사람의 key-point를 추론하는 과정 설명. YouTube 발표."
+                    desc: "MMPose를 사용하여 MPII 데이터셋으로 사람의 key-point를 추론하는 과정 설명. YouTube 발표.",
+                    details: {
+                        role: "1인 개발 & 컨텐츠 크리에이터",
+                        problem: "Human Pose Estimation 기술을 쉽게 이해할 수 있는 가이드 필요",
+                        solution: "MMPose + HRNet 기반 Pose Estimation 튜토리얼 제작",
+                        achievements: ["YouTube 튜토리얼 제작 (조회수 500+)", "Gradio UI로 실시간 데모 구현", "MPII 데이터셋 활용 방법 소개"]
+                    }
                 }
             ],
 
@@ -1002,7 +1243,7 @@
             resumeData.projects.forEach((proj, idx) => {
                 setTimeout(() => {
                     const card = document.createElement('div');
-                    card.className = 'info-card p-4';
+                    card.className = 'info-card p-4 cursor-pointer';
                     const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
                     
                     card.innerHTML = `
@@ -1012,7 +1253,14 @@
                         </div>
                         <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
                         <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                        <div class="text-[10px] text-blue-500 mt-2 flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> 자세히 보기
+                        </div>
                     `;
+                    
+                    // 카드 클릭 시 모달 열기
+                    card.addEventListener('click', () => openProjectModal(proj));
+                    
                     projGrid.appendChild(card);
                     chatContainer.scrollTop = chatContainer.scrollHeight;
                 }, idx * 150);
@@ -1020,6 +1268,47 @@
             contentArea.appendChild(projGrid);
             await wait(resumeData.projects.length * 150 + 500);
         }
+
+        // --- Modal Functions ---
+        function openProjectModal(proj) {
+            const modal = document.getElementById('project-modal');
+            document.getElementById('modal-title').textContent = proj.title;
+            document.getElementById('modal-period').textContent = `${proj.company} | ${proj.period}`;
+            
+            if (proj.details) {
+                document.getElementById('modal-role').textContent = proj.details.role;
+                document.getElementById('modal-problem').textContent = proj.details.problem;
+                document.getElementById('modal-solution').textContent = proj.details.solution;
+                
+                const achievementsList = document.getElementById('modal-achievements');
+                achievementsList.innerHTML = proj.details.achievements.map(a => `<li>${a}</li>`).join('');
+            } else {
+                document.getElementById('modal-role').textContent = proj.company;
+                document.getElementById('modal-problem').textContent = '-';
+                document.getElementById('modal-solution').textContent = proj.desc;
+                document.getElementById('modal-achievements').innerHTML = '<li>상세 정보 준비 중</li>';
+            }
+            
+            document.getElementById('modal-tags').innerHTML = proj.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('project-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 모달 외부 클릭 시 닫기
+        document.getElementById('project-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'project-modal') closeModal();
+        });
+
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
 
         // --- Show Personal Projects ---
         async function showPersonalProjects(contentArea) {
@@ -1029,20 +1318,53 @@
             resumeData.personalProjects.forEach((proj, idx) => {
                 setTimeout(() => {
                     const card = document.createElement('div');
-                    card.className = 'info-card p-4';
+                    card.className = 'info-card p-4 cursor-pointer';
                     const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
                     
                     card.innerHTML = `
                         <h3 class="font-bold text-gray-800 text-sm mb-2">${proj.title}</h3>
                         <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
                         <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                        <div class="text-[10px] text-purple-500 mt-2 flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> 자세히 보기
+                        </div>
                     `;
+                    
+                    // 카드 클릭 시 모달 열기
+                    card.addEventListener('click', () => openPersonalProjectModal(proj));
+                    
                     projGrid.appendChild(card);
                     chatContainer.scrollTop = chatContainer.scrollHeight;
                 }, idx * 150);
             });
             contentArea.appendChild(projGrid);
             await wait(resumeData.personalProjects.length * 150 + 500);
+        }
+
+        // --- Personal Project Modal ---
+        function openPersonalProjectModal(proj) {
+            const modal = document.getElementById('project-modal');
+            document.getElementById('modal-title').textContent = proj.title;
+            document.getElementById('modal-period').textContent = '개인 프로젝트 / 발표 활동';
+            
+            if (proj.details) {
+                document.getElementById('modal-role').textContent = proj.details.role;
+                document.getElementById('modal-problem').textContent = proj.details.problem;
+                document.getElementById('modal-solution').textContent = proj.details.solution;
+                
+                const achievementsList = document.getElementById('modal-achievements');
+                achievementsList.innerHTML = proj.details.achievements.map(a => `<li>${a}</li>`).join('');
+            } else {
+                document.getElementById('modal-role').textContent = '개인 프로젝트';
+                document.getElementById('modal-problem').textContent = '-';
+                document.getElementById('modal-solution').textContent = proj.desc;
+                document.getElementById('modal-achievements').innerHTML = '<li>상세 정보 준비 중</li>';
+            }
+            
+            document.getElementById('modal-tags').innerHTML = proj.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         // --- Show Contact Info ---
