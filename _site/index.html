@@ -1,1221 +1,690 @@
 <!DOCTYPE html>
-<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
-<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
+<html lang="ko">
 <head>
-  <title>최재혁(JaeHyeok Choi) | AI Engineer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choi Jhyeok | AI Engineer Portfolio</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Meta -->
-  <meta charset="utf-8">
-  
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="안녕하세요 개발자 최재혁입니다.">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #0d0d0d; }
+        
+        /* 커서 깜빡임 */
+        .cursor::after { content: '●'; color: #000; animation: blink 1s infinite; margin-left: 2px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-  <!-- Favicon -->
-  <link rel="shortcut icon" href="favicon.ico">
+        /* 채팅 말풍선 */
+        .user-msg { background-color: #f3f3f3; border-radius: 1.5rem; padding: 10px 20px; display: inline-block; max-width: 80%; margin-left: auto; }
 
-  <!-- Global CSS -->
-  <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+        /* 카드 UI */
+        .info-card { border: 1px solid #e5e5e5; border-radius: 0.75rem; transition: all 0.2s ease; background: #fff; }
+        .info-card:hover { border-color: #8e8ea0; background-color: #f9f9f9; transform: translateY(-2px); }
+        
+        /* 애니메이션 */
+        .fade-in { animation: fadeIn 0.6s forwards; opacity: 0; transform: translateY(10px); }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
 
-  <!-- Plugins CSS -->
-  <link rel="stylesheet" href="/assets/plugins/font-awesome/css/all.css">
+        /* 스크롤바 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 3px; }
 
-  <!-- Theme CSS -->
-  <link id="theme-style" rel="stylesheet" href="/assets/css/main.css">
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        /* 선택 버튼 */
+        .choice-btn { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-weight: 500;
+        }
+        .choice-btn:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
+
+        /* 입력창 컨테이너 */
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 48px;
+            border-radius: 1.5rem;
+            background: #f4f4f4;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .input-container:focus-within {
+            border-color: #d1d1d1;
+            background: #fff;
+        }
+    </style>
 </head>
+<body class="h-screen flex flex-col overflow-hidden">
 
-<body>
-  <div class="wrapper h-wrapper">
-    <div class="sidebar-wrapper">
-
-      <div class="profile-container">
-    
-        
-        <img class="avatar" src="/assets/images/profile.png" alt="profile picture" />
-        
-    
-      </div><!--//profile-container-->
-
+    <!-- 1. Landing View -->
+    <div id="landing-view" class="flex-1 flex flex-col items-center justify-center p-4 transition-all duration-500">
+        <div class="mb-6">
+            <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center text-white text-3xl shadow-lg">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">
+            무엇을 도와드릴까요?
+        </h1>
+        <div class="w-full max-w-2xl relative">
+            <div class="input-container">
+                <i class="fa-solid fa-magnifying-glass text-gray-400 ml-4 text-lg"></i>
+                <input type="text" id="search-input" class="w-full h-full bg-transparent border-none outline-none px-4 text-gray-800 placeholder-gray-400" placeholder="최재혁 개발자에 대해 알려줘" autocomplete="off">
+                <button id="send-btn" class="mr-3 w-8 h-8 rounded-lg bg-gray-300 text-white flex items-center justify-center hover:bg-black transition-colors">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-2 mt-6 justify-center text-sm text-gray-500">
+            <button class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-full hover:bg-gray-100 transition" onclick="startFlow('career')">💼 주요 경력</button>
+            <button class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-full hover:bg-gray-100 transition" onclick="startFlow('project')">🤖 RAG & LLM 프로젝트</button>
+            <button class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-full hover:bg-gray-100 transition" onclick="startFlow('contact')">📧 연락처 & Skill</button>
+        </div>
     </div>
 
-    <div class="main-wrapper">
+    <!-- 2. Chat View -->
+    <div id="chat-view" class="hidden flex-1 flex flex-col h-full w-full max-w-4xl mx-auto p-4 md:p-6">
+        <div class="flex justify-between items-center py-3 border-b border-gray-100 mb-4">
+            <div class="font-semibold text-gray-700 flex items-center gap-2">
+                <span class="text-gray-400">Model:</span> Choi-Korean-97.1.19
+            </div>
+            <a href="index.html" class="text-sm text-gray-500 hover:text-black transition"><i class="fa-solid fa-rotate-right"></i> Reset</a>
+        </div>
+        <div id="chat-container" class="flex-1 overflow-y-auto pb-10 space-y-6 pr-2"></div>
+        
+        <!-- Chat Input Area -->
+        <div id="chat-input-area" class="mt-4 hidden">
+            <div class="input-container">
+                <i class="fa-solid fa-message text-gray-400 ml-4 text-lg"></i>
+                <input type="text" id="chat-input" class="w-full h-full bg-transparent border-none outline-none px-4 text-gray-800 placeholder-gray-400" placeholder="답변을 입력하세요..." autocomplete="off">
+                <button id="chat-send-btn" class="mr-3 w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center hover:bg-gray-700 transition-colors">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
+            </div>
+        </div>
 
-      <div class="profile-container">
-    
-        
-        <h1 class="name">최재혁(Jaehyeok Choi)</h1>
-        
-    
-        
-        <h3 class="tagline">AI Engineer</h3>
-        
-    
-      </div><!--//profile-container-->
-
+        <!-- Disabled Input -->
+        <div id="disabled-input" class="mt-4 opacity-60 pointer-events-none">
+            <div class="w-full h-12 bg-gray-100 rounded-full border border-gray-200 flex items-center px-4 justify-between">
+                <span class="text-gray-400 text-sm">AI Engineer Choi Jhyeok Portfolio</span>
+                <i class="fa-solid fa-stop text-gray-400"></i>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="wrapper b-wrapper">
-    
-<div class="sidebar-wrapper">
 
-  <div class="contact-container container-block">
-  <ul class="list-unstyled contact-list">
-
-    <h2 class="container-block-title">
-      CONTACT
-    </h2>
-
-    
-    <li class="email"><i class="fas fa-envelope"></i>
-      <a href="mailto:wowogur12@naver.com">wowogur12@naver.com</a>
-    </li>
-    
-
-    
-    <li class="phone"><i class="fas fa-phone"></i>
-      <a href="tel:+82 010-4479-6775">+82 010-4479-6775</a>
-    </li>
-    
-
-    
-
-    
-    <li class="timezone"><i class="fas fa-clock"></i>
-      <a href="">Asia/Seoul Timezone</a>
-    </li>
-    
-
-    
-
-    
-    <li class="website"><i class="fas fa-globe-americas"></i>
-      <a href="http://cjhyeok.tistory.com" target="_blank">cjhyeok.tistory.com</a>
-    </li>
-    
-
-    
-
-    
-
-    
-    <li class="github"><i class="fab fa-github"></i>
-      <a href="http://github.com/choijhyeok" target="_blank">choijhyeok</a>
-    </li>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-  </ul>
-</div><!--//contact-container-->
-
-
-  
-    
-
-  
-  <div class="education-container container-block">
-
-    <h2 class="container-block-title">
-      Education
-    </h2>
-
-    
-    <div class="item">
-      <h4 class="degree">빅리더 아카데미 수료</h4>
-      <h5 class="meta">2020 데이터 청년 캠퍼스</h5>
-      <div class="time">2020.06 ~ 2020.09</div>
-    </div><!--//item-->
-    
-    <div class="item">
-      <h4 class="degree">정보통계학과, 컴퓨터과학과 학사</h4>
-      <h5 class="meta">경상대학교</h5>
-      <div class="time">2016.03 ~ 2022.02</div>
-    </div><!--//item-->
-    
-
-  </div><!--//education-container-->
-  
-
-
-  
-
-  
-    
-
-  
-  <div class="education-container container-block">
-
-    <h2 class="container-block-title">
-      Awards
-    </h2>
-
-    
-    <div class="item">
-      <h4 class="degree">전주시 빅데이터 공모전 최우수상</h4>
-      <h5 class="meta">전주시</h5>
-      <div class="time">2021.04 ~ 2021.05</div>
-    </div><!--//item-->
-    
-    <div class="item">
-      <h4 class="degree">더존비즈온 중소,중견 빅데이터 장려상</h4>
-      <h5 class="meta">더존비즈온</h5>
-      <div class="time">2020.09 ~ 2020.11</div>
-    </div><!--//item-->
-    
-    <div class="item">
-      <h4 class="degree">학술 창의력 경진대회 은상</h4>
-      <h5 class="meta">경상대학교 자연과학대학</h5>
-      <div class="time">2020.09 ~ 2020.10</div>
-    </div><!--//item-->
-    
-    <div class="item">
-      <h4 class="degree">빅리더 아카데미 경남도지사상</h4>
-      <h5 class="meta">2020 데이터 청년 캠퍼스</h5>
-      <div class="time">2020.06 ~ 2020.09</div>
-    </div><!--//item-->
-    
-
-  </div><!--//education-container-->
-  
-
-
-  
-
-  
-    
-
-  
-  <div class="education-container container-block">
-
-    <h2 class="container-block-title">
-      certificate
-    </h2>
-
-    
-    <div class="item">
-      <h4 class="degree">데이터분석준전문가(ADsP)</h4>
-      <h5 class="meta">ADsP-0276326</h5>
-      <div class="time"></div>
-    </div><!--//item-->
-    
-    <div class="item">
-      <h4 class="degree">SQL개발자(SQLD)</h4>
-      <h5 class="meta">SQLD-041006581</h5>
-      <div class="time"></div>
-    </div><!--//item-->
-    
-    <div class="item">
-      <h4 class="degree">AICE Associate</h4>
-      <h5 class="meta">AICE_20230408_A00006</h5>
-      <div class="time"></div>
-    </div><!--//item-->
-    
-
-  </div><!--//education-container-->
-  
-
-
-  
-
-  
-
-
-  
-
-
-
-  
-
-</div><!--//sidebar-wrapper-->
-
-
-    <div class="main-wrapper">
-        
-
-<section class="section summary-section">
-
-  <h2 class="section-title">
-    Profile
-  </h2>
-
-  <div class="summary">
-    <p>CV, LLM, Time-Series 등 다양한 기술을 주로 다루는 AI 개발자 최재혁입니다.</p>
-
-<p>LLM, RAG를 활용한 기술 및 프로젝트에 관심이 많습니다.</p>
-
-  </div><!--//summary-->
-    
-</section><!--//section-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section class="section experiences-section">
-  <h2 class="section-title">
-    Experiences
-  </h2>
-
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">AI Engineer</h3>
-        <div class="time">2024.07.15 ~ 재직중</div>
-      </div><!--//upper-row-->
-
-      <div class="company">KT</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">DataScientist</h3>
-        <div class="time">2022.04.11 ~ 2024.05.15</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">DataScientist</h3>
-        <div class="time">2021.07.26 ~ 2022.01.28</div>
-      </div><!--//upper-row-->
-
-      <div class="company">GSITM</div>
-
-    </div><!--//meta-->
-
-    
-
-  </div><!--//item-->
-  
-
-</section><!--//section-->
-
-
-
-
-
-
-<section class="section experiences-section">
-  <h2 class="section-title">
-    project
-  </h2>
-
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">연구분야 대화형 생성 AI의 교정학습구조 설계 및 평가</h3>
-        <div class="time">2024-01-15 ~ 2024-05-15</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>한국전력공사의 사내 데이터 RAG 시스템 구축을 위한 RAG 용 LLM 학습 및 사외 데이터 수집</strong></p>
-
-    <ul>
-      <li>사외 데이터는 python을 활용한 crawling을 사용
-        <ul>
-          <li>동적 웹페이지 crawling시 selenium 사용</li>
-          <li>IP 차단을 수행하는 웹페이지는 undetected_chromedriver을 사용하여 차단 우회</li>
-        </ul>
-      </li>
-      <li>LLM 학습에는 SFT Trainer 사용
-        <ul>
-          <li>A6000 GPU 2장에서 학습하기 위한 QLora 사용</li>
-          <li>SFT 훈련시 best adapter만 저장</li>
-          <li>학습의 효율화를 위해서 deepspeed zero 2 사용하여 병렬 GPU 학습 수행</li>
-        </ul>
-      </li>
-      <li>Ragas의 faithfulness score, answer relevancy score 평가
-        <ul>
-          <li>학습시킨 모델 (llama2, eeve, gemma … 등)의 RAG 성능을 Ragas 패키지를 통한 평가</li>
-          <li>faithfulness score, answer relevancy score 가 높은 모델로 선정</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">docker 기반 시계열 예측 pipeline 개발</h3>
-        <div class="time">2023-10-16 ~ 2023-12-15</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>5가지 시계열 모델을 데이터 갱신, 모델 학습, 추론의 과정을 스케줄을 통해 자동으로 수행하는 docker 설계 및 개발</strong></p>
-
-    <ul>
-      <li>BAT 파일을 통해 window의 Task Scheduler에 작업 등록 (이때 실행 주기 설정 일, 주, 월)</li>
-      <li>Task Scheduler에 등록된 BAT이 설정한 주기로 실행
-        <ul>
-          <li>docker container는 프로세스 효율화를 위해 실행이 끝나면 container 제거하는 방법 사용</li>
-          <li>모델별 데이터 갱신, 학습, 추론 개별 수행할 수 있는 class 와 전체를 한 번에 실행할 수 있는 class 설계</li>
-        </ul>
-      </li>
-      <li>docker 안의 wrap.py를 실행하고 해당 wrap.py는 bat에서 넘어온 전역변수를 통해 적절한 class로 실행시켜 주는 역할 수행</li>
-      <li>모든 실행은 subprocess를 통해서 실행, 실행 도중 에러 발생 시 해당 error local DB에 기록</li>
-      <li>실행 완료 시 local MariaDB에 추론 결과 예측값 저장</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">어종(魚種) 식별 및 분류 알고리즘 개발</h3>
-        <div class="time">2023-10-30 ~ 2023-11-30</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>8가지 어종에 대한 Object-detection 대회 설계 및 출제</strong></p>
-
-    <ul>
-      <li>train : test 분리 시 class 불균형 비율 유지</li>
-      <li>label coco format setting</li>
-      <li>평가 지표 Macro F1 score
-        <ul>
-          <li>불필요한 bbox 예측에 대한 점수 감소 적용</li>
-          <li>NMS 적용 시에만 정상 작동 → 결과의 연산량 감소</li>
-        </ul>
-      </li>
-      <li>Yolo V5를 통한 어종 식별 Object-Detection
-        <ul>
-          <li>yolo format 변환 후 적용</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">디브릿지 프로젝트</h3>
-        <div class="time">2023-07-20 ~ 2023-10-31</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>KT 내부 전산망 API와 자사의 chatbot 및 local llm을 통한 채팅형 관제 서비스 설계</strong></p>
-
-    <ul>
-      <li>지식 기반 chatbot 서비스 개발
-        <ul>
-          <li>PDF, CSV, hwp와 같이 특정 문서의 text 자동 전처리 후, 해당 정보를 VectorDB 저장</li>
-          <li>VectorDB의 similarity score를 기반으로 답변 생성 및 Source reference 제공</li>
-        </ul>
-      </li>
-      <li>KT 집중 감시 서버 관제
-        <ul>
-          <li>ChatGPT를 통해서 특정 기간, 특정 간격으로 집중적으로 서버의 이상 유무를 판단</li>
-          <li>“30분 뒤까지 10분 간격으로 집중 감시해 줘” 수행 시 10분 간격으로 30분까지 감시</li>
-          <li>위의 전체 실행 기능은 sub process로 작동 (반복 및 실행 종료 시 영향 최소화)</li>
-        </ul>
-      </li>
-      <li>ChatGPT Function call 사용한 채팅형 서버 관제
-        <ul>
-          <li>ChatGPT의 Function call 기능을 활용하여 채팅을 통해 서버 관제 API 호출</li>
-          <li>호출된 API의 return 값을 통해 ChatGPT가 추가적인 조치 프로세스 수행</li>
-          <li>채팅을 통해서 11개의 관제 API 호출</li>
-        </ul>
-      </li>
-      <li>Local llm Function call 사용한 채팅형 서버 관제
-        <ul>
-          <li>llama2를 활용하여 Function call 기능 적용 및 채팅을 통해 서버 관제 API 호출</li>
-          <li>호출된 API의 return 값을 통해 추가적인 조치 프로세스 수행</li>
-          <li>채팅을 통해서 11개의 관제 API 호출</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">KT 통신망 안정성 확보를 위한 인공지능 해커톤</h3>
-        <div class="time">2023-07-19 ~ 2023-09-15</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li><strong>무선 기지국 장비의 통계 데이터를 활용한 인구 밀집도 예측</strong>
-    <ul>
-      <li>축제 지역 근방 10곳의 기지국에서 축제 기간 전후에 해당하는 모든 타임스탬프에 대해 인구 수를 예측하는 회귀 문제</li>
-      <li>다양한 데이터 column 중 인구 수 변화에 유의미한 값을 선별하고 시계열 데이터의 주기성을 고려하도록 출제</li>
-      <li>MAE 평가 지표를 통한 평가</li>
-    </ul>
-  </li>
-  <li><strong>유선 네트워크 장비의 신속한 조치를 위한 경보 유형 분류</strong>
-    <ul>
-      <li>모든 전표 ID에 대해 링크 장애, 유닛 장애, 전원 장애 중 하나의 유형으로 예측하는 분류 문제</li>
-      <li>경보 메시지를 구성하는 다양한 키워드의 의미와 조합을 이해하고, 다수의 경보 간 발생 순서를 고려하도록 설계</li>
-      <li>Accuracy 평가 지표를 통한 평가</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">자사 추론자동화 제출 테스트 설계</h3>
-        <div class="time">2023-07-17 ~ 2023-09-30</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>Time Series forcast Task</li>
-  <li>Sliding window를 사용하여 6시간 input 추론 기준시점으로부터 4시간 뒤를 예측</li>
-  <li>MAE를 평가 지표로 사용하여 평가</li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">자사 Local llm chatbot 테스트</h3>
-        <div class="time">2023-04-15 ~ 2023-06-17</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>Local llm chatbot 구축을 위한 local llm test (koalpaca, kullm, kovicuna)</strong></p>
-
-    <ul>
-      <li>GPU 3090 사용</li>
-      <li>PDF, hwp, csv 등 데이터 원천으로 얻은 분할된 chunk  vectorDB (chroma)</li>
-      <li>langchain의 VectorDBQA chain과 local llm 연결, RAG chat 설계</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">자사 chatbot hwp text load 기능 개발</h3>
-        <div class="time">2023-04-03 ~ 2023-05-20</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>기존의 olefile의 hwp text 불러오는 한계가 존재
-    <ul>
-      <li>표 안의 text를 가져오지 못하는 문제</li>
-    </ul>
-  </li>
-  <li>JAVA의 패키지를 컴파일 → python에서 해당 패키지를 사용하는 방법으로 hwp text 파싱
-    <ul>
-      <li>표 안의 text 및 text 파싱 속도 향상</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">USG AI·데이터 문제해결 제조혁신 경진대회</h3>
-        <div class="time">2023-03-08 ~ 2023-03-13</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>크기와 형태가 다른 LED 숫자 이미지 분류 대회 출제</strong></p>
-
-    <ul>
-      <li>대학생 초급 난이도를 위한 경진대회 설계</li>
-      <li>VGG16 전이 학습을 통한 분류</li>
-      <li>총 10가지 class 데이터의  불균형 설정</li>
-      <li>평가는 macro f1-score 사용</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">Animal Datathon Korea 2022</h3>
-        <div class="time">2022-11-04 ~ 2022-11-06</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>축사 내부의 돼지의 자세 분류, 말의 자세 예측 대회 출제</strong></p>
-
-    <ul>
-      <li>돼지의 자세 분류
-        <ul>
-          <li>돼지의 자세 4가지 class로 구성</li>
-          <li>label 미제공으로 비지도로 해결하도록 설계</li>
-          <li>F1-score를 통해서 평가</li>
-        </ul>
-      </li>
-      <li>축사 내 말의 자세 예측
-        <ul>
-          <li>말의 관절 17개에 해당하는 keypoint detection 문제로 설계</li>
-          <li>절반의 데이터만 labeling 되어있고 나머지는 label 미제공</li>
-          <li>COCOeval의 Keypoin Evaluation을 통해 평가</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">NH투자증권 빅데이터 경진대회</h3>
-        <div class="time">2022-09-08 ~ 2022-12-09</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>NH 고객 및 거래 데이터를 활용해 NH투자증권의 Digital 고객을 분석 대회 설계</strong></p>
-
-    <ul>
-      <li>NH 고객의 거래 데이터를 통한 고객군 분류</li>
-      <li>NH 고객의 자산을 변동률을 통해 자산의 변동을 파악할 수 있는 파생 변수 생성</li>
-      <li>국내 주식만, 외국 주식만, 모두 다 주식의 거래 패턴을 확인할 수 있는 파생 변수 생성</li>
-      <li>Kmean 군집을 사용해 군집별 군집 수를 적절하게 분류</li>
-      <li>분류된 군집의 특성과 고객군의 나이를 기반으로 보고서를 작성</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">DL E&C 시공 현장 안전장구 착용 여부 탐지</h3>
-        <div class="time">2022-09-05 ~ 2022-11-11</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>Object Detection을 활용한 10개의 안전장비 착용 여부 탐지 대회 설계</strong></p>
-
-    <ul>
-      <li>10개의 class에 해당하는 객체를 탐지하는 AI 모델</li>
-      <li>data는 영상을 프레임 단위로 분절시킨 데이터</li>
-      <li>Macro F1 Score를 평가 지표로 사용, 불필요한 예측에 대한 감점 적용</li>
-      <li>모든 데이터 셋 Coco format으로 통일</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">농넷 농산물 가격 변동률 예측 AI 경진대회</h3>
-        <div class="time">2022-08-29 ~ 2022-11-30</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>37품목의 농산물 가격 변동률을 예측하는 대회 설계</strong></p>
-
-    <ul>
-      <li>Transformer를 활용한 Time Series Forecasting 설계</li>
-      <li>추론 기준시점으로부터 1주, 2주, 4주를 예측하는 모델</li>
-      <li>평가는 예측값의 평균 변동률의 MAE로 계산</li>
-      <li>가격을 예측하는 것이 아닌 기준시점 대비 예측값의 변동률을 예측</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">LG 입자 형태 분석 모델 개발 해커톤</h3>
-        <div class="time">2022-07-07 ~ 2022-08-08</div>
-      </div><!--//upper-row-->
-
-      <div class="company">AIFactory</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>Instance Segmentation 분야를 활용하여 유체상에 입자를 검출해 내는 대회 설계</strong></p>
-
-    <ul>
-      <li>Mask R-CNN을 통한 입자 검출 모델 설계</li>
-      <li>Image Data preprocessing &amp; labels check</li>
-      <li>coco format setting</li>
-      <li>IoU를 반영한 F1-Score을 통한 평가 수행</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">유전알고리즘을 활용한 물류매칭 알고리즘</h3>
-        <div class="time">2021-10-01 ~ 2021-12-01</div>
-      </div><!--//upper-row-->
-
-      <div class="company">GSITM</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>상품 적재 시 최대 적재량을 넘지 않으면서 최대의 이익률을 얻을 수 있는 상품들의 조합 추천</strong></p>
-
-    <ul>
-      <li>DEAP 유전 알고리즘을 활용</li>
-      <li>무게와 가격의 두 개의 기준을 통해 최대의 이익을 내는 상품 조합 추천 프로세스 개발</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">상품별 판매량 예측 프로젝트</h3>
-        <div class="time">2021-09-01 ~ 2022-09-30</div>
-      </div><!--//upper-row-->
-
-      <div class="company">GSITM</div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>편의점 상품의 품목코드 매칭 및 판매량의 연별, 월별, 일별, 분기별 계절성 고려하여 전처리</li>
-  <li>Meta의 Prophet을 사용하여 상품별 판매량 예측</li>
-  <li>예측된 판매량을 통해서 편의점별 제고의 관리 효율화 방안 제시</li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-
-</section><!--//section-->
-
-
-
-
-
-
-<section class="section experiences-section">
-  <h2 class="section-title">
-    Personal Project
-  </h2>
-
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">Gemma 비서</h3>
-        <div class="time"></div>
-      </div><!--//upper-row-->
-
-      <div class="company"></div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>Gemma 7b 모델을 SFT 학습을 통한 Function call</strong></p>
-
-    <ul>
-      <li>Gemma에게 질문(’역삼역에서 시청까지 가는 방법알려줘’, ‘삼성전자 주가 알려줘’, ‘부산 날씨 알려줘’ , ‘최근 이메일 조회해줘’) 수행시 사전에 정의한 함수를 Gemma가 선택하여 실행</li>
-      <li>Data set은 chatGPT Function call을 기반으로 정제, SFT 학습을 통해 Adapter 생성</li>
-      <li>학습된 adapter을 연결하여 질의시 해당 함수를 실행 이후 실행된 내용은 KaKao톡을 통하여 전달</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">Streamlit과 Langchain으로 나만의 웹서비스 개발하기</h3>
-        <div class="time"></div>
-      </div><!--//upper-row-->
-
-      <div class="company"></div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>Langchain KR이 주최하는 2024Q1 밋업 발표</strong></p>
-
-    <ul>
-      <li><a href="https://docs.google.com/presentation/d/12Oc3JX08BZZDI_Jxhr2KZL0xq0450sP2/edit?usp=sharing&amp;ouid=113621701230122831294&amp;rtpof=true&amp;sd=true">발표 PPT Link</a></li>
-      <li>Streamlit을 사용한 Langchain 서비스 배포방법 설명</li>
-      <li>Vector DB 분리, Langchain QA chain을 사용한 장소 추천방법 설명</li>
-      <li>DEAP 유전알고리즘을 사용한 경로기반 추천방법 설명</li>
-      <li>Python으로 자동화 보고서 생성하는 방법 설명
-        <ul>
-          <li>HTML 코드를 python String으로 생성</li>
-          <li>생성된 HTML를 PDF로 변환</li>
-        </ul>
-      </li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">개인 데이터셋을 통한 llama2 fine-tune</h3>
-        <div class="time"></div>
-      </div><!--//upper-row-->
-
-      <div class="company"></div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>llama2 fine-tuning 을 쉽게 하기 위한 방법 설계 및 llama2 RAG 프로세스 설계 방법 발표</strong></p>
-
-    <ul>
-      <li><a href="https://www.youtube.com/live/4I9AUFuBlFs?feature=shared">발표 YouTube Link</a></li>
-      <li>사용한 model :  meta-llama2 7b, beomi/llama-2-ko-7b
-        <ul>
-          <li>colab GPU T4에 최적화 되도록 설정</li>
-          <li>SFTTrainer, lora를 사용해서 Instruction Fine-tune</li>
-          <li>Fine-tune을 쉽게 수행하기 위해 Gradio GUI 사용</li>
-        </ul>
-      </li>
-      <li>langchain RetrievalQAWithSourcesChain 을 통한 RAG 시스템</li>
-      <li>HuggingFace Embeddings 모델 사용</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">챗GPT 점메추 메뉴판, 예산입력하고 점심 메뉴 추천받자</h3>
-        <div class="time"></div>
-      </div><!--//upper-row-->
-
-      <div class="company"></div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>chatGPT 와 Langchain을 사용해서 RAG 시스템 설계와 특정 PDF 맞춤 챗봇 만드는 방법 발표</strong></p>
-
-    <ul>
-      <li><a href="https://www.youtube.com/live/RYVFrr_HsyM?feature=shared">발표 YouTube Link</a></li>
-      <li>사용자가 가지고 있는 PDF → chroma vectorDB
-        <ul>
-          <li>PDF의 text에서 불용어 전처리</li>
-          <li>RecursiveCharacterTextSplitter 사용해서 chunk 분할</li>
-        </ul>
-      </li>
-      <li>RetrievalQAWithSourcesChain 을 통한 RAG 시스템 구축</li>
-      <li>langchain의 FakeAgent를 통한 답변과 이미지 출력같이하는 프로세스 구축</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">MMPose를 통한 Human Pose estimatixon</h3>
-        <div class="time"></div>
-      </div><!--//upper-row-->
-
-      <div class="company"></div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>MMPose를 사용하여 Pose estimation 구현 방법 발표</strong></p>
-
-    <ul>
-      <li><a href="https://www.youtube.com/live/tnncgDjVWKA?feature=shared">발표 YouTube Link</a></li>
-      <li>MMPose는 관절의 key-point를 detect 하는 패키지
-        <ul>
-          <li>한국어에 대한 설명과 실제 사용방법이 잘 설명되지 않아서 처음 접하기는 어려움</li>
-          <li>MMPose를 사용해 <a href="http://human-pose.mpi-inf.mpg.de/">MPII 데이터 셋</a> 으로 실제 사람의 key-point를 추론하는 과정 설명</li>
-        </ul>
-      </li>
-      <li>hrnet 모델을 사용해서 최종적으로 학습된 모델로 inference 테스트</li>
-      <li>학습한 모델을 Gradio GUI</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-  <div class="item">
-
-    <div class="meta">
-
-      <div class="upper-row">
-        <h3 class="job-title">지오에이아이데이터학회</h3>
-        <div class="time"></div>
-      </div><!--//upper-row-->
-
-      <div class="company"></div>
-
-    </div><!--//meta-->
-
-    
-    <div class="details">
-      <ul>
-  <li>
-    <p><strong>지오에이아이 데이터 학회 튜토리얼 세션 중급 Object-Detection</strong></p>
-
-    <ul>
-      <li>YoloV3를 이용한 Car Detection</li>
-      <li>csv 파일 안의 image, xmin, ymin, xmax, ymax → yolo format</li>
-      <li>yolov3 훈련 및 결과 시각화</li>
-    </ul>
-  </li>
-</ul>
-
-    </div><!--//details-->
-    
-
-  </div><!--//item-->
-  
-
-</section><!--//section-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
-  </div>
-
-<!-- Javascript -->
-<script type="text/javascript" src="/assets/plugins/jquery-1.11.3.min.js"></script>
-<script type="text/javascript" src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-
-<!-- custom js -->
-<script type="text/javascript" src="/assets/js/main.js"></script>
-
-
-  <!-- Analytics -->
-<script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-      (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-  ga('create', 'G-8ZXMRXCZGS', 'auto');
-  ga('send', 'pageview');
-</script>
-
+    <!-- Javascript -->
+    <script>
+        // --- Data Structure (User Resume) ---
+        const resumeData = {
+            intro: `**AI Engineer 최재혁**님에 대한 분석 결과입니다.\n\n최재혁님은 **CV(Computer Vision), LLM, Time-Series** 등 다양한 도메인을 아우르는 AI 개발자입니다. 특히 최근에는 **LLM과 RAG(검색 증강 생성) 기술**을 활용하여 실제 비즈니스 문제를 해결하는 데 집중하고 있습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 이전에는 **AIFactory**와 **GSITM**에서 Data Scientist로 활약했습니다.`,
+            
+            experience: [
+                { role: "AI Engineer", company: "KT", period: "2024.07 ~ 현재", desc: "LLM 및 AI 서비스 개발 및 운영" },
+                { role: "Data Scientist", company: "AIFactory", period: "2022.04 ~ 2024.05", desc: "RAG 시스템 구축, Docker 기반 MLOps 파이프라인 설계, 각종 AI 경진대회 문제 출제 및 평가 모델 개발" },
+                { role: "Data Scientist", company: "GSITM", period: "2021.07 ~ 2022.01", desc: "유전 알고리즘 기반 물류 최적화, 시계열 판매량 예측 프로젝트 수행" }
+            ],
+
+            education: [
+                { degree: "정보통계학과, 컴퓨터과학과 학사", school: "경상대학교", period: "2016.03 ~ 2022.02" },
+                { degree: "빅리더 아카데미 수료", school: "2020 데이터 청년 캠퍼스", period: "2020.06 ~ 2020.09" }
+            ],
+
+            awards: [
+                { title: "전주시 빅데이터 공모전 최우수상", org: "전주시", period: "2021.04 ~ 2021.05" },
+                { title: "더존비즈온 중소,중견 빅데이터 장려상", org: "더존비즈온", period: "2020.09 ~ 2020.11" },
+                { title: "학술 창의력 경진대회 은상", org: "경상대학교 자연과학대학", period: "2020.09 ~ 2020.10" },
+                { title: "빅리더 아카데미 경남도지사상", org: "2020 데이터 청년 캠퍼스", period: "2020.06 ~ 2020.09" }
+            ],
+
+            certificates: [
+                { name: "데이터분석준전문가(ADsP)", id: "ADsP-0276326" },
+                { name: "SQL개발자(SQLD)", id: "SQLD-041006581" },
+                { name: "AICE Associate", id: "AICE_20230408_A00006" }
+            ],
+
+            projects: [
+                {
+                    title: "한국전력공사 사내 데이터 RAG 구축",
+                    period: "2024.01 ~ 2024.05",
+                    company: "AIFactory",
+                    tags: ["LLM", "RAG", "QLora", "Ragas"],
+                    desc: "Llama2, Gemma 등을 QLora로 Fine-tuning하고, Ragas로 성능을 평가하여 사내/외 데이터를 답변하는 챗봇 시스템 구축."
+                },
+                {
+                    title: "Docker 기반 시계열 예측 파이프라인",
+                    period: "2023.10 ~ 2023.12",
+                    company: "AIFactory",
+                    tags: ["Docker", "Python", "Automation"],
+                    desc: "데이터 갱신부터 모델 학습, 추론까지 자동으로 수행하는 컨테이너 환경 설계. Task Scheduler와 연동하여 프로세스 효율화."
+                },
+                {
+                    title: "디브릿지: 채팅형 서버 관제 서비스",
+                    period: "2023.07 ~ 2023.10",
+                    company: "AIFactory",
+                    tags: ["OpenAI API", "Function Call", "VectorDB"],
+                    desc: "자연어 질의를 통해 서버 상태를 모니터링하고 조치하는 Function Call 기반 챗봇 서비스. 11개의 관제 API 호출 가능."
+                },
+                {
+                    title: "어종 식별 및 분류 알고리즘 개발",
+                    period: "2023.10 ~ 2023.11",
+                    company: "AIFactory",
+                    tags: ["Object Detection", "YoloV5", "Macro F1"],
+                    desc: "8가지 어종에 대한 Object-detection 대회 설계 및 출제. Yolo V5를 통한 어종 식별 모델 개발."
+                },
+                {
+                    title: "KT 통신망 안정성 확보 AI 해커톤",
+                    period: "2023.07 ~ 2023.09",
+                    company: "AIFactory",
+                    tags: ["Time-Series", "Classification", "MAE"],
+                    desc: "무선 기지국 장비 통계 데이터를 활용한 인구 밀집도 예측 및 경보 유형 분류 대회 설계."
+                },
+                {
+                    title: "NH투자증권 빅데이터 경진대회",
+                    period: "2022.09 ~ 2022.12",
+                    company: "AIFactory",
+                    tags: ["Clustering", "K-means", "Data Analysis"],
+                    desc: "NH 고객 거래 데이터를 통한 고객군 분류 및 자산 변동률 분석. 군집별 특성과 나이 기반 보고서 작성."
+                },
+                {
+                    title: "DL E&C 안전장구 착용 탐지",
+                    period: "2022.09 ~ 2022.11",
+                    company: "AIFactory",
+                    tags: ["Object Detection", "COCO", "Macro F1"],
+                    desc: "Object Detection을 활용한 10개의 안전장비 착용 여부 탐지 대회 설계."
+                },
+                {
+                    title: "LG 입자 형태 분석 해커톤",
+                    period: "2022.07 ~ 2022.08",
+                    company: "AIFactory",
+                    tags: ["Instance Segmentation", "Mask R-CNN"],
+                    desc: "Mask R-CNN을 통한 유체상 입자 검출 대회 설계. IoU 반영 F1-Score 평가."
+                },
+                {
+                    title: "유전알고리즘 물류매칭",
+                    period: "2021.10 ~ 2021.12",
+                    company: "GSITM",
+                    tags: ["Genetic Algorithm", "DEAP", "Optimization"],
+                    desc: "DEAP 유전 알고리즘을 활용하여 최대 적재량 내 최대 이익률 상품 조합 추천 프로세스 개발."
+                },
+                {
+                    title: "편의점 판매량 예측 프로젝트",
+                    period: "2021.09 ~ 2022.09",
+                    company: "GSITM",
+                    tags: ["Time-Series", "Prophet", "Forecasting"],
+                    desc: "Meta의 Prophet을 사용하여 상품별 판매량 예측. 편의점별 재고 관리 효율화 방안 제시."
+                }
+            ],
+
+            personalProjects: [
+                {
+                    title: "Gemma 비서 (Personal)",
+                    tags: ["Gemma-7b", "SFT", "KakaoTalk"],
+                    desc: "Gemma-7b 모델을 SFT 학습시켜 '시청 가는 법', '주가 조회' 등 함수 호출 기능을 수행하고 카카오톡으로 결과를 전송하는 개인 비서."
+                },
+                {
+                    title: "LangChain 웹 서비스 (Personal)",
+                    tags: ["Streamlit", "LangChain", "Web"],
+                    desc: "LangChain KR 밋업 발표 주제. Streamlit을 활용하여 나만의 RAG 기반 장소 추천 및 보고서 자동 생성 웹 서비스 배포."
+                },
+                {
+                    title: "Llama2 Fine-tune & RAG",
+                    tags: ["Llama2", "SFTTrainer", "LoRA"],
+                    desc: "llama2 fine-tuning을 쉽게 하기 위한 방법 설계 및 RAG 프로세스 설계 방법 발표. YouTube 발표 영상 공개."
+                },
+                {
+                    title: "챗GPT 점메추 메뉴판",
+                    tags: ["ChatGPT", "LangChain", "RAG"],
+                    desc: "ChatGPT와 Langchain을 사용해서 PDF 기반 RAG 챗봇 시스템 구축. YouTube 발표 영상 공개."
+                },
+                {
+                    title: "MMPose Human Pose Estimation",
+                    tags: ["MMPose", "HRNet", "Gradio"],
+                    desc: "MMPose를 사용하여 MPII 데이터셋으로 사람의 key-point를 추론하는 과정 설명. YouTube 발표."
+                }
+            ],
+
+            skills: ["Python", "PyTorch", "TensorFlow", "LangChain", "RAG", "LLM Fine-tuning", "Docker", "MySQL", "GCP"],
+            
+            contact: {
+                email: "wowogur12@naver.com",
+                phone: "+82 010-4479-6775",
+                blog: "cjhyeok.tistory.com",
+                github: "github.com/choijhyeok"
+            }
+        };
+
+        // --- State Management ---
+        let currentFlow = null;
+        let currentStep = 0;
+        let waitingForInput = false;
+        let pendingAction = null;
+
+        // --- DOM Elements ---
+        const searchInput = document.getElementById('search-input');
+        const landingView = document.getElementById('landing-view');
+        const chatView = document.getElementById('chat-view');
+        const chatContainer = document.getElementById('chat-container');
+        const chatInputArea = document.getElementById('chat-input-area');
+        const chatInput = document.getElementById('chat-input');
+        const disabledInput = document.getElementById('disabled-input');
+
+        // --- Fixed Query ---
+        const fixedQuery = '최재혁 개발자에 대해 알려줘';
+        let inputIndex = 0;
+
+        // --- Event Listeners ---
+        searchInput.addEventListener('input', (e) => {
+            // 한 글자 입력할 때마다 fixedQuery의 다음 글자로 대체
+            if (inputIndex < fixedQuery.length) {
+                inputIndex++;
+                searchInput.value = fixedQuery.substring(0, inputIndex);
+            } else {
+                searchInput.value = fixedQuery;
+            }
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && inputIndex > 0) startFlow('full');
+        });
+        document.getElementById('send-btn').addEventListener('click', () => {
+            if (inputIndex > 0) startFlow('full');
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && chatInput.value.trim() !== "") handleUserInput();
+        });
+        document.getElementById('chat-send-btn').addEventListener('click', () => {
+            if (chatInput.value.trim() !== "") handleUserInput();
+        });
+
+        // --- Flow Control ---
+        function startFlow(flowType) {
+            currentFlow = flowType;
+            currentStep = 0;
+            
+            landingView.classList.add('hidden');
+            chatView.classList.remove('hidden');
+            
+            // User message (always show the same)
+            const userQuery = getFlowQuery(flowType);
+            addUserMessage(userQuery);
+            
+            setTimeout(() => processFlow(), 600);
+        }
+
+        function getFlowQuery(flowType) {
+            switch(flowType) {
+                case 'career': return '최재혁의 주요 경력을 요약해줘';
+                case 'project': return 'RAG 및 LLM 프로젝트 보여줘';
+                case 'contact': return '연락처와 기술 스택 알려줘';
+                default: return '최재혁 개발자에 대해 알려줘';
+            }
+        }
+
+        async function processFlow() {
+            switch(currentFlow) {
+                case 'career':
+                    await careerFlow();
+                    break;
+                case 'project':
+                    await projectFlow();
+                    break;
+                case 'contact':
+                    await contactFlow();
+                    break;
+                case 'full':
+                default:
+                    await fullFlow();
+                    break;
+            }
+        }
+
+        // --- Career Flow ---
+        async function careerFlow() {
+            const contentArea = createAIWrapper();
+            
+            // Step 1: Career intro
+            await typeText(contentArea, `**최재혁님의 주요 경력**을 정리해드리겠습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 총 **3개 회사**에서 AI/Data Science 관련 경력을 쌓았습니다.`);
+            
+            // Step 2: Experience cards
+            const expContainer = document.createElement('div');
+            expContainer.className = 'grid gap-3 mt-2 fade-in';
+            resumeData.experience.forEach(exp => {
+                const item = document.createElement('div');
+                item.className = 'flex flex-col md:flex-row md:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100';
+                item.innerHTML = `
+                    <div>
+                        <span class="font-bold text-gray-900 text-lg">${exp.company}</span>
+                        <span class="text-sm text-gray-600 ml-2">${exp.role}</span>
+                        <p class="text-xs text-gray-500 mt-1">${exp.desc}</p>
+                    </div>
+                    <div class="text-sm text-blue-600 font-medium mt-2 md:mt-0 whitespace-nowrap">${exp.period}</div>
+                `;
+                expContainer.appendChild(item);
+            });
+            contentArea.appendChild(expContainer);
+            await wait(500);
+
+            // Step 3: Career Summary
+            await typeText(contentArea, `\n**최재혁 | AI Engineer 주요 경력 요약**\n\n최재혁은 LLM·RAG·시계열 전반을 아우르는 실무 중심의 AI Engineer로,\n\n대규모 데이터 처리부터 모델 학습·평가·서비스화까지 전 과정을 직접 설계·구현해 온 경험을 보유하고 있습니다.`);
+            await wait(800);
+
+            // Step 4: Ask about projects
+            await askQuestion(contentArea, '\n프로젝트도 확인하시겠습니까?', 'showProjects');
+        }
+
+        // --- Project Flow ---
+        async function projectFlow() {
+            const contentArea = createAIWrapper();
+            
+            await typeText(contentArea, `**RAG 및 LLM 관련 프로젝트**를 중심으로 정리해드리겠습니다.\n\n최재혁님은 다양한 AI 프로젝트를 수행했으며, 특히 **LLM Fine-tuning, RAG 시스템 구축, Function Call** 등의 분야에서 전문성을 보유하고 있습니다.`);
+            
+            await showProjects(contentArea);
+            
+            await askQuestion(contentArea, '개인 프로젝트도 확인하시겠습니까?', 'showPersonalProjects');
+        }
+
+        // --- Contact Flow ---
+        async function contactFlow() {
+            const contentArea = createAIWrapper();
+            
+            await typeText(contentArea, `**최재혁님의 연락처 및 기술 스택**입니다.`);
+            
+            // Contact info
+            const contactDiv = document.createElement('div');
+            contactDiv.className = 'bg-gray-900 text-white p-4 rounded-xl mt-3 fade-in shadow-md';
+            contactDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-blue-300"><i class="fa-solid fa-address-card mr-2"></i>연락처</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400"></i> <a href="mailto:${resumeData.contact.email}" class="hover:text-blue-300 transition">${resumeData.contact.email}</a></div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-phone text-gray-400"></i> ${resumeData.contact.phone}</div>
+                    <div class="flex items-center gap-3"><i class="fa-brands fa-github text-gray-400"></i> <a href="https://${resumeData.contact.github}" target="_blank" class="hover:text-blue-300 transition">GitHub</a></div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-blog text-gray-400"></i> <a href="https://${resumeData.contact.blog}" target="_blank" class="hover:text-blue-300 transition">Tistory Blog</a></div>
+                </div>
+            `;
+            contentArea.appendChild(contactDiv);
+            await wait(300);
+
+            // Skills
+            const skillsDiv = document.createElement('div');
+            skillsDiv.className = 'mt-4 fade-in';
+            skillsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-code mr-2"></i>기술 스택</h3>
+                <div class="flex flex-wrap gap-2">
+                    ${resumeData.skills.map(s => `<span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">${s}</span>`).join('')}
+                </div>
+            `;
+            contentArea.appendChild(skillsDiv);
+            await wait(300);
+
+            // Certificates
+            const certDiv = document.createElement('div');
+            certDiv.className = 'mt-4 fade-in';
+            certDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-certificate mr-2"></i>자격증</h3>
+                <div class="grid gap-2">
+                    ${resumeData.certificates.map(c => `
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                            <span class="font-medium text-gray-800">${c.name}</span>
+                            <span class="text-xs text-gray-400">${c.id}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(certDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            await wait(500);
+
+            await askQuestion(contentArea, '주요 경력도 확인하시겠습니까?', 'showCareer');
+        }
+
+        // --- Full Flow ---
+        async function fullFlow() {
+            const contentArea = createAIWrapper();
+            
+            // Intro
+            await typeText(contentArea, resumeData.intro);
+            
+            // Experience summary
+            const expContainer = document.createElement('div');
+            expContainer.className = 'grid gap-3 mt-2 fade-in';
+            resumeData.experience.forEach(exp => {
+                const item = document.createElement('div');
+                item.className = 'flex flex-col md:flex-row md:items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100';
+                item.innerHTML = `
+                    <div>
+                        <span class="font-bold text-gray-900">${exp.company}</span>
+                        <span class="text-sm text-gray-600"> | ${exp.role}</span>
+                    </div>
+                    <div class="text-xs text-gray-400 mt-1 md:mt-0">${exp.period}</div>
+                `;
+                expContainer.appendChild(item);
+            });
+            contentArea.appendChild(expContainer);
+            await wait(500);
+
+            await askQuestion(contentArea, '프로젝트도 확인하시겠습니까?', 'showProjects');
+        }
+
+        // --- Ask Question with Input ---
+        async function askQuestion(contentArea, question, actionOnYes) {
+            await typeText(contentArea, `\n${question}`);
+            
+            pendingAction = actionOnYes;
+            waitingForInput = true;
+            
+            // Show input area
+            disabledInput.classList.add('hidden');
+            chatInputArea.classList.remove('hidden');
+            chatInput.placeholder = '답변을 입력하세요...';
+            chatInput.focus();
+        }
+
+        // --- Handle User Input ---
+        async function handleUserInput() {
+            const userInput = chatInput.value.trim();
+            chatInput.value = '';
+            
+            // Always show "네" as user message
+            addUserMessage('네');
+            
+            waitingForInput = false;
+            chatInputArea.classList.add('hidden');
+            disabledInput.classList.remove('hidden');
+            
+            setTimeout(() => executeAction(pendingAction), 600);
+        }
+
+        async function executeAction(action) {
+            const contentArea = createAIWrapper();
+            
+            switch(action) {
+                case 'showProjects':
+                    await typeText(contentArea, `**주요 프로젝트 목록**입니다.`);
+                    await showProjects(contentArea);
+                    await askQuestion(contentArea, '개인 프로젝트도 확인하시겠습니까?', 'showPersonalProjects');
+                    break;
+                    
+                case 'showPersonalProjects':
+                    await typeText(contentArea, `**개인 프로젝트 및 발표 활동**입니다.`);
+                    await showPersonalProjects(contentArea);
+                    await askQuestion(contentArea, '연락처와 기술 스택도 확인하시겠습니까?', 'showContact');
+                    break;
+                    
+                case 'showContact':
+                    await showContactInfo(contentArea);
+                    await typeText(contentArea, `\n더 궁금한 점이 있으시면 상단의 **Reset** 버튼을 눌러 다시 시작해주세요! 😊`);
+                    break;
+                    
+                case 'showCareer':
+                    await typeText(contentArea, `**주요 경력**입니다.`);
+                    const expContainer = document.createElement('div');
+                    expContainer.className = 'grid gap-3 mt-2 fade-in';
+                    resumeData.experience.forEach(exp => {
+                        const item = document.createElement('div');
+                        item.className = 'flex flex-col md:flex-row md:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100';
+                        item.innerHTML = `
+                            <div>
+                                <span class="font-bold text-gray-900 text-lg">${exp.company}</span>
+                                <span class="text-sm text-gray-600 ml-2">${exp.role}</span>
+                                <p class="text-xs text-gray-500 mt-1">${exp.desc}</p>
+                            </div>
+                            <div class="text-sm text-blue-600 font-medium mt-2 md:mt-0 whitespace-nowrap">${exp.period}</div>
+                        `;
+                        expContainer.appendChild(item);
+                    });
+                    contentArea.appendChild(expContainer);
+                    await wait(500);
+                    await askQuestion(contentArea, '프로젝트도 확인하시겠습니까?', 'showProjects');
+                    break;
+            }
+        }
+
+        // --- Show Projects ---
+        async function showProjects(contentArea) {
+            const projGrid = document.createElement('div');
+            projGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 mt-2 fade-in';
+            
+            resumeData.projects.forEach((proj, idx) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = 'info-card p-4';
+                    const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
+                    
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">${proj.title}</h3>
+                            <span class="text-[10px] text-gray-400 whitespace-nowrap ml-2">${proj.period}</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
+                        <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                    `;
+                    projGrid.appendChild(card);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, idx * 150);
+            });
+            contentArea.appendChild(projGrid);
+            await wait(resumeData.projects.length * 150 + 500);
+        }
+
+        // --- Show Personal Projects ---
+        async function showPersonalProjects(contentArea) {
+            const projGrid = document.createElement('div');
+            projGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 mt-2 fade-in';
+            
+            resumeData.personalProjects.forEach((proj, idx) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = 'info-card p-4';
+                    const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
+                    
+                    card.innerHTML = `
+                        <h3 class="font-bold text-gray-800 text-sm mb-2">${proj.title}</h3>
+                        <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
+                        <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                    `;
+                    projGrid.appendChild(card);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, idx * 150);
+            });
+            contentArea.appendChild(projGrid);
+            await wait(resumeData.personalProjects.length * 150 + 500);
+        }
+
+        // --- Show Contact Info ---
+        async function showContactInfo(contentArea) {
+            await typeText(contentArea, `**연락처 및 기술 스택**입니다.`);
+            
+            const contactDiv = document.createElement('div');
+            contactDiv.className = 'bg-gray-900 text-white p-4 rounded-xl mt-3 fade-in shadow-md';
+            contactDiv.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400"></i> <a href="mailto:${resumeData.contact.email}" class="hover:text-blue-300 transition">${resumeData.contact.email}</a></div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-phone text-gray-400"></i> ${resumeData.contact.phone}</div>
+                    <div class="flex items-center gap-3"><i class="fa-brands fa-github text-gray-400"></i> <a href="https://${resumeData.contact.github}" target="_blank" class="hover:text-blue-300 transition">GitHub</a></div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-blog text-gray-400"></i> <a href="https://${resumeData.contact.blog}" target="_blank" class="hover:text-blue-300 transition">Tistory Blog</a></div>
+                </div>
+            `;
+            contentArea.appendChild(contactDiv);
+            
+            const skillsDiv = document.createElement('div');
+            skillsDiv.className = 'mt-4 fade-in';
+            skillsDiv.innerHTML = `
+                <div class="flex flex-wrap gap-2">
+                    ${resumeData.skills.map(s => `<span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">${s}</span>`).join('')}
+                </div>
+            `;
+            contentArea.appendChild(skillsDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            await wait(300);
+        }
+
+        // --- Helper Functions ---
+        function createAIWrapper() {
+            const aiWrapper = document.createElement('div');
+            aiWrapper.className = 'flex gap-4 fade-in mt-4 items-start max-w-full';
+            aiWrapper.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-[#10a37f] flex-shrink-0 flex items-center justify-center text-white text-sm shadow-sm">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="flex-1 space-y-3 overflow-hidden ai-content-area"></div>
+            `;
+            chatContainer.appendChild(aiWrapper);
+            return aiWrapper.querySelector('.ai-content-area');
+        }
+
+        function addUserMessage(text) {
+            const userMsg = document.createElement('div');
+            userMsg.className = 'flex justify-end fade-in';
+            userMsg.innerHTML = `<div class="user-msg text-sm md:text-base">${text}</div>`;
+            chatContainer.appendChild(userMsg);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function typeText(container, text) {
+            return new Promise(resolve => {
+                const p = document.createElement('p');
+                p.className = 'text-gray-800 leading-relaxed text-sm md:text-base';
+                container.appendChild(p);
+                
+                const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-black">$1</strong>').replace(/\n/g, '<br>');
+                
+                p.innerHTML = `<span class="cursor"></span>`;
+                
+                const words = formattedText.split(" ");
+                let wordIndex = 0;
+
+                const interval = setInterval(() => {
+                    if (wordIndex < words.length) {
+                        const word = words[wordIndex] + " ";
+                        p.innerHTML = p.innerHTML.replace('<span class="cursor"></span>', word + '<span class="cursor"></span>');
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                        wordIndex++;
+                    } else {
+                        clearInterval(interval);
+                        const cursor = p.querySelector('.cursor');
+                        if (cursor) cursor.remove();
+                        resolve();
+                    }
+                }, 40);
+            });
+        }
+
+        function wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
 </body>
-
 </html>
-

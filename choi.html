@@ -463,16 +463,16 @@
             await askQuestion(contentArea, '주요 경력도 확인하시겠습니까?', 'showCareer');
         }
 
-        // --- fullFlow 함수 교체 ---
+        // --- Full Flow ---
         async function fullFlow() {
             const contentArea = createAIWrapper();
             
-            // 1. 인사말
+            // Intro
             await typeText(contentArea, resumeData.intro);
             
-            // 2. 경력 카드
+            // Experience summary
             const expContainer = document.createElement('div');
-            expContainer.className = 'grid gap-3 mt-3 mb-3 fade-in';
+            expContainer.className = 'grid gap-3 mt-2 fade-in';
             resumeData.experience.forEach(exp => {
                 const item = document.createElement('div');
                 item.className = 'flex flex-col md:flex-row md:items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100';
@@ -486,16 +486,13 @@
                 expContainer.appendChild(item);
             });
             contentArea.appendChild(expContainer);
-            await wait(600);
+            await wait(500);
 
-            // 3. 경력 요약 (이제 안 씹히고 잘 나올 겁니다)
-            const summaryText = "**최재혁 | AI Engineer 주요 경력 요약**\n\n최재혁은 LLM·RAG·시계열 전반을 아우르는 실무 중심의 AI Engineer로, 대규모 데이터 처리부터 모델 학습·평가·서비스화까지 전 과정을 직접 설계·구현해 온 경험을 보유하고 있습니다.";
-            await typeText(contentArea, summaryText);
-            
+            // Career Summary
+            await typeText(contentArea, `\n**최재혁 | AI Engineer 주요 경력 요약**\n\n최재혁은 LLM·RAG·시계열 전반을 아우르는 실무 중심의 AI Engineer로,\n\n대규모 데이터 처리부터 모델 학습·평가·서비스화까지 전 과정을 직접 설계·구현해 온 경험을 보유하고 있습니다.`);
             await wait(800);
 
-            // 4. 질문
-            await askQuestion(contentArea, '프로젝트도 확인하시겠습니까?', 'showProjects');
+            await askQuestion(contentArea, '\n프로젝트도 확인하시겠습니까?', 'showProjects');
         }
 
         // --- Ask Question with Input ---
@@ -682,59 +679,32 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
-        // --- 기존 typeText 함수를 이걸로 교체하세요 ---
-        // --- 텍스트 타이핑 효과 함수 (HTML 태그 깨짐 방지 버전) ---
         function typeText(container, text) {
             return new Promise(resolve => {
                 const p = document.createElement('p');
                 p.className = 'text-gray-800 leading-relaxed text-sm md:text-base';
                 container.appendChild(p);
-
-                // 커서 생성
-                const cursor = document.createElement('span');
-                cursor.className = 'cursor';
-                p.appendChild(cursor);
-
-                // 1. Markdown을 HTML로 변환
-                // **굵게** -> Tailwind 클래스가 적용된 strong 태그
-                // \n -> br 태그
-                const htmlContent = text
-                    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-black">$1</strong>')
-                    .replace(/\n/g, '<br>');
-
-                let i = 0;
                 
-                // 2. 한 글자씩 타이핑 (HTML 태그는 통째로 추가)
+                const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-black">$1</strong>').replace(/\n/g, '<br>');
+                
+                p.innerHTML = `<span class="cursor"></span>`;
+                
+                const words = formattedText.split(" ");
+                let wordIndex = 0;
+
                 const interval = setInterval(() => {
-                    if (i >= htmlContent.length) {
-                        clearInterval(interval);
-                        cursor.remove(); // 타이핑 끝나면 커서 제거
-                        resolve();
-                        return;
-                    }
-
-                    const char = htmlContent[i];
-
-                    // 태그의 시작('<')을 만나면 닫는 괄호('>')까지 찾아서 한 번에 추가
-                    if (char === '<') {
-                        const closeIdx = htmlContent.indexOf('>', i);
-                        if (closeIdx !== -1) {
-                            const tag = htmlContent.substring(i, closeIdx + 1);
-                            cursor.insertAdjacentHTML('beforebegin', tag);
-                            i = closeIdx + 1; // 인덱스를 태그 끝 다음으로 이동
-                        } else {
-                            i++; // 혹시 닫는 태그가 없으면 그냥 진행
-                        }
+                    if (wordIndex < words.length) {
+                        const word = words[wordIndex] + " ";
+                        p.innerHTML = p.innerHTML.replace('<span class="cursor"></span>', word + '<span class="cursor"></span>');
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                        wordIndex++;
                     } else {
-                        // 일반 텍스트는 한 글자씩 추가
-                        cursor.insertAdjacentHTML('beforebegin', char);
-                        i++;
+                        clearInterval(interval);
+                        const cursor = p.querySelector('.cursor');
+                        if (cursor) cursor.remove();
+                        resolve();
                     }
-
-                    // 스크롤을 항상 하단으로 유지
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-
-                }, 20); // 타이핑 속도 (숫자가 작을수록 빠름, 15~30 추천)
+                }, 40);
             });
         }
 
