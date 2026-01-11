@@ -65,6 +65,64 @@
             background: #fff;
         }
 
+        /* Thinking 패널 */
+        .thinking-panel {
+            background: #f7f7f8;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .thinking-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .thinking-header:hover {
+            background: #ececec;
+        }
+        .thinking-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+        }
+        .thinking-spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #ccc;
+            border-top-color: #666;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .thinking-content {
+            padding: 0 14px 12px;
+            font-size: 12px;
+            color: #888;
+            line-height: 1.6;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .thinking-content.collapsed {
+            display: none;
+        }
+        .thinking-line {
+            padding: 2px 0;
+            opacity: 0;
+            animation: fadeInLine 0.3s forwards;
+        }
+        @keyframes fadeInLine {
+            to { opacity: 1; }
+        }
+
         /* 사이드바 */
         .sidebar {
             width: 260px;
@@ -106,9 +164,67 @@
                 transform: translateX(0);
             }
         }
+        /* 사이드바 접기 */
+        .sidebar.collapsed {
+            width: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .sidebar.collapsed .sidebar-content {
+            display: none;
+        }
+        .sidebar.collapsed .sidebar-header {
+            display: none;
+        }
+        /* 사이드바 열기 버튼 (접혔을 때만 보임) */
+        .sidebar-open-btn {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 40;
+            width: 36px;
+            height: 36px;
+            background: #171717;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #ececec;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .sidebar-open-btn:hover {
+            background: #2a2a2a;
+        }
+        .sidebar-open-btn.visible {
+            display: flex;
+        }
+        .sidebar-toggle-btn {
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            color: #ececec;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+        .sidebar-toggle-btn:hover {
+            background: #2a2a2a;
+        }
     </style>
 </head>
 <body class="h-screen flex overflow-hidden">
+    <!-- Sidebar Open Button (접혔을 때만 보임) -->
+    <button id="sidebar-open-btn" class="sidebar-open-btn" title="사이드바 열기">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
     <!-- Mobile Menu Toggle -->
     <button id="mobile-menu-btn" class="md:hidden fixed top-4 left-4 z-50 w-10 h-10 bg-gray-800 text-white rounded-lg flex items-center justify-center">
         <i class="fa-solid fa-bars"></i>
@@ -116,15 +232,17 @@
 
     <!-- Sidebar -->
     <aside id="sidebar" class="sidebar flex flex-col h-full">
-        <div class="p-3">
-            <a href="index.html" class="sidebar-btn">
-                <i class="fa-solid fa-plus"></i>
-                <span>New chat</span>
+        <div class="sidebar-header p-2 flex items-center justify-between">
+            <button id="sidebar-toggle" class="sidebar-toggle-btn" title="사이드바 접기">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <a href="index.html" class="sidebar-toggle-btn" title="New chat">
+                <i class="fa-regular fa-pen-to-square"></i>
             </a>
         </div>
         
         <!-- 메인화면용 컨텐츠 -->
-        <div id="sidebar-main" class="flex-1 overflow-y-auto px-3">
+        <div id="sidebar-main" class="sidebar-content flex-1 overflow-y-auto px-3">
             <div class="text-xs text-gray-500 px-3 py-2 font-medium">🎯 2026년 목표</div>
             <div class="space-y-1">
                 <div class="sidebar-btn text-sm">
@@ -159,7 +277,7 @@
         </div>
 
         <!-- 채팅화면용 네비게이션 (동적 생성) -->
-        <div id="sidebar-chat" class="flex-1 overflow-y-auto px-3 hidden">
+        <div id="sidebar-chat" class="sidebar-content flex-1 overflow-y-auto px-3 hidden">
             <div class="text-xs text-gray-500 px-3 py-2 font-medium">💬 현재 대화</div>
             <div id="nav-buttons" class="space-y-1">
                 <!-- 동적으로 버튼 추가됨 -->
@@ -167,7 +285,7 @@
         </div>
 
         <!-- 프로필 섹션 -->
-        <div class="p-3 border-t border-gray-700">
+        <div class="sidebar-content p-3 border-t border-gray-700">
             <a href="https://www.linkedin.com/in/choijh0119" target="_blank" class="sidebar-btn hover:bg-blue-900/30">
                 <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">최</div>
                 <span class="flex-1">Choi Jhyeok</span>
@@ -437,9 +555,23 @@
         const sidebarMain = document.getElementById('sidebar-main');
         const sidebarChat = document.getElementById('sidebar-chat');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarOpenBtn = document.getElementById('sidebar-open-btn');
 
         mobileMenuBtn.addEventListener('click', () => {
             sidebar.classList.toggle('open');
+        });
+
+        // 사이드바 접기
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.add('collapsed');
+            sidebarOpenBtn.classList.add('visible');
+        });
+
+        // 사이드바 열기
+        sidebarOpenBtn.addEventListener('click', () => {
+            sidebar.classList.remove('collapsed');
+            sidebarOpenBtn.classList.remove('visible');
         });
 
         function switchSidebar(mode) {
@@ -541,6 +673,15 @@
             contentArea.id = 'section-career';
             addNavButton('career', 'fa-briefcase', 'text-blue-400', '주요 경력');
             
+            // Thinking
+            await showThinking(contentArea, [
+                '최재혁 경력 데이터 검색 중...',
+                'KT, AIFactory, GSITM 재직 이력 확인',
+                'AI Engineer → Data Scientist 경력 분석',
+                'LLM, RAG, CV, 시계열 프로젝트 경험 정리',
+                '경력 요약 생성 중...'
+            ]);
+            
             // Step 1: Career intro
             await typeText(contentArea, `**최재혁님의 주요 경력**을 정리해드리겠습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 총 **3개 회사**에서 AI/Data Science 관련 경력을 쌓았습니다.`);
             
@@ -577,6 +718,15 @@
             contentArea.id = 'section-project';
             addNavButton('project', 'fa-robot', 'text-purple-400', '주요 프로젝트');
             
+            // Thinking
+            await showThinking(contentArea, [
+                'RAG 및 LLM 프로젝트 검색 중...',
+                'VectorDB 구축 경험 확인',
+                'LLM Fine-tuning 프로젝트 분석',
+                'Function Call, RAG 파이프라인 정리',
+                '프로젝트 목록 생성 중...'
+            ]);
+            
             await typeText(contentArea, `**RAG 및 LLM 관련 프로젝트**를 중심으로 정리해드리겠습니다.\n\n최재혁님은 다양한 AI 프로젝트를 수행했으며, 특히 **LLM Fine-tuning, RAG 시스템 구축, Function Call** 등의 분야에서 전문성을 보유하고 있습니다.`);
             
             await showProjects(contentArea);
@@ -589,6 +739,14 @@
             const contentArea = createAIWrapper();
             contentArea.id = 'section-contact';
             addNavButton('contact', 'fa-address-card', 'text-orange-400', '연락처 & Skills');
+            
+            // Thinking
+            await showThinking(contentArea, [
+                '연락처 정보 검색 중...',
+                '기술 스택 분석: Python, LangChain, RAG...',
+                '자격증 정보 확인',
+                '수상 경력 정리 중...'
+            ]);
             
             await typeText(contentArea, `**최재혁님의 연락처 및 기술 스택**입니다.`);
             
@@ -666,6 +824,16 @@
             contentArea.id = 'section-intro';
             addNavButton('intro', 'fa-user', 'text-cyan-400', '소개');
             
+            // Thinking
+            await showThinking(contentArea, [
+                '최재혁 개발자 정보 검색 중...',
+                '최재혁은 AI Engineer로 KT에 재직 중...',
+                'CV, LLM, Time-Series 다양한 도메인 경험 확인',
+                'RAG 및 검색 증강 생성 기술 전문성 분석',
+                'AIFactory, GSITM 이전 경력 정리',
+                '프로필 요약 생성 중...'
+            ]);
+            
             // 1. 인사말
             await typeText(contentArea, resumeData.intro);
             
@@ -738,6 +906,16 @@
                 case 'showProjects':
                     contentArea.id = 'section-project';
                     addNavButton('project', 'fa-robot', 'text-purple-400', '주요 프로젝트');
+                    
+                    // Thinking
+                    await showThinking(contentArea, [
+                        '프로젝트 데이터 검색 중...',
+                        'RAG 시스템 구축 프로젝트 확인',
+                        'LLM Fine-tuning 경험 분석',
+                        'Docker 기반 MLOps 파이프라인 정리',
+                        '핵심 역량 요약 생성 중...'
+                    ]);
+                    
                     await typeText(contentArea, `**주요 프로젝트 목록**입니다.`);
                     await showProjects(contentArea);
                     await typeText(contentArea, `\n**프로젝트 기반 핵심 역량**\n\n1. **LLM & RAG 전문성**: QLora Fine-tuning, Ragas 평가, VectorDB 구축 등 LLM 전 주기 경험\n\n2. **MLOps 설계 능력**: Docker 기반 자동화 파이프라인, Task Scheduler 연동으로 실무 배포 경험\n\n3. **CV & 시계열 다양성**: Object Detection, Instance Segmentation, Prophet 등 다양한 도메인 경험\n\n4. **대회 설계 & 평가 능력**: 10개 이상의 AI 경진대회 문제 출제 및 평가 시스템 설계`);
@@ -748,6 +926,16 @@
                 case 'showPersonalProjects':
                     contentArea.id = 'section-personal';
                     addNavButton('personal', 'fa-laptop-code', 'text-green-400', '개인 프로젝트');
+                    
+                    // Thinking
+                    await showThinking(contentArea, [
+                        '개인 프로젝트 검색 중...',
+                        'LangChain KR 밋업 발표 이력 확인',
+                        'YouTube 튜토리얼 제작 활동 분석',
+                        'Gemma 비서, 점메추 챗봇 등 사이드 프로젝트 정리',
+                        '차별화 포인트 생성 중...'
+                    ]);
+                    
                     await typeText(contentArea, `**개인 프로젝트 및 발표 활동**입니다.`);
                     await showPersonalProjects(contentArea);
                     await typeText(contentArea, `\n**개인 프로젝트 기반 차별화 포인트**\n\n1. **기술 공유 & 커뮤니티 기여**: LangChain KR 밋업 발표, YouTube 튜토리얼 제작 등 적극적인 지식 공유\n\n2. **실생활 문제 해결 능력**: Gemma 비서(카카오톡 연동), 점메추 챗봇 등 실용적인 AI 서비스 개발\n\n3. **자기주도 학습**: 업무 외 시간에도 지속적으로 신기술 학습 및 프로젝트화\n\n4. **End-to-End 구현 능력**: 모델 학습부터 Gradio/Streamlit 배포까지 전 과정 독립 수행`);
@@ -758,6 +946,15 @@
                 case 'showContact':
                     contentArea.id = 'section-contact';
                     addNavButton('contact', 'fa-address-card', 'text-orange-400', '연락처 & Skills');
+                    
+                    // Thinking
+                    await showThinking(contentArea, [
+                        '연락처 정보 검색 중...',
+                        '기술 스택 분석: Python, LangChain, RAG...',
+                        '자격증 정보 확인',
+                        '수상 경력 정리 중...'
+                    ]);
+                    
                     await showContactInfo(contentArea);
                     await typeText(contentArea, `\n더 궁금한 점이 있으시면 상단의 **Reset** 버튼을 눌러 다시 시작해주세요! 😊`);
                     break;
@@ -765,6 +962,15 @@
                 case 'showCareer':
                     contentArea.id = 'section-career';
                     addNavButton('career', 'fa-briefcase', 'text-blue-400', '주요 경력');
+                    
+                    // Thinking
+                    await showThinking(contentArea, [
+                        '경력 데이터 검색 중...',
+                        'KT AI Engineer 재직 정보 확인',
+                        'AIFactory, GSITM 이전 경력 분석',
+                        '경력 카드 생성 중...'
+                    ]);
+                    
                     await typeText(contentArea, `**주요 경력**입니다.`);
                     const expContainer = document.createElement('div');
                     expContainer.className = 'grid gap-3 mt-2 fade-in';
@@ -921,6 +1127,63 @@
             `;
             chatContainer.appendChild(aiWrapper);
             return aiWrapper.querySelector('.ai-content-area');
+        }
+
+        // --- Thinking Panel ---
+        async function showThinking(contentArea, thinkingSteps) {
+            const panel = document.createElement('div');
+            panel.className = 'thinking-panel';
+            
+            const header = document.createElement('div');
+            header.className = 'thinking-header';
+            header.innerHTML = `
+                <div class="thinking-title">
+                    <div class="thinking-spinner"></div>
+                    <span>생각하는 중...</span>
+                </div>
+                <i class="fa-solid fa-chevron-down text-gray-400 text-xs"></i>
+            `;
+            
+            const content = document.createElement('div');
+            content.className = 'thinking-content';
+            
+            panel.appendChild(header);
+            panel.appendChild(content);
+            contentArea.appendChild(panel);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // 토글 기능
+            header.addEventListener('click', () => {
+                content.classList.toggle('collapsed');
+                const icon = header.querySelector('.fa-chevron-down, .fa-chevron-up');
+                icon.className = content.classList.contains('collapsed') 
+                    ? 'fa-solid fa-chevron-up text-gray-400 text-xs'
+                    : 'fa-solid fa-chevron-down text-gray-400 text-xs';
+            });
+            
+            // 단계별 thinking 표시
+            for (let i = 0; i < thinkingSteps.length; i++) {
+                const line = document.createElement('div');
+                line.className = 'thinking-line';
+                line.textContent = thinkingSteps[i];
+                content.appendChild(line);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                await wait(400 + Math.random() * 300);
+            }
+            
+            // 완료 표시
+            await wait(300);
+            header.innerHTML = `
+                <div class="thinking-title">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    <span>생각 완료</span>
+                    <span class="text-xs text-gray-400">${thinkingSteps.length}단계</span>
+                </div>
+                <i class="fa-solid fa-chevron-up text-gray-400 text-xs"></i>
+            `;
+            content.classList.add('collapsed');
+            
+            await wait(200);
         }
 
         function addUserMessage(text) {
