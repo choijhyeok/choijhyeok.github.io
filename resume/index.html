@@ -36,17 +36,6 @@
             margin-bottom: 1rem;
         }
         
-        .tag {
-            display: inline-block;
-            padding: 0.125rem 0.5rem;
-            background: #f1f5f9;
-            color: #475569;
-            font-size: 0.7rem;
-            border-radius: 4px;
-            margin-right: 0.25rem;
-            margin-bottom: 0.25rem;
-        }
-        
         .project-card {
             border-left: 3px solid #3b82f6;
             padding-left: 1rem;
@@ -57,11 +46,21 @@
             border-left-color: #ef4444;
         }
         
+        .personal-project {
+            border-left-color: #10b981;
+        }
+        
+        .achievement-item {
+            position: relative;
+            padding-left: 1rem;
+        }
+        
         .achievement-item::before {
             content: "•";
             color: #3b82f6;
             font-weight: bold;
-            margin-right: 0.5rem;
+            position: absolute;
+            left: 0;
         }
         
         @media print {
@@ -89,17 +88,17 @@
             <p class="text-lg text-blue-600 font-medium mb-4">AI Engineer</p>
             
             <div class="flex flex-wrap gap-4 text-sm text-gray-600">
+                <span class="flex items-center gap-2">
+                    <i class="fa-solid fa-location-dot"></i> Seoul, South Korea
+                </span>
                 <a href="mailto:wowogur12@naver.com" class="flex items-center gap-2 hover:text-blue-600">
                     <i class="fa-solid fa-envelope"></i> wowogur12@naver.com
                 </a>
-                <span class="flex items-center gap-2">
-                    <i class="fa-solid fa-phone"></i> +82 10-4479-6775
-                </span>
                 <a href="https://github.com/choijhyeok" target="_blank" class="flex items-center gap-2 hover:text-blue-600">
                     <i class="fa-brands fa-github"></i> github.com/choijhyeok
                 </a>
-                <a href="https://cjhyeok.tistory.com" target="_blank" class="flex items-center gap-2 hover:text-blue-600">
-                    <i class="fa-solid fa-blog"></i> cjhyeok.tistory.com
+                <a href="https://linkedin.com/in/choijh0119" target="_blank" class="flex items-center gap-2 hover:text-blue-600">
+                    <i class="fa-brands fa-linkedin"></i> linkedin.com/in/choijh0119
                 </a>
             </div>
         </header>
@@ -108,317 +107,276 @@
         <section class="mb-8">
             <h2 class="section-title">Profile</h2>
             <p class="text-sm text-gray-700 leading-relaxed">
-                AI Engineer specializing in <strong>LLM, RAG, Agentic AI, and large-scale document processing pipelines</strong>. 
-                Designs and implements <strong>end-to-end Generative AI systems</strong> with a focus on real-world business scenarios and production environments.
-                Currently at <strong>KT</strong>, leading multiple <strong>Enterprise GenAI PoC projects</strong> for legal, financial, media, and global clients.
+                AI Engineer specializing in <strong>LLMs, RAG, Agentic AI, and large-scale document processing pipelines</strong>. 
+                Strong experience in designing and implementing <strong>end-to-end generative AI systems</strong>, 
+                from PoC development to real-world, production-oriented scenarios.
             </p>
         </section>
 
-        <!-- Experience -->
+        <!-- Work Experience -->
         <section class="mb-8">
-            <h2 class="section-title">Experience</h2>
+            <h2 class="section-title">Work Experience</h2>
             
             <div class="mb-6">
-                <div class="flex justify-between items-start mb-1">
+                <div class="flex justify-between items-start mb-2">
                     <div>
-                        <span class="font-semibold text-gray-900">KT</span>
+                        <span class="font-semibold text-gray-900">AI Engineer</span>
                         <span class="text-gray-500 mx-2">|</span>
-                        <span class="text-gray-700">AI Engineer</span>
+                        <span class="text-gray-700">KT</span>
+                        <span class="text-gray-400 text-sm ml-2">Seoul, South Korea</span>
                     </div>
-                    <span class="text-sm text-gray-500">2024.07 – Present</span>
+                    <span class="text-sm text-gray-500">Jul 2024 — Present</span>
                 </div>
-                <p class="text-sm text-gray-600">
-                    Enterprise GenAI PoC for legal, financial, media, and global clients. Design complex Agent systems including RAG, Web Search Agent, and Realtime Voice Agent. End-to-end implementation on Azure infrastructure.
-                </p>
+                <ul class="text-sm text-gray-600 space-y-1">
+                    <li class="achievement-item">Delivered multiple enterprise-grade GenAI PoCs for legal, finance, media, and global clients</li>
+                    <li class="achievement-item">Designed complex Agent-based systems, including RAG, Web Search Agents, and Realtime Voice Agents</li>
+                    <li class="achievement-item">Built end-to-end solutions on Azure, from data processing to demo web deployment</li>
+                </ul>
             </div>
             
             <div class="mb-6">
-                <div class="flex justify-between items-start mb-1">
+                <div class="flex justify-between items-start mb-2">
                     <div>
-                        <span class="font-semibold text-gray-900">AIFactory</span>
+                        <span class="font-semibold text-gray-900">Data Scientist</span>
                         <span class="text-gray-500 mx-2">|</span>
-                        <span class="text-gray-700">Data Scientist</span>
+                        <span class="text-gray-700">AIFactory</span>
+                        <span class="text-gray-400 text-sm ml-2">Seoul, South Korea</span>
                     </div>
-                    <span class="text-sm text-gray-500">2022.04 – 2024.05</span>
+                    <span class="text-sm text-gray-500">Apr 2022 — May 2024</span>
                 </div>
-                <p class="text-sm text-gray-600">
-                    LLM, CV, and time-series based AI competition design and corporate PoC validation. LLM Fine-tuning, RAG system development and performance evaluation (RAGAS).
-                </p>
+                <ul class="text-sm text-gray-600 space-y-1">
+                    <li class="achievement-item">Designed and validated AI competitions and enterprise PoCs across LLM, CV, and time-series domains</li>
+                    <li class="achievement-item">Built LLM fine-tuning pipelines, RAG systems, and performance evaluation workflows (RAGAS)</li>
+                    <li class="achievement-item">Implemented large-scale data preprocessing and automated inference pipelines</li>
+                </ul>
             </div>
             
             <div class="mb-2">
-                <div class="flex justify-between items-start mb-1">
+                <div class="flex justify-between items-start mb-2">
                     <div>
-                        <span class="font-semibold text-gray-900">GSITM</span>
+                        <span class="font-semibold text-gray-900">Data Scientist</span>
                         <span class="text-gray-500 mx-2">|</span>
-                        <span class="text-gray-700">Data Scientist</span>
+                        <span class="text-gray-700">GSITM</span>
+                        <span class="text-gray-400 text-sm ml-2">Seoul, South Korea</span>
                     </div>
-                    <span class="text-sm text-gray-500">2021.07 – 2022.01</span>
+                    <span class="text-sm text-gray-500">Jul 2021 — Jan 2022</span>
                 </div>
-                <p class="text-sm text-gray-600">
-                    Retail and logistics domain prediction and optimization model development. Demand forecasting and matching algorithms for business applications.
-                </p>
+                <ul class="text-sm text-gray-600 space-y-1">
+                    <li class="achievement-item">Developed forecasting and optimization models for retail and logistics domains</li>
+                    <li class="achievement-item">Implemented demand forecasting and matching algorithms for real-world business operations</li>
+                </ul>
             </div>
         </section>
 
-        <!-- KT Key Projects -->
+        <!-- Key Projects (KT) -->
         <section class="mb-8">
-            <h2 class="section-title">KT Key Projects</h2>
+            <h2 class="section-title">Key Projects (KT)</h2>
             
             <div class="project-card kt-project">
                 <div class="flex justify-between items-start mb-1">
-                    <h3 class="font-semibold text-gray-900 text-sm">Large-scale Insurance Policy RAG Pipeline (Meritz)</h3>
-                    <span class="text-xs text-gray-500">2025.05 – 2025.12</span>
+                    <h3 class="font-semibold text-gray-900 text-sm">AI Engineer, Large-scale Insurance Policy RAG Pipeline (Meritz)</h3>
+                    <span class="text-xs text-gray-500">May 2025 — Dec 2025</span>
                 </div>
-                <p class="text-xs text-gray-600 mb-2">
-                    Designed and implemented large-scale RAG pipeline for ~280,000 insurance policy documents.
-                </p>
-                <div class="flex flex-wrap gap-1 mb-2">
-                    <span class="tag">RAG</span>
-                    <span class="tag">Azure Durable Functions</span>
-                    <span class="tag">PyMuPDF</span>
-                    <span class="tag">Azure AI Search</span>
-                </div>
-                <div class="text-xs text-gray-600 space-y-1">
-                    <p class="achievement-item">End-to-end indexing automation with Parent-Child RAG architecture</p>
-                    <p class="achievement-item">Custom Chunker and Table Stable Extract using PyMuPDF</p>
-                    <p class="achievement-item">Multi-source Loader (PDF, PPT, Excel, JSON) development</p>
-                </div>
+                <ul class="text-xs text-gray-600 space-y-1 mt-2">
+                    <li class="achievement-item">Designed and implemented a large-scale RAG pipeline for 280,000 insurance policy documents</li>
+                    <li class="achievement-item">Built an end-to-end indexing workflow using Azure Durable Functions</li>
+                    <li class="achievement-item">Developed custom loaders for PDF, PPT, Excel, and JSON sources</li>
+                    <li class="achievement-item">Implemented table-stable extraction and custom chunking logic using PyMuPDF</li>
+                    <li class="achievement-item">Applied a Parent–Child RAG architecture on Azure AI Search</li>
+                </ul>
             </div>
             
             <div class="project-card kt-project">
                 <div class="flex justify-between items-start mb-1">
-                    <h3 class="font-semibold text-gray-900 text-sm">AI Branch – Realtime Voice AI Banker (Shinhan Bank)</h3>
-                    <span class="text-xs text-gray-500">2025.01 – 2025.04</span>
+                    <h3 class="font-semibold text-gray-900 text-sm">AI Engineer, AI Branch – Realtime Voice-based AI Banker (Shinhan Bank)</h3>
+                    <span class="text-xs text-gray-500">Jan 2025 — Apr 2025</span>
                 </div>
-                <p class="text-xs text-gray-600 mb-2">
-                    GPT-4o-Realtime API based voice input → real-time inference → voice response AI banker PoC.
-                </p>
-                <div class="flex flex-wrap gap-1 mb-2">
-                    <span class="tag">GPT-4o-Realtime</span>
-                    <span class="tag">WebSocket</span>
-                    <span class="tag">Function Calling</span>
-                    <span class="tag">Azure Container App</span>
-                </div>
-                <div class="text-xs text-gray-600 space-y-1">
-                    <p class="achievement-item">Real-time voice streaming pipeline implementation</p>
-                    <p class="achievement-item">Loan product recommendation Agent with Function Calling</p>
-                </div>
+                <ul class="text-xs text-gray-600 space-y-1 mt-2">
+                    <li class="achievement-item">Built a voice-to-voice AI banker PoC using the GPT-4o-Realtime API</li>
+                    <li class="achievement-item">Implemented WebSocket-based real-time streaming pipelines</li>
+                    <li class="achievement-item">Developed loan recommendation agents using Function Calling</li>
+                    <li class="achievement-item">Integrated Azure AI Search for financial product retrieval and reasoning</li>
+                    <li class="achievement-item">Deployed the full system on Azure Container Apps</li>
+                </ul>
             </div>
             
             <div class="project-card kt-project">
                 <div class="flex justify-between items-start mb-1">
-                    <h3 class="font-semibold text-gray-900 text-sm">Web Search Agent (Giga Genie / Thailand JTS)</h3>
-                    <span class="text-xs text-gray-500">2024.09 – 2025.03</span>
+                    <h3 class="font-semibold text-gray-900 text-sm">AI Engineer, Web Search Agent (Giga Genie / JTS Thailand)</h3>
+                    <span class="text-xs text-gray-500">Sep 2024 — Mar 2025</span>
                 </div>
-                <p class="text-xs text-gray-600 mb-2">
-                    Multiple Bing Search based Web Search Agent PoC development with hallucination reduction.
-                </p>
-                <div class="flex flex-wrap gap-1 mb-2">
-                    <span class="tag">LangGraph</span>
-                    <span class="tag">Bing Search</span>
-                    <span class="tag">Self-RAG</span>
-                    <span class="tag">Corrective-RAG</span>
-                </div>
-                <div class="text-xs text-gray-600 space-y-1">
-                    <p class="achievement-item">Average response time under 10 seconds, max accuracy 94%</p>
-                    <p class="achievement-item">LangGraph-based Agent Workflow design</p>
-                </div>
+                <ul class="text-xs text-gray-600 space-y-1 mt-2">
+                    <li class="achievement-item">Developed multiple Web Search Agent PoCs based on Bing Search</li>
+                    <li class="achievement-item">Designed agent workflows using LangGraph</li>
+                    <li class="achievement-item">Reduced hallucinations using Self-RAG and Corrective-RAG</li>
+                    <li class="achievement-item">Achieved up to 94% answer accuracy with sub-10s response latency</li>
+                    <li class="achievement-item">Built demo applications using Gradio</li>
+                </ul>
             </div>
             
             <div class="project-card kt-project">
                 <div class="flex justify-between items-start mb-1">
-                    <h3 class="font-semibold text-gray-900 text-sm">Legal RAG System PoC (Korea Forest Service)</h3>
-                    <span class="text-xs text-gray-500">2024.08 – 2024.12</span>
+                    <h3 class="font-semibold text-gray-900 text-sm">AI Engineer, Legal RAG System PoC (Korea Forest Service)</h3>
+                    <span class="text-xs text-gray-500">Aug 2024 — Dec 2024</span>
                 </div>
-                <p class="text-xs text-gray-600 mb-2">
-                    RAG system for national property-related laws and precedents.
-                </p>
-                <div class="flex flex-wrap gap-1 mb-2">
-                    <span class="tag">LLM Fine-tuning</span>
-                    <span class="tag">RAG</span>
-                    <span class="tag">RAGAS</span>
-                    <span class="tag">pdf.js</span>
-                </div>
-                <div class="text-xs text-gray-600 space-y-1">
-                    <p class="achievement-item">RAGAS overall score 90%+ (Context Precision/Recall/Faithfulness)</p>
-                    <p class="achievement-item">Top-5 retrieval accuracy 93.51%, source highlighting with pdf.js</p>
-                </div>
+                <ul class="text-xs text-gray-600 space-y-1 mt-2">
+                    <li class="achievement-item">Built a legal-domain RAG system PoC for statutes and legal precedents</li>
+                    <li class="achievement-item">Designed a combined LLM fine-tuning + RAG architecture</li>
+                    <li class="achievement-item">Achieved Top-5 retrieval accuracy of 93.51%</li>
+                    <li class="achievement-item">Evaluated performance with RAGAS (Context Precision, Recall, Faithfulness > 90)</li>
+                    <li class="achievement-item">Developed a demo web using Gradio and pdf.js with source highlighting</li>
+                </ul>
             </div>
         </section>
 
-        <!-- Selected Projects -->
+        <!-- Selected Projects (AIFactory) -->
         <section class="mb-8">
-            <h2 class="section-title">Selected Projects</h2>
+            <h2 class="section-title">Selected Projects (AIFactory)</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="project-card">
-                    <h3 class="font-semibold text-gray-900 text-sm mb-1">LLM Fine-tuning & RAG Evaluation</h3>
-                    <p class="text-xs text-gray-500 mb-2">AIFactory</p>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="tag">QLoRA</span>
-                        <span class="tag">DeepSpeed</span>
-                        <span class="tag">RAGAS</span>
-                    </div>
-                    <p class="text-xs text-gray-600">LLaMA2, Gemma, EEVE model Fine-tuning and RAG pipeline development</p>
+                    <h3 class="font-semibold text-gray-900 text-sm mb-2">Data Scientist, LLM Fine-tuning and RAG Evaluation</h3>
+                    <ul class="text-xs text-gray-600 space-y-1">
+                        <li class="achievement-item">Fine-tuned LLaMA2, Gemma, and EEVE models using QLoRA and DeepSpeed</li>
+                        <li class="achievement-item">Built RAG pipelines and evaluated performance using RAGAS</li>
+                        <li class="achievement-item">Developed crawling pipelines for external data collection</li>
+                    </ul>
                 </div>
                 
                 <div class="project-card">
-                    <h3 class="font-semibold text-gray-900 text-sm mb-1">AI Competition Design (CV / Time-Series)</h3>
-                    <p class="text-xs text-gray-500 mb-2">AIFactory</p>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="tag">Object Detection</span>
-                        <span class="tag">Segmentation</span>
-                        <span class="tag">COCO</span>
-                    </div>
-                    <p class="text-xs text-gray-600">Competition design for multiple enterprises and institutions</p>
-                </div>
-                
-                <div class="project-card">
-                    <h3 class="font-semibold text-gray-900 text-sm mb-1">Retail Sales Forecasting System</h3>
-                    <p class="text-xs text-gray-500 mb-2">GSITM</p>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="tag">Prophet</span>
-                        <span class="tag">Time-Series</span>
-                        <span class="tag">Forecasting</span>
-                    </div>
-                    <p class="text-xs text-gray-600">Meta Prophet-based product sales forecasting model</p>
-                </div>
-                
-                <div class="project-card">
-                    <h3 class="font-semibold text-gray-900 text-sm mb-1">Genetic Algorithm Logistics Optimization</h3>
-                    <p class="text-xs text-gray-500 mb-2">GSITM</p>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="tag">DEAP</span>
-                        <span class="tag">Genetic Algorithm</span>
-                        <span class="tag">Optimization</span>
-                    </div>
-                    <p class="text-xs text-gray-600">Optimal product combination considering load weight and price</p>
+                    <h3 class="font-semibold text-gray-900 text-sm mb-2">Data Scientist, AI Competition Design (CV / Time-Series)</h3>
+                    <ul class="text-xs text-gray-600 space-y-1">
+                        <li class="achievement-item">Designed challenges for Object Detection, Segmentation, and Pose Estimation</li>
+                        <li class="achievement-item">Built datasets in COCO format and defined evaluation metrics (Macro F1, IoU, MAE)</li>
+                        <li class="achievement-item">Led competition design and validation for multiple enterprise and public clients</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
-        <!-- Personal Projects & Open Source -->
+        <!-- Selected Projects (GSITM) -->
         <section class="mb-8">
-            <h2 class="section-title">Personal Projects & Open Source</h2>
+            <h2 class="section-title">Selected Projects (GSITM)</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="project-card" style="border-left-color: #10b981;">
-                    <h3 class="font-semibold text-gray-900 text-sm mb-1">Korean HWP/HWPX Document Parser</h3>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="tag">Python</span>
-                        <span class="tag">HWP</span>
-                        <span class="tag">Open Source</span>
-                    </div>
-                    <p class="text-xs text-gray-600">Python-based HWP/HWPX parsing library for RAG pipelines</p>
-                    <a href="https://github.com/choijhyeok/python-hwplib" target="_blank" class="text-xs text-blue-600 hover:underline">github.com/choijhyeok/python-hwplib</a>
+                <div class="project-card">
+                    <h3 class="font-semibold text-gray-900 text-sm mb-2">Data Scientist, Retail Sales Forecasting System</h3>
+                    <ul class="text-xs text-gray-600 space-y-1">
+                        <li class="achievement-item">Preprocessed convenience store sales data with seasonality analysis</li>
+                        <li class="achievement-item">Built Prophet-based sales forecasting models</li>
+                        <li class="achievement-item">Proposed inventory optimization strategies based on forecast results</li>
+                    </ul>
                 </div>
                 
-                <div class="project-card" style="border-left-color: #10b981;">
-                    <h3 class="font-semibold text-gray-900 text-sm mb-1">Gemma Function Calling Assistant</h3>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="tag">Gemma-7b</span>
-                        <span class="tag">SFT</span>
-                        <span class="tag">KakaoTalk</span>
-                    </div>
-                    <p class="text-xs text-gray-600">Personal AI assistant with Function Calling via KakaoTalk</p>
+                <div class="project-card">
+                    <h3 class="font-semibold text-gray-900 text-sm mb-2">Data Scientist, Genetic Algorithm-based Logistics Matching</h3>
+                    <ul class="text-xs text-gray-600 space-y-1">
+                        <li class="achievement-item">Implemented optimization algorithms using DEAP</li>
+                        <li class="achievement-item">Developed matching logic to maximize profit under weight and cost constraints</li>
+                        <li class="achievement-item">Improved logistics efficiency and operational decision-making</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Personal Projects & Talks -->
+        <section class="mb-8">
+            <h2 class="section-title">Personal Projects & Talks</h2>
+            
+            <div class="grid grid-cols-1 gap-4">
+                <div class="project-card personal-project">
+                    <h3 class="font-semibold text-gray-900 text-sm mb-2">Open Source Maintainer, Korean HWP/HWPX Document Parsing Open Source</h3>
+                    <ul class="text-xs text-gray-600 space-y-1">
+                        <li class="achievement-item">Developed Python libraries for parsing HWP and HWPX documents</li>
+                        <li class="achievement-item">Addressed real-world limitations of Korean document processing in Python environments</li>
+                        <li class="achievement-item">Resources: <a href="https://github.com/choijhyeok/python-hwplib" target="_blank" class="text-blue-600 hover:underline">GitHub Repo</a>, <a href="https://linkedin.com/in/choijh0119" target="_blank" class="text-blue-600 hover:underline">LinkedIn Post</a></li>
+                    </ul>
+                </div>
+
+                <div class="project-card personal-project">
+                    <h3 class="font-semibold text-gray-900 text-sm mb-2">Personal Project, Gemma Function Calling Assistant</h3>
+                    <ul class="text-xs text-gray-600 space-y-1">
+                        <li class="achievement-item">Fine-tuned Gemma 7B using SFT to enable Function Calling</li>
+                        <li class="achievement-item">Built a personal assistant that executes external tools and delivers results via KakaoTalk</li>
+                    </ul>
                 </div>
                 
-                <div class="project-card" style="border-left-color: #10b981;">
-                    <h3 class="font-semibold text-gray-900 text-sm mb-1">LLaMA2 Fine-tuning & RAG Pipeline</h3>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="tag">LLaMA2</span>
-                        <span class="tag">QLoRA</span>
-                        <span class="tag">Gradio</span>
-                    </div>
-                    <p class="text-xs text-gray-600">YouTube Talk & Open Source (Colab T4 optimized)</p>
-                    <a href="https://github.com/choijhyeok/easy_finetuner" target="_blank" class="text-xs text-blue-600 hover:underline">github.com/choijhyeok/easy_finetuner</a>
+                <div class="project-card personal-project">
+                    <h3 class="font-semibold text-gray-900 text-sm mb-2">Speaker / Open Source Contributor, LLaMA2 Fine-tuning & RAG Pipeline</h3>
+                    <ul class="text-xs text-gray-600 space-y-1">
+                        <li class="achievement-item">Presented an end-to-end LLaMA2 fine-tuning and RAG pipeline</li>
+                        <li class="achievement-item">Implemented QLoRA-based instruction fine-tuning optimized for Colab T4</li>
+                        <li class="achievement-item">Built an easy-to-use fine-tuning pipeline with a Gradio UI</li>
+                        <li class="achievement-item">Resources: <a href="https://github.com/choijhyeok/easy_finetuner" target="_blank" class="text-blue-600 hover:underline">GitHub Repo</a>, <a href="#" target="_blank" class="text-blue-600 hover:underline">YouTube Talk</a></li>
+                    </ul>
                 </div>
                 
-                <div class="project-card" style="border-left-color: #10b981;">
-                    <h3 class="font-semibold text-gray-900 text-sm mb-1">Streamlit & LangChain RAG Service</h3>
-                    <div class="flex flex-wrap gap-1 mb-2">
-                        <span class="tag">Streamlit</span>
-                        <span class="tag">LangChain</span>
-                        <span class="tag">RAG</span>
-                    </div>
-                    <p class="text-xs text-gray-600">LangChain KR Meetup presentation (2024 Q1)</p>
+                <div class="project-card personal-project">
+                    <h3 class="font-semibold text-gray-900 text-sm mb-2">Speaker, Building RAG-based Services with Streamlit & LangChain</h3>
+                    <ul class="text-xs text-gray-600 space-y-1">
+                        <li class="achievement-item">Speaker at LangChain KR Meetup (2024 Q1)</li>
+                        <li class="achievement-item">Demonstrated deployment of RAG-based AI services using Streamlit</li>
+                        <li class="achievement-item">Explained vector DB separation and QA-chain-based recommendation architectures</li>
+                        <li class="achievement-item">Showcased automated report generation pipelines (HTML → PDF)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="mb-8">
+            <h2 class="section-title">Education</h2>
+            <div class="flex justify-between items-start">
+                <div>
+                    <p class="font-semibold text-gray-900 text-sm">Gyeongsang National University</p>
+                    <p class="text-xs text-gray-600">B.S. in Information Statistics and Computer Science</p>
+                </div>
+                <div class="text-right">
+                    <span class="text-xs text-gray-500">Mar 2016 — Feb 2022</span>
+                    <p class="text-xs text-gray-400">South Korea</p>
                 </div>
             </div>
         </section>
 
         <!-- Skills -->
-        <section class="mb-8">
-            <h2 class="section-title">Skills</h2>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Python</span>
-                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">JavaScript</span>
-                <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">SQL</span>
-                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">RAG</span>
-                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">LangChain</span>
-                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">LangGraph</span>
-                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Fine-tuning</span>
-                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Function Calling</span>
-                <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">RAGAS</span>
-                <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-xs font-medium">Azure Functions</span>
-                <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-xs font-medium">Azure AI Search</span>
-                <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-xs font-medium">Azure Container App</span>
-                <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">Docker</span>
-                <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">PyMuPDF</span>
-                <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">OCR</span>
-            </div>
-        </section>
-
-        <!-- Education & Certifications -->
-        <section class="mb-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h2 class="section-title">Education</h2>
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="font-semibold text-gray-900 text-sm">Gyeongsang National University</p>
-                            <p class="text-xs text-gray-600">B.S. in Statistics & Computer Science</p>
-                        </div>
-                        <span class="text-xs text-gray-500">2016.03 – 2022.02</span>
-                    </div>
-                </div>
-                
-                <div>
-                    <h2 class="section-title">Certifications</h2>
-                    <div class="space-y-2 text-sm">
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">ADsP (Data Analysis Semi-Professional)</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">SQLD (SQL Developer)</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-700">AICE Associate</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Awards -->
         <section>
-            <h2 class="section-title">Awards</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-                <div class="flex justify-between">
-                    <span class="text-gray-700">Jeonju City Big Data Competition – Grand Prize</span>
-                    <span class="text-xs text-gray-500">2021</span>
+            <h2 class="section-title">Skills</h2>
+            <div class="space-y-3">
+                <div>
+                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Languages</span>
+                    <div class="flex flex-wrap gap-2 mt-1">
+                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">Python</span>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">JavaScript</span>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">SQL</span>
+                    </div>
                 </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-700">Douzone Big Data Competition – Encouragement Award</span>
-                    <span class="text-xs text-gray-500">2020</span>
+                <div>
+                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">LLM / GenAI</span>
+                    <div class="flex flex-wrap gap-2 mt-1">
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">RAG</span>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">LangChain</span>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">LangGraph</span>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Fine-tuning</span>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">Function Calling</span>
+                        <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">RAGAS</span>
+                    </div>
                 </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-700">Academic Creativity Competition – Silver Award</span>
-                    <span class="text-xs text-gray-500">2020</span>
+                <div>
+                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Infrastructure</span>
+                    <div class="flex flex-wrap gap-2 mt-1">
+                        <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-xs font-medium">Azure Functions</span>
+                        <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-xs font-medium">Azure AI Search</span>
+                        <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-xs font-medium">Azure Container Apps</span>
+                        <span class="px-3 py-1 bg-cyan-100 text-cyan-700 rounded-full text-xs font-medium">Docker</span>
+                    </div>
                 </div>
-                <div class="flex justify-between">
-                    <span class="text-gray-700">Big Leader Academy – Governor's Award</span>
-                    <span class="text-xs text-gray-500">2020</span>
+                <div>
+                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Document Processing</span>
+                    <div class="flex flex-wrap gap-2 mt-1">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">PyMuPDF</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">OCR</span>
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">Large-scale Document Pipelines</span>
+                    </div>
                 </div>
             </div>
         </section>

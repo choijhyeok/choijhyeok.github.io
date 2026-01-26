@@ -331,9 +331,39 @@
         .sidebar-toggle-btn:hover {
             background: #2a2a2a;
         }
+
+        /* Resume 버튼 */
+        .resume-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        .resume-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
     </style>
 </head>
 <body class="h-screen flex overflow-hidden">
+    <!-- Resume Button -->
+    <a href="/resume" class="resume-btn">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>Resume</span>
+    </a>
+
     <!-- Sidebar Open Button (접혔을 때만 보임) -->
     <button id="sidebar-open-btn" class="sidebar-open-btn" title="사이드바 열기">
         <i class="fa-solid fa-bars"></i>
