@@ -360,32 +360,32 @@
             <div class="text-xs text-gray-500 px-3 py-2 font-medium">🎯 2026년 목표</div>
             <div class="space-y-1">
                 <div class="sidebar-btn text-sm">
-                    <i class="fa-solid fa-rocket text-purple-400"></i>
-                    <span>개인 LLM 서비스 개발 구축</span>
+                    <i class="fa-solid fa-robot text-red-400"></i>
+                    <span>Enterprise GenAI 실전 배포</span>
                 </div>
                 <div class="sidebar-btn text-sm">
-                    <i class="fa-solid fa-brain text-blue-400"></i>
-                    <span>LLM Agent 시스템 공부</span>
+                    <i class="fa-solid fa-microphone text-blue-400"></i>
+                    <span>Realtime Voice Agent 고도화</span>
                 </div>
                 <div class="sidebar-btn text-sm">
-                    <i class="fa-solid fa-code text-green-400"></i>
-                    <span>외부 활동 많이 하기</span>
+                    <i class="fa-solid fa-code-branch text-green-400"></i>
+                    <span>오픈소스 기여 확대</span>
                 </div>
             </div>
             <div class="sidebar-divider mt-4"></div>
-            <div class="text-xs text-gray-500 px-3 py-2 font-medium">💡 Core Values</div>
+            <div class="text-xs text-gray-500 px-3 py-2 font-medium">💡 Core Strengths</div>
             <div class="space-y-1">
                 <div class="sidebar-btn text-sm">
-                    <span>🔥 끊임없는 학습</span>
+                    <span>🏢 Enterprise AI PoC</span>
                 </div>
                 <div class="sidebar-btn text-sm">
-                    <span>🤝 지식 공유</span>
+                    <span>📄 대규모 문서 RAG</span>
                 </div>
                 <div class="sidebar-btn text-sm">
-                    <span>🎯 문제 해결 집착</span>
+                    <span>🤖 Agent Workflow 설계</span>
                 </div>
                 <div class="sidebar-btn text-sm">
-                    <span>💸 개인 자동 AI 수익화!</span>
+                    <span>☁️ Azure 기반 인프라</span>
                 </div>
             </div>
         </div>
@@ -506,24 +506,38 @@
     <script>
         // --- Data Structure (User Resume) ---
         const resumeData = {
-            intro: `**AI Engineer 최재혁**님에 대한 분석 결과입니다.\n\n최재혁님은 **CV(Computer Vision), LLM, Time-Series** 등 다양한 도메인을 아우르는 AI 개발자입니다. 특히 최근에는 **LLM과 RAG(검색 증강 생성) 기술**을 활용하여 실제 비즈니스 문제를 해결하는 데 집중하고 있습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 이전에는 **AIFactory**와 **GSITM**에서 Data Scientist로 활약했습니다.`,
+            intro: `**AI Engineer 최재혁**님에 대한 분석 결과입니다.\n\nLLM, RAG, Agentic AI, 대규모 문서 처리 파이프라인을 중심으로 **End-to-End 생성형 AI 시스템을 설계·구현하는 AI Engineer**입니다.\n\nPoC 수준을 넘어 **실제 업무 시나리오와 운영 환경을 고려한 AI 서비스 구현**에 강점이 있습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 법률·금융·미디어·글로벌 고객 대상 **Enterprise GenAI PoC를 다수 수행**하고 있습니다.`,
             
             experience: [
-                { role: "AI Engineer", company: "KT", period: "2024.07 ~ 현재", desc: "LLM 및 AI 서비스 개발 및 운영" },
-                { role: "Data Scientist", company: "AIFactory", period: "2022.04 ~ 2024.05", desc: "RAG 시스템 구축, Docker 기반 MLOps 파이프라인 설계, 각종 AI 경진대회 문제 출제 및 평가 모델 개발" },
-                { role: "Data Scientist", company: "GSITM", period: "2021.07 ~ 2022.01", desc: "유전 알고리즘 기반 물류 최적화, 시계열 판매량 예측 프로젝트 수행" }
+                { 
+                    role: "AI Engineer", 
+                    company: "KT", 
+                    period: "2024.07 ~ 현재", 
+                    desc: "법률, 금융, 미디어, 글로벌 고객 대상 Enterprise GenAI PoC 다수 수행. RAG, Web Search Agent, Realtime Voice Agent 등 복합 Agent 시스템 설계. Azure 기반 인프라에서 End-to-End 구현." 
+                },
+                { 
+                    role: "Data Scientist", 
+                    company: "AIFactory", 
+                    period: "2022.04 ~ 2024.05", 
+                    desc: "LLM, CV, 시계열 기반 AI 경진대회 및 기업 PoC 설계·검증. LLM Fine-tuning, RAG 시스템 구축 및 성능 평가(RAGAS)." 
+                },
+                { 
+                    role: "Data Scientist", 
+                    company: "GSITM", 
+                    period: "2021.07 ~ 2022.01", 
+                    desc: "유통·물류 도메인 데이터 기반 예측 및 최적화 모델 개발. 현업 업무 적용을 고려한 수요 예측 및 매칭 알고리즘 구현." 
+                }
             ],
 
             education: [
-                { degree: "정보통계학과, 컴퓨터과학과 학사", school: "경상대학교", period: "2016.03 ~ 2022.02" },
-                { degree: "빅리더 아카데미 수료", school: "2020 데이터 청년 캠퍼스", period: "2020.06 ~ 2020.09" }
+                { degree: "정보통계학과 / 컴퓨터과학과 학사", school: "경상국립대학교", period: "2016.03 ~ 2022.02" }
             ],
 
             awards: [
-                { title: "전주시 빅데이터 공모전 최우수상", org: "전주시", period: "2021.04 ~ 2021.05" },
-                { title: "더존비즈온 중소,중견 빅데이터 장려상", org: "더존비즈온", period: "2020.09 ~ 2020.11" },
-                { title: "학술 창의력 경진대회 은상", org: "경상대학교 자연과학대학", period: "2020.09 ~ 2020.10" },
-                { title: "빅리더 아카데미 경남도지사상", org: "2020 데이터 청년 캠퍼스", period: "2020.06 ~ 2020.09" }
+                { title: "전주시 빅데이터 공모전 최우수상", org: "전주시", period: "2021" },
+                { title: "더존비즈온 중소·중견 빅데이터 장려상", org: "더존비즈온", period: "2020" },
+                { title: "학술 창의력 경진대회 은상", org: "경상대학교 자연과학대학", period: "2020" },
+                { title: "빅리더 아카데미 경남도지사상", org: "2020 데이터 청년 캠퍼스", period: "2020" }
             ],
 
             certificates: [
@@ -532,202 +546,142 @@
                 { name: "AICE Associate", id: "AICE_20230408_A00006" }
             ],
 
+            // KT 핵심 프로젝트
             projects: [
                 {
-                    title: "한국전력공사 사내 데이터 RAG 구축",
-                    period: "2024.01 ~ 2024.05",
-                    company: "AIFactory",
-                    tags: ["LLM", "RAG", "QLora", "Ragas"],
-                    desc: "Llama2, Gemma 등을 QLora로 Fine-tuning하고, Ragas로 성능을 평가하여 사내/외 데이터를 답변하는 챗봇 시스템 구축.",
+                    title: "대규모 보험 약관 RAG 파이프라인 (메리츠)",
+                    period: "2025.05 ~ 2025.12",
+                    company: "KT",
+                    tags: ["RAG", "Azure Durable Functions", "PyMuPDF", "Azure AI Search"],
+                    desc: "약 28만 건 보험 약관 대상 대규모 RAG 파이프라인 설계·구현. End-to-End 인덱싱 자동화 및 Parent-Child RAG 아키텍처 적용.",
                     details: {
-                        role: "AI Engineer (RAG 설계 및 LLM Fine-tuning 담당)",
-                        problem: "한전 사내 문서가 분산되어 있어 직원들이 필요한 정보를 찾는 데 시간이 오래 걸림",
-                        solution: "LangChain 기반 RAG 시스템 구축, Llama2/Gemma를 QLora로 Fine-tuning하여 한전 도메인에 특화된 답변 생성",
-                        achievements: ["Ragas 평가 기반 Context Relevancy 85% 달성", "문서 검색 시간 평균 70% 단축", "VectorDB(ChromaDB) 기반 유사 문서 검색 기능 구현"]
+                        role: "AI Engineer (RAG 파이프라인 설계 및 구현)",
+                        problem: "28만 건의 보험 약관 문서를 효율적으로 검색하고 답변할 수 있는 대규모 RAG 시스템 필요",
+                        solution: "Azure Durable Functions 기반 End-to-End 인덱싱 자동화, PyMuPDF 기반 Table Stable Extract 및 커스텀 Chunker 구현, Parent-Child 구조의 RAG 아키텍처를 Azure AI Search에 적용",
+                        achievements: ["28만 건 문서 대상 대규모 인덱싱 자동화 구축", "PDF, PPT, Excel, JSON 등 다중 원천 Loader 직접 개발", "Parent-Child RAG로 검색 정확도 및 컨텍스트 품질 향상"]
                     }
                 },
                 {
-                    title: "Docker 기반 시계열 예측 파이프라인",
-                    period: "2023.10 ~ 2023.12",
-                    company: "AIFactory",
-                    tags: ["Docker", "Python", "Automation"],
-                    desc: "데이터 갱신부터 모델 학습, 추론까지 자동으로 수행하는 컨테이너 환경 설계. Task Scheduler와 연동하여 프로세스 효율화.",
+                    title: "AI Branch – 실시간 음성 AI 은행원 (신한은행)",
+                    period: "2025.01 ~ 2025.04",
+                    company: "KT",
+                    tags: ["GPT-4o-Realtime", "WebSocket", "Function Calling", "Azure Container App"],
+                    desc: "GPT-4o-Realtime API 기반 음성 입력 → 실시간 추론 → 음성 응답 AI 은행원 PoC. 대출 상품 추천 Agent 개발.",
                     details: {
-                        role: "MLOps Engineer (파이프라인 설계 및 자동화 담당)",
-                        problem: "수동으로 데이터 갱신, 모델 재학습, 배포를 진행하여 인적 오류 및 시간 소요 발생",
-                        solution: "Docker 컨테이너로 환경 격리, Windows Task Scheduler로 주기적 실행 자동화",
-                        achievements: ["주간 작업 시간 8시간 → 30분으로 단축", "환경 일관성 확보로 배포 오류 90% 감소", "로그 기반 모니터링 시스템 구축"]
+                        role: "AI Engineer (Realtime Voice Agent 개발)",
+                        problem: "은행 창구에서 고객 응대를 AI가 실시간 음성으로 처리할 수 있는 시스템 필요",
+                        solution: "GPT-4o-Realtime API + WebSocket 기반 실시간 스트리밍 처리, Function Calling을 통한 대출 상품 추천 Agent 개발",
+                        achievements: ["실시간 음성 입력 → 추론 → 음성 응답 파이프라인 구현", "고객 정보 수집 후 맞춤형 대출 상품 추천", "Azure Container App 환경에 전체 시스템 배포"]
                     }
                 },
                 {
-                    title: "디브릿지: 채팅형 서버 관제 서비스",
-                    period: "2023.07 ~ 2023.10",
-                    company: "AIFactory",
-                    tags: ["OpenAI API", "Function Call", "VectorDB"],
-                    desc: "자연어 질의를 통해 서버 상태를 모니터링하고 조치하는 Function Call 기반 챗봇 서비스. 11개의 관제 API 호출 가능.",
+                    title: "Web Search Agent (Giga Genie / 태국 JTS)",
+                    period: "2024.09 ~ 2025.03",
+                    company: "KT",
+                    tags: ["LangGraph", "Bing Search", "Self-RAG", "Corrective-RAG"],
+                    desc: "Bing Search 기반 Web Search Agent PoC 다수 개발. Self-RAG/Corrective-RAG 적용으로 Hallucination 감소.",
                     details: {
-                        role: "Backend & AI Engineer (Function Call 설계 담당)",
-                        problem: "서버 관제를 위해 복잡한 CLI 명령어를 알아야 하는 진입장벽 존재",
-                        solution: "OpenAI Function Calling을 활용하여 자연어로 서버 상태 조회 및 제어 가능한 챗봇 개발",
-                        achievements: ["11개 관제 API 연동 (CPU, 메모리, 디스크, 프로세스 등)", "비개발자도 서버 관리 가능하게 됨", "VectorDB 기반 이전 장애 사례 검색 기능"]
+                        role: "AI Engineer (Agent Workflow 설계)",
+                        problem: "웹 검색 기반 AI 답변 생성 시 Hallucination 문제 해결 필요",
+                        solution: "LangGraph 기반 Agent Workflow 설계, Self-RAG / Corrective-RAG 적용",
+                        achievements: ["평균 응답 시간 10초 이내 달성", "최대 정확도 94% 달성", "Gradio 기반 Demo App 개발"]
                     }
                 },
                 {
-                    title: "어종 식별 및 분류 알고리즘 개발",
-                    period: "2023.10 ~ 2023.11",
-                    company: "AIFactory",
-                    tags: ["Object Detection", "YoloV5", "Macro F1"],
-                    desc: "8가지 어종에 대한 Object-detection 대회 설계 및 출제. Yolo V5를 통한 어종 식별 모델 개발.",
+                    title: "법률 RAG 시스템 PoC (산림청)",
+                    period: "2024.08 ~ 2024.12",
+                    company: "KT",
+                    tags: ["LLM Fine-tuning", "RAG", "RAGAS", "pdf.js"],
+                    desc: "산림청 국유재산 관련 법령·판례 기반 RAG 시스템 PoC. RAGAS 기준 종합 90% 이상 달성.",
                     details: {
-                        role: "AI Competition Designer (Dataset 구축 및 평가 설계)",
-                        problem: "AI 경진대회 출제를 위한 고품질 어종 데이터셋 및 평가 시스템 필요",
-                        solution: "YoloV5 기반 베이스라인 모델 개발, Macro F1-Score 평가 시스템 설계",
-                        achievements: ["200여 팀 참가 대회 성공적 운영", "8종 어류 10,000장 이상 레이블링", "자동 평가 시스템 구축으로 실시간 리더보드 운영"]
+                        role: "AI Engineer (법률 RAG 시스템 설계)",
+                        problem: "법률 도메인 특화 RAG 시스템으로 높은 정확도의 법령·판례 검색 및 답변 필요",
+                        solution: "법률 도메인 LLM Fine-tuning + RAG 결합 구조 설계, pdf.js 기반 원문 하이라이팅 구현",
+                        achievements: ["RAGAS 기준 Context Precision/Recall/Faithfulness 종합 90% 이상", "Top-5 검색 정확도 93.51%", "Gradio 기반 Demo Web 및 원문 하이라이팅 구현"]
                     }
+                }
+            ],
+
+            // AIFactory & GSITM 프로젝트
+            selectedProjects: [
+                {
+                    title: "LLM Fine-tuning 및 RAG 성능 평가",
+                    company: "AIFactory",
+                    tags: ["QLoRA", "DeepSpeed", "RAGAS"],
+                    desc: "LLaMA2, Gemma, EEVE 모델 QLoRA + DeepSpeed 기반 Fine-tuning 및 RAG 파이프라인 구축."
                 },
                 {
-                    title: "KT 통신망 안정성 확보 AI 해커톤",
-                    period: "2023.07 ~ 2023.09",
+                    title: "AI 경진대회 설계 (CV / 시계열)",
                     company: "AIFactory",
-                    tags: ["Time-Series", "Classification", "MAE"],
-                    desc: "무선 기지국 장비 통계 데이터를 활용한 인구 밀집도 예측 및 경보 유형 분류 대회 설계.",
-                    details: {
-                        role: "AI Competition Designer (Dataset 설계 및 문제 출제)",
-                        problem: "KT 통신망 안정성 확보를 위한 AI 모델 개발 경진대회 기획 필요",
-                        solution: "시계열 예측(MAE) + 분류(Accuracy) 복합 평가 체계 설계",
-                        achievements: ["150여 팀 참가, 3주간 대회 운영", "무선 기지국 데이터 전처리 파이프라인 제공", "Top 10 솔루션 분석 및 인사이트 도출"]
-                    }
+                    tags: ["Object Detection", "Segmentation", "COCO"],
+                    desc: "Object Detection, Segmentation, Pose Estimation 문제 설계. 다수 기업·기관 대상 대회 출제 및 검증."
                 },
                 {
-                    title: "NH투자증권 빅데이터 경진대회",
-                    period: "2022.09 ~ 2022.12",
-                    company: "AIFactory",
-                    tags: ["Clustering", "K-means", "Data Analysis"],
-                    desc: "NH 고객 거래 데이터를 통한 고객군 분류 및 자산 변동률 분석. 군집별 특성과 나이 기반 보고서 작성.",
-                    details: {
-                        role: "Data Analyst (EDA 및 군집 분석 담당)",
-                        problem: "NH 고객 특성에 따른 맞춤형 서비스 제공을 위한 데이터 분석 필요",
-                        solution: "K-means 군집화로 고객 세분화, 나이대별 투자 성향 분석",
-                        achievements: ["5개 고객 군집 도출 및 특성 정의", "군집별 자산 변동률 패턴 발견", "경영진 대상 인사이트 보고서 제출"]
-                    }
-                },
-                {
-                    title: "DL E&C 안전장구 착용 탐지",
-                    period: "2022.09 ~ 2022.11",
-                    company: "AIFactory",
-                    tags: ["Object Detection", "COCO", "Macro F1"],
-                    desc: "Object Detection을 활용한 10개의 안전장비 착용 여부 탐지 대회 설계.",
-                    details: {
-                        role: "AI Competition Designer (Dataset 구축 및 평가 설계)",
-                        problem: "건설 현장 안전장구 착용 감시를 위한 AI 모델 필요",
-                        solution: "COCO 포맷 데이터셋 구축, Object Detection 기반 대회 설계",
-                        achievements: ["10종 안전장구 15,000장 레이블링", "Macro F1-Score 기반 공정한 평가 체계", "180여 팀 참가 대회 성공 운영"]
-                    }
-                },
-                {
-                    title: "LG 입자 형태 분석 해커톤",
-                    period: "2022.07 ~ 2022.08",
-                    company: "AIFactory",
-                    tags: ["Instance Segmentation", "Mask R-CNN"],
-                    desc: "Mask R-CNN을 통한 유체상 입자 검출 대회 설계. IoU 반영 F1-Score 평가.",
-                    details: {
-                        role: "AI Competition Designer (Dataset 설계 및 베이스라인 개발)",
-                        problem: "LG 생산 공정에서 유체 입자 형태 분석 자동화 필요",
-                        solution: "Mask R-CNN 기반 Instance Segmentation 모델 개발",
-                        achievements: ["IoU 반영 F1-Score 평가 시스템 구축", "입자 크기/형태 자동 분류 가능", "100여 팀 참가 대회 운영"]
-                    }
-                },
-                {
-                    title: "유전알고리즘 물류매칭",
-                    period: "2021.10 ~ 2021.12",
+                    title: "유통 상품 판매량 예측 시스템",
                     company: "GSITM",
-                    tags: ["Genetic Algorithm", "DEAP", "Optimization"],
-                    desc: "DEAP 유전 알고리즘을 활용하여 최대 적재량 내 최대 이익률 상품 조합 추천 프로세스 개발.",
-                    details: {
-                        role: "Data Scientist (최적화 알고리즘 개발)",
-                        problem: "물류 차량 적재 효율화를 위한 상품 조합 최적화 필요",
-                        solution: "DEAP 라이브러리 기반 유전 알고리즘으로 최적 조합 탐색",
-                        achievements: ["적재 효율 15% 향상", "배송 비용 절감 효과 도출", "실시간 최적화 API 개발"]
-                    }
+                    tags: ["Prophet", "Time-Series", "Forecasting"],
+                    desc: "Meta Prophet 기반 상품별 판매량 예측 모델 개발 및 재고 관리 효율화 방안 제시."
                 },
                 {
-                    title: "편의점 판매량 예측 프로젝트",
-                    period: "2021.09 ~ 2022.09",
+                    title: "유전 알고리즘 기반 물류 매칭 최적화",
                     company: "GSITM",
-                    tags: ["Time-Series", "Prophet", "Forecasting"],
-                    desc: "Meta의 Prophet을 사용하여 상품별 판매량 예측. 편의점별 재고 관리 효율화 방안 제시.",
-                    details: {
-                        role: "Data Scientist (시계열 예측 모델 개발)",
-                        problem: "편의점 상품 재고 관리를 위한 판매량 예측 필요",
-                        solution: "Facebook Prophet 기반 상품별 시계열 예측 모델 개발",
-                        achievements: ["예측 정확도 MAPE 12% 달성", "재고 부족/과쟉 문제 30% 감소", "점포별 맞춤형 발주 시스템 제안"]
-                    }
+                    tags: ["DEAP", "Genetic Algorithm", "Optimization"],
+                    desc: "적재 중량·가격 조건을 고려한 최적 상품 조합 추천 알고리즘 개발."
                 }
             ],
 
             personalProjects: [
                 {
-                    title: "Gemma 비서 (Personal)",
+                    title: "Korean HWP/HWPX 문서 파싱 오픈소스",
+                    tags: ["Python", "HWP", "Open Source"],
+                    desc: "Python 기반 HWP/HWPX 문서 파싱 라이브러리 개발. Python 환경에서의 한글 문서 처리 한계 해결.",
+                    details: {
+                        role: "오픈소스 메인테이너",
+                        problem: "Python 환경에서 한글 문서(HWP/HWPX)를 파싱할 수 있는 라이브러리 부재",
+                        solution: "Python 기반 HWP/HWPX 문서 파싱 라이브러리 직접 개발 및 오픈소스로 공개",
+                        achievements: ["GitHub 레포 공개 (github.com/choijhyeok/python-hwplib)", "LinkedIn Post를 통한 커뮤니티 공유", "RAG 파이프라인에서 한글 문서 처리 가능"]
+                    }
+                },
+                {
+                    title: "Gemma Function Calling Assistant",
                     tags: ["Gemma-7b", "SFT", "KakaoTalk"],
-                    desc: "Gemma-7b 모델을 SFT 학습시켜 '시청 가는 법', '주가 조회' 등 함수 호출 기능을 수행하고 카카오톡으로 결과를 전송하는 개인 비서.",
+                    desc: "Gemma 7B 모델 SFT 학습을 통한 Function Calling 구현. 외부 함수 실행 결과를 카카오톡으로 전달하는 개인 비서.",
                     details: {
                         role: "1인 개발 (Full-stack)",
                         problem: "간단한 일상 질문(길찾기, 주가 조회 등)을 빠르게 처리할 수 있는 개인 AI 비서 필요",
                         solution: "Gemma-7b를 SFT로 Fine-tuning하여 Function Calling 기능 구현, 카카오톡 API 연동",
-                        achievements: ["시청 길찾기, 주식 시세 조회 등 5개 이상 기능 구현", "카카오톡 메시지로 실시간 응답", "Gradio UI로 테스트 환경 구축"]
+                        achievements: ["외부 함수 실행 결과 카카오톡 전달", "Gemma 7B SFT 학습 성공", "개인 비서 프로토타입 완성"]
                     }
                 },
                 {
-                    title: "LangChain 웹 서비스 (Personal)",
-                    tags: ["Streamlit", "LangChain", "Web"],
-                    desc: "LangChain KR 밋업 발표 주제. Streamlit을 활용하여 나만의 RAG 기반 장소 추천 및 보고서 자동 생성 웹 서비스 배포.",
+                    title: "LLaMA2 Fine-tuning & RAG Pipeline",
+                    tags: ["LLaMA2", "QLoRA", "Gradio"],
+                    desc: "LLaMA2 Fine-tuning 및 RAG 파이프라인 설계 방법 발표. QLoRA 기반 Instruction Fine-tuning (Colab T4 최적화).",
                     details: {
-                        role: "1인 개발 & 발표자",
-                        problem: "LangChain을 활용한 실용적인 웹 서비스 개발 및 커뮤니티 지식 공유",
-                        solution: "Streamlit + LangChain으로 RAG 기반 장소 추천/보고서 생성 서비스 개발",
-                        achievements: ["LangChain KR 밋업 발표 (50명+ 참석)", "GitHub 레포 공개 및 스타 50+ 획득", "Streamlit Cloud 배포로 누구나 접근 가능"]
-                    }
-                },
-                {
-                    title: "Llama2 Fine-tune & RAG",
-                    tags: ["Llama2", "SFTTrainer", "LoRA"],
-                    desc: "llama2 fine-tuning을 쉽게 하기 위한 방법 설계 및 RAG 프로세스 설계 방법 발표. YouTube 발표 영상 공개.",
-                    details: {
-                        role: "1인 개발 & 컨텐츠 크리에이터",
+                        role: "발표자 / 오픈소스 기여자",
                         problem: "LLM Fine-tuning이 어렵다는 인식을 깨고 쉽게 접근할 수 있도록 가이드 필요",
-                        solution: "SFTTrainer + LoRA를 활용한 간단한 Fine-tuning 파이프라인 설계",
-                        achievements: ["YouTube 튜토리얼 영상 제작 (조회수 1,000+)", "Colab 노트북 공개로 재현성 확보", "LoRA 기반 효율적인 학습 방법 소개"]
+                        solution: "QLoRA 기반 Instruction Fine-tuning 파이프라인 설계, Gradio GUI 제공",
+                        achievements: ["GitHub Repo 공개 (github.com/choijhyeok/easy_finetuner)", "YouTube Talk 공개", "Colab T4에서 학습 가능하도록 최적화"]
                     }
                 },
                 {
-                    title: "챗GPT 점메추 메뉴판",
-                    tags: ["ChatGPT", "LangChain", "RAG"],
-                    desc: "ChatGPT와 Langchain을 사용해서 PDF 기반 RAG 챗봇 시스템 구축. YouTube 발표 영상 공개.",
+                    title: "Streamlit & LangChain 기반 RAG 서비스",
+                    tags: ["Streamlit", "LangChain", "RAG"],
+                    desc: "LangChain KR Meetup 발표. Streamlit 기반 RAG 서비스 배포 방법 및 HTML → PDF 자동 보고서 생성 파이프라인 시연.",
                     details: {
-                        role: "1인 개발 & 컨텐츠 크리에이터",
-                        problem: "점심 메뉴 추천을 AI가 도와주는 재미있는 서비스 기획",
-                        solution: "PDF 메뉴판을 VectorDB에 저장하고 RAG로 메뉴 추천 챗봇 구현",
-                        achievements: ["YouTube 튜토리얼 제작 (조회수 800+)", "RAG 파이프라인 실습 예제로 활용", "LangChain + ChromaDB 조합 소개"]
-                    }
-                },
-                {
-                    title: "MMPose Human Pose Estimation",
-                    tags: ["MMPose", "HRNet", "Gradio"],
-                    desc: "MMPose를 사용하여 MPII 데이터셋으로 사람의 key-point를 추론하는 과정 설명. YouTube 발표.",
-                    details: {
-                        role: "1인 개발 & 컨텐츠 크리에이터",
-                        problem: "Human Pose Estimation 기술을 쉽게 이해할 수 있는 가이드 필요",
-                        solution: "MMPose + HRNet 기반 Pose Estimation 튜토리얼 제작",
-                        achievements: ["YouTube 튜토리얼 제작 (조회수 500+)", "Gradio UI로 실시간 데모 구현", "MPII 데이터셋 활용 방법 소개"]
+                        role: "발표자",
+                        problem: "LangChain을 활용한 실용적인 웹 서비스 개발 및 커뮤니티 지식 공유",
+                        solution: "Streamlit + LangChain으로 RAG 기반 서비스 개발, Vector DB 분리 및 QA Chain 구조 설명",
+                        achievements: ["LangChain KR Meetup (2024 Q1) 발표", "HTML → PDF 자동 보고서 생성 파이프라인 시연", "발표 자료 PPT 공개"]
                     }
                 }
             ],
 
-            skills: ["Python", "PyTorch", "TensorFlow", "LangChain", "RAG", "LLM Fine-tuning", "Docker", "MySQL", "GCP"],
+            skills: ["Python", "JavaScript", "SQL", "RAG", "LangChain", "LangGraph", "Fine-tuning", "Function Calling", "RAGAS", "Azure Functions", "Azure AI Search", "Azure Container App", "Docker", "PyMuPDF", "OCR"],
             
             contact: {
                 email: "wowogur12@naver.com",
-                phone: "+82 010-4479-6775",
+                phone: "+82 10-4479-6775",
                 blog: "cjhyeok.tistory.com",
                 github: "github.com/choijhyeok"
             }
@@ -918,13 +872,13 @@
             await showThinking(contentArea, [
                 '최재혁 경력 데이터 검색 중...',
                 'KT, AIFactory, GSITM 재직 이력 확인',
-                'AI Engineer → Data Scientist 경력 분석',
-                'LLM, RAG, CV, 시계열 프로젝트 경험 정리',
+                'Enterprise GenAI PoC 경험 분석',
+                'RAG, Agent, Realtime Voice 프로젝트 정리',
                 '경력 요약 생성 중...'
             ]);
             
             // Step 1: Career intro
-            await typeText(contentArea, `**최재혁님의 주요 경력**을 정리해드리겠습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 총 **3개 회사**에서 AI/Data Science 관련 경력을 쌓았습니다.`);
+            await typeText(contentArea, `**최재혁님의 주요 경력**을 정리해드리겠습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, **Enterprise GenAI PoC**를 전문으로 수행하고 있습니다.\n\n총 **3개 회사**에서 AI/Data Science 관련 경력을 쌓았습니다.`);
             
             // Step 2: Experience cards
             const expContainer = document.createElement('div');
@@ -946,11 +900,11 @@
             await wait(500);
 
             // Step 3: Career Summary
-            await typeText(contentArea, `\n\n**최재혁 | AI Engineer 주요 경력 요약**\n\n최재혁은 LLM·RAG·시계열 전반을 아우르는 실무 중심의 AI Engineer로,\n\n대규모 데이터 처리부터 모델 학습·평가·서비스화까지 전 과정을 직접 설계·구현해 온 경험을 보유하고 있습니다.`);
+            await typeText(contentArea, `\n\n**최재혁 | AI Engineer 핵심 역량**\n\nLLM·RAG·Agentic AI·대규모 문서 처리 파이프라인을 중심으로\n\n**End-to-End 생성형 AI 시스템**을 설계·구현하는 AI Engineer입니다.\n\nPoC 수준을 넘어 **실제 업무 시나리오와 운영 환경**을 고려한 AI 서비스 구현에 강점이 있습니다.`);
             await wait(800);
 
             // Step 4: Ask about projects
-            await askQuestion(contentArea, '\n프로젝트도 확인하시겠습니까?', 'showProjects');
+            await askQuestion(contentArea, '\nKT 핵심 프로젝트도 확인하시겠습니까?', 'showProjects');
         }
 
         // --- Project Flow ---
@@ -961,18 +915,18 @@
             
             // Thinking
             await showThinking(contentArea, [
-                'RAG 및 LLM 프로젝트 검색 중...',
-                'VectorDB 구축 경험 확인',
-                'LLM Fine-tuning 프로젝트 분석',
-                'Function Call, RAG 파이프라인 정리',
+                'KT Enterprise GenAI PoC 검색 중...',
+                '메리츠 보험 RAG (28만건) 확인',
+                '신한은행 AI Branch Realtime Voice 분석',
+                'Web Search Agent, 법률 RAG 정리',
                 '프로젝트 목록 생성 중...'
             ]);
             
-            await typeText(contentArea, `**RAG 및 LLM 관련 프로젝트**를 중심으로 정리해드리겠습니다.\n\n최재혁님은 다양한 AI 프로젝트를 수행했으며, 특히 **LLM Fine-tuning, RAG 시스템 구축, Function Call** 등의 분야에서 전문성을 보유하고 있습니다.`);
+            await typeText(contentArea, `**KT 핵심 프로젝트 및 주요 경력 프로젝트**를 정리해드리겠습니다.\n\n최재혁님은 **대규모 RAG 파이프라인, Realtime Voice Agent, Web Search Agent** 등 다양한 Enterprise GenAI PoC를 수행했습니다.`);
             
             await showProjects(contentArea);
             
-            await askQuestion(contentArea, '개인 프로젝트도 확인하시겠습니까?', 'showPersonalProjects');
+            await askQuestion(contentArea, '개인 프로젝트 및 오픈소스 활동도 확인하시겠습니까?', 'showPersonalProjects');
         }
 
         // --- Contact Flow ---
@@ -984,7 +938,7 @@
             // Thinking
             await showThinking(contentArea, [
                 '연락처 정보 검색 중...',
-                '기술 스택 분석: Python, LangChain, RAG...',
+                '기술 스택 분석: Azure, RAG, LangGraph...',
                 '자격증 정보 확인',
                 '수상 경력 정리 중...'
             ]);
@@ -1068,10 +1022,10 @@
             // Thinking
             await showThinking(contentArea, [
                 '최재혁 개발자 정보 검색 중...',
-                '최재혁은 AI Engineer로 KT에 재직 중...',
-                'CV, LLM, Time-Series 다양한 도메인 경험 확인',
-                'RAG 및 검색 증강 생성 기술 전문성 분석',
-                'AIFactory, GSITM 이전 경력 정리',
+                'KT에서 AI Engineer로 재직 중 확인...',
+                'Enterprise GenAI PoC 전문가 경험 분석',
+                'RAG, Agentic AI, Realtime Voice 기술 스택 확인',
+                'Azure 기반 인프라 구축 경험 정리',
                 '프로필 요약 생성 중...'
             ]);
             
@@ -1096,14 +1050,14 @@
             contentArea.appendChild(expContainer);
             await wait(600);
 
-            // 3. 경력 요약 (이제 안 씹히고 잘 나올 겁니다)
-            const summaryText = "**최재혁 | AI Engineer 주요 경력 요약**\n\n최재혁은 LLM·RAG·시계열 전반을 아우르는 실무 중심의 AI Engineer로, 대규모 데이터 처리부터 모델 학습·평가·서비스화까지 전 과정을 직접 설계·구현해 온 경험을 보유하고 있습니다.";
+            // 3. 경력 요약
+            const summaryText = "**최재혁 | AI Engineer 핵심 역량**\n\nLLM·RAG·Agentic AI·대규모 문서 처리 파이프라인을 중심으로 End-to-End 생성형 AI 시스템을 설계·구현합니다.\n\nPoC 수준을 넘어 실제 업무 시나리오와 운영 환경을 고려한 AI 서비스 구현에 강점이 있습니다.";
             await typeText(contentArea, summaryText);
             
             await wait(800);
 
             // 4. 질문
-            await askQuestion(contentArea, '프로젝트도 확인하시겠습니까?', 'showProjects');
+            await askQuestion(contentArea, 'KT 핵심 프로젝트도 확인하시겠습니까?', 'showProjects');
         }
 
         // --- Ask Question with Input ---
@@ -1150,18 +1104,18 @@
                     
                     // Thinking
                     await showThinking(contentArea, [
-                        '프로젝트 데이터 검색 중...',
-                        'RAG 시스템 구축 프로젝트 확인',
-                        'LLM Fine-tuning 경험 분석',
-                        'Docker 기반 MLOps 파이프라인 정리',
-                        '핵심 역량 요약 생성 중...'
+                        'KT 핵심 프로젝트 검색 중...',
+                        '메리츠 보험 RAG (28만 건) 확인',
+                        '신한은행 AI Branch 분석',
+                        'Web Search Agent, 법률 RAG 정리',
+                        'AIFactory, GSITM 프로젝트 정리 중...'
                     ]);
                     
                     await typeText(contentArea, `**주요 프로젝트 목록**입니다.`);
                     await showProjects(contentArea);
-                    await typeText(contentArea, `\n**프로젝트 기반 핵심 역량**\n\n1. **LLM & RAG 전문성**: QLora Fine-tuning, Ragas 평가, VectorDB 구축 등 LLM 전 주기 경험\n\n2. **MLOps 설계 능력**: Docker 기반 자동화 파이프라인, Task Scheduler 연동으로 실무 배포 경험\n\n3. **CV & 시계열 다양성**: Object Detection, Instance Segmentation, Prophet 등 다양한 도메인 경험\n\n4. **대회 설계 & 평가 능력**: 10개 이상의 AI 경진대회 문제 출제 및 평가 시스템 설계`);
+                    await typeText(contentArea, `\n**프로젝트 기반 핵심 역량**\n\n1. **대규모 RAG 파이프라인**: 28만 건 문서 대상 End-to-End 인덱싱 자동화, Parent-Child RAG 아키텍처\n\n2. **Realtime Voice Agent**: GPT-4o-Realtime API + WebSocket 기반 실시간 음성 AI 시스템\n\n3. **Agent Workflow 설계**: LangGraph 기반 Self-RAG / Corrective-RAG 적용, Hallucination 감소\n\n4. **Azure 기반 인프라**: Azure Functions, AI Search, Container App 환경 구축 경험`);
                     await wait(800);
-                    await askQuestion(contentArea, '\n개인 프로젝트도 확인하시겠습니까?', 'showPersonalProjects');
+                    await askQuestion(contentArea, '\n개인 프로젝트 및 오픈소스 활동도 확인하시겠습니까?', 'showPersonalProjects');
                     break;
                     
                 case 'showPersonalProjects':
@@ -1171,15 +1125,15 @@
                     // Thinking
                     await showThinking(contentArea, [
                         '개인 프로젝트 검색 중...',
+                        'HWP/HWPX 오픈소스 파서 확인',
                         'LangChain KR 밋업 발표 이력 확인',
-                        'YouTube 튜토리얼 제작 활동 분석',
-                        'Gemma 비서, 점메추 챗봇 등 사이드 프로젝트 정리',
+                        'Gemma Function Calling, LLaMA2 Fine-tuning 정리',
                         '차별화 포인트 생성 중...'
                     ]);
                     
-                    await typeText(contentArea, `**개인 프로젝트 및 발표 활동**입니다.`);
+                    await typeText(contentArea, `**개인 프로젝트 및 오픈소스 활동**입니다.`);
                     await showPersonalProjects(contentArea);
-                    await typeText(contentArea, `\n**개인 프로젝트 기반 차별화 포인트**\n\n1. **기술 공유 & 커뮤니티 기여**: LangChain KR 밋업 발표, YouTube 튜토리얼 제작 등 적극적인 지식 공유\n\n2. **실생활 문제 해결 능력**: Gemma 비서(카카오톡 연동), 점메추 챗봇 등 실용적인 AI 서비스 개발\n\n3. **자기주도 학습**: 업무 외 시간에도 지속적으로 신기술 학습 및 프로젝트화\n\n4. **End-to-End 구현 능력**: 모델 학습부터 Gradio/Streamlit 배포까지 전 과정 독립 수행`);
+                    await typeText(contentArea, `\n**개인 프로젝트 기반 차별화 포인트**\n\n1. **오픈소스 기여**: Korean HWP/HWPX 파서 개발 및 GitHub 공개\n\n2. **기술 커뮤니티 기여**: LangChain KR Meetup 발표, YouTube 튜토리얼 제작\n\n3. **실생활 문제 해결**: Gemma 기반 Function Calling 개인 비서 개발\n\n4. **End-to-End 구현 능력**: 모델 학습부터 Gradio/Streamlit 배포까지 전 과정 독립 수행`);
                     await wait(800);
                     await askQuestion(contentArea, '\n연락처와 기술 스택도 확인하시겠습니까?', 'showContact');
                     break;
@@ -1191,7 +1145,7 @@
                     // Thinking
                     await showThinking(contentArea, [
                         '연락처 정보 검색 중...',
-                        '기술 스택 분석: Python, LangChain, RAG...',
+                        '기술 스택 분석: Azure, RAG, LangGraph...',
                         '자격증 정보 확인',
                         '수상 경력 정리 중...'
                     ]);
@@ -1208,7 +1162,7 @@
                     await showThinking(contentArea, [
                         '경력 데이터 검색 중...',
                         'KT AI Engineer 재직 정보 확인',
-                        'AIFactory, GSITM 이전 경력 분석',
+                        'Enterprise GenAI PoC 경험 분석',
                         '경력 카드 생성 중...'
                     ]);
                     
@@ -1237,14 +1191,21 @@
 
         // --- Show Projects ---
         async function showProjects(contentArea) {
-            const projGrid = document.createElement('div');
-            projGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 mt-2 fade-in';
+            // KT 핵심 프로젝트 섹션
+            const ktSection = document.createElement('div');
+            ktSection.className = 'mb-6';
+            ktSection.innerHTML = `<h3 class="font-bold text-lg mb-3 text-gray-800 flex items-center gap-2">
+                <span class="w-2 h-2 bg-red-500 rounded-full"></span>KT Key Projects
+            </h3>`;
+            
+            const ktGrid = document.createElement('div');
+            ktGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 fade-in';
             
             resumeData.projects.forEach((proj, idx) => {
                 setTimeout(() => {
                     const card = document.createElement('div');
-                    card.className = 'info-card p-4 cursor-pointer';
-                    const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
+                    card.className = 'info-card p-4 cursor-pointer border-l-4 border-red-500';
+                    const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-red-50 text-red-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
                     
                     card.innerHTML = `
                         <div class="flex justify-between items-start mb-2">
@@ -1253,20 +1214,54 @@
                         </div>
                         <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
                         <div class="flex flex-wrap gap-1">${tagsHtml}</div>
-                        <div class="text-[10px] text-blue-500 mt-2 flex items-center gap-1">
+                        <div class="text-[10px] text-red-500 mt-2 flex items-center gap-1">
                             <i class="fa-solid fa-arrow-up-right-from-square"></i> 자세히 보기
                         </div>
                     `;
                     
-                    // 카드 클릭 시 모달 열기
                     card.addEventListener('click', () => openProjectModal(proj));
-                    
-                    projGrid.appendChild(card);
+                    ktGrid.appendChild(card);
                     chatContainer.scrollTop = chatContainer.scrollHeight;
                 }, idx * 150);
             });
-            contentArea.appendChild(projGrid);
-            await wait(resumeData.projects.length * 150 + 500);
+            
+            ktSection.appendChild(ktGrid);
+            contentArea.appendChild(ktSection);
+            await wait(resumeData.projects.length * 150 + 300);
+
+            // AIFactory & GSITM Selected Projects 섹션
+            const selectedSection = document.createElement('div');
+            selectedSection.className = 'mt-4';
+            selectedSection.innerHTML = `<h3 class="font-bold text-lg mb-3 text-gray-800 flex items-center gap-2">
+                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>Selected Projects (AIFactory / GSITM)
+            </h3>`;
+            
+            const selectedGrid = document.createElement('div');
+            selectedGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 fade-in';
+            
+            resumeData.selectedProjects.forEach((proj, idx) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = 'info-card p-4';
+                    const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
+                    
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">${proj.title}</h3>
+                            <span class="text-[10px] text-gray-400 whitespace-nowrap ml-2">${proj.company}</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
+                        <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                    `;
+                    
+                    selectedGrid.appendChild(card);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, idx * 150);
+            });
+            
+            selectedSection.appendChild(selectedGrid);
+            contentArea.appendChild(selectedSection);
+            await wait(resumeData.selectedProjects.length * 150 + 500);
         }
 
         // --- Modal Functions ---
