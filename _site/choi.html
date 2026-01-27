@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choi Jhyeok | AI Engineer Portfolio</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #0d0d0d; }
+        
+        /* 커서 깜빡임 */
+        .cursor::after { content: '●'; color: #000; animation: blink 1s infinite; margin-left: 2px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* 채팅 말풍선 */
+        .user-msg { background-color: #f3f3f3; border-radius: 1.5rem; padding: 10px 20px; display: inline-block; max-width: 80%; margin-left: auto; }
+
+        /* 카드 UI */
+        .info-card { border: 1px solid #e5e5e5; border-radius: 0.75rem; transition: all 0.2s ease; background: #fff; }
+        .info-card:hover { border-color: #8e8ea0; background-color: #f9f9f9; transform: translateY(-2px); }
+        
+        /* 애니메이션 */
+        .fade-in { animation: fadeIn 0.6s forwards; opacity: 0; transform: translateY(10px); }
+        @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+
+        /* 스크롤바 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #d1d1d1; border-radius: 3px; }
+
+        /* 선택 버튼 */
+        .choice-btn { 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-weight: 500;
+        }
+        .choice-btn:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4); }
+
+        /* 입력창 컨테이너 */
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 48px;
+            border-radius: 1.5rem;
+            background: #f4f4f4;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .input-container:focus-within {
+            border-color: #d1d1d1;
+            background: #fff;
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col overflow-hidden">
+
+    <!-- 1. Landing View -->
+    <div id="landing-view" class="flex-1 flex flex-col items-center justify-center p-4 transition-all duration-500">
+        <!-- Spline 3D Animation -->
+        <div class="w-48 h-48 md:w-64 md:h-64 mb-4 rounded-full overflow-hidden relative">
+            <iframe src='https://my.spline.design/voiceinteractionanimation-DahqAQJQXUxvX6GTwPYAo2nC/' frameborder='0' width='150%' height='150%' style='pointer-events: none; position: absolute; top: -25%; left: -25%;'></iframe>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">
+            무엇을 도와드릴까요?
+        </h1>
+        <div class="w-full max-w-2xl relative">
+            <div class="input-container">
+                <i class="fa-solid fa-magnifying-glass text-gray-400 ml-4 text-lg"></i>
+                <input type="text" id="search-input" class="w-full h-full bg-transparent border-none outline-none px-4 text-gray-800 placeholder-gray-400" placeholder="최재혁 개발자에 대해 알려줘" autocomplete="off">
+                <button id="send-btn" class="mr-3 w-8 h-8 rounded-lg bg-gray-300 text-white flex items-center justify-center hover:bg-black transition-colors">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-2 mt-6 justify-center text-sm text-gray-500">
+            <button class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-full hover:bg-gray-100 transition" onclick="startFlow('career')">💼 주요 경력</button>
+            <button class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-full hover:bg-gray-100 transition" onclick="startFlow('project')">🤖 RAG & LLM 프로젝트</button>
+            <button class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-full hover:bg-gray-100 transition" onclick="startFlow('contact')">📧 연락처 & Skill</button>
+        </div>
+    </div>
+
+    <!-- 2. Chat View -->
+    <div id="chat-view" class="hidden flex-1 flex flex-col h-full w-full max-w-4xl mx-auto p-4 md:p-6">
+        <div class="flex justify-between items-center py-3 border-b border-gray-100 mb-4">
+            <div class="font-semibold text-gray-700 flex items-center gap-2">
+                <span class="text-gray-400">Model:</span> Choi-Korean-97.1.19
+            </div>
+            <a href="index.html" class="text-sm text-gray-500 hover:text-black transition"><i class="fa-solid fa-rotate-right"></i> Reset</a>
+        </div>
+        <div id="chat-container" class="flex-1 overflow-y-auto pb-10 space-y-6 pr-2"></div>
+        
+        <!-- Chat Input Area -->
+        <div id="chat-input-area" class="mt-4 hidden">
+            <div class="input-container">
+                <i class="fa-solid fa-message text-gray-400 ml-4 text-lg"></i>
+                <input type="text" id="chat-input" class="w-full h-full bg-transparent border-none outline-none px-4 text-gray-800 placeholder-gray-400" placeholder="답변을 입력하세요..." autocomplete="off">
+                <button id="chat-send-btn" class="mr-3 w-8 h-8 rounded-lg bg-black text-white flex items-center justify-center hover:bg-gray-700 transition-colors">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Disabled Input -->
+        <div id="disabled-input" class="mt-4 opacity-60 pointer-events-none">
+            <div class="w-full h-12 bg-gray-100 rounded-full border border-gray-200 flex items-center px-4 justify-between">
+                <span class="text-gray-400 text-sm">AI Engineer Choi Jhyeok Portfolio</span>
+                <i class="fa-solid fa-stop text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript -->
+    <script>
+        // --- Data Structure (User Resume) ---
+        const resumeData = {
+            intro: `**AI Engineer 최재혁**님에 대한 분석 결과입니다.\n\n최재혁님은 **CV(Computer Vision), LLM, Time-Series** 등 다양한 도메인을 아우르는 AI 개발자입니다. 특히 최근에는 **LLM과 RAG(검색 증강 생성) 기술**을 활용하여 실제 비즈니스 문제를 해결하는 데 집중하고 있습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 이전에는 **AIFactory**와 **GSITM**에서 Data Scientist로 활약했습니다.`,
+            
+            experience: [
+                { role: "AI Engineer", company: "KT", period: "2024.07 ~ 현재", desc: "LLM 및 AI 서비스 개발 및 운영" },
+                { role: "Data Scientist", company: "AIFactory", period: "2022.04 ~ 2024.05", desc: "RAG 시스템 구축, Docker 기반 MLOps 파이프라인 설계, 각종 AI 경진대회 문제 출제 및 평가 모델 개발" },
+                { role: "Data Scientist", company: "GSITM", period: "2021.07 ~ 2022.01", desc: "유전 알고리즘 기반 물류 최적화, 시계열 판매량 예측 프로젝트 수행" }
+            ],
+
+            education: [
+                { degree: "정보통계학과, 컴퓨터과학과 학사", school: "경상대학교", period: "2016.03 ~ 2022.02" },
+                { degree: "빅리더 아카데미 수료", school: "2020 데이터 청년 캠퍼스", period: "2020.06 ~ 2020.09" }
+            ],
+
+            awards: [
+                { title: "전주시 빅데이터 공모전 최우수상", org: "전주시", period: "2021.04 ~ 2021.05" },
+                { title: "더존비즈온 중소,중견 빅데이터 장려상", org: "더존비즈온", period: "2020.09 ~ 2020.11" },
+                { title: "학술 창의력 경진대회 은상", org: "경상대학교 자연과학대학", period: "2020.09 ~ 2020.10" },
+                { title: "빅리더 아카데미 경남도지사상", org: "2020 데이터 청년 캠퍼스", period: "2020.06 ~ 2020.09" }
+            ],
+
+            certificates: [
+                { name: "데이터분석준전문가(ADsP)", id: "ADsP-0276326" },
+                { name: "SQL개발자(SQLD)", id: "SQLD-041006581" },
+                { name: "AICE Associate", id: "AICE_20230408_A00006" }
+            ],
+
+            projects: [
+                {
+                    title: "한국전력공사 사내 데이터 RAG 구축",
+                    period: "2024.01 ~ 2024.05",
+                    company: "AIFactory",
+                    tags: ["LLM", "RAG", "QLora", "Ragas"],
+                    desc: "Llama2, Gemma 등을 QLora로 Fine-tuning하고, Ragas로 성능을 평가하여 사내/외 데이터를 답변하는 챗봇 시스템 구축."
+                },
+                {
+                    title: "Docker 기반 시계열 예측 파이프라인",
+                    period: "2023.10 ~ 2023.12",
+                    company: "AIFactory",
+                    tags: ["Docker", "Python", "Automation"],
+                    desc: "데이터 갱신부터 모델 학습, 추론까지 자동으로 수행하는 컨테이너 환경 설계. Task Scheduler와 연동하여 프로세스 효율화."
+                },
+                {
+                    title: "디브릿지: 채팅형 서버 관제 서비스",
+                    period: "2023.07 ~ 2023.10",
+                    company: "AIFactory",
+                    tags: ["OpenAI API", "Function Call", "VectorDB"],
+                    desc: "자연어 질의를 통해 서버 상태를 모니터링하고 조치하는 Function Call 기반 챗봇 서비스. 11개의 관제 API 호출 가능."
+                },
+                {
+                    title: "어종 식별 및 분류 알고리즘 개발",
+                    period: "2023.10 ~ 2023.11",
+                    company: "AIFactory",
+                    tags: ["Object Detection", "YoloV5", "Macro F1"],
+                    desc: "8가지 어종에 대한 Object-detection 대회 설계 및 출제. Yolo V5를 통한 어종 식별 모델 개발."
+                },
+                {
+                    title: "KT 통신망 안정성 확보 AI 해커톤",
+                    period: "2023.07 ~ 2023.09",
+                    company: "AIFactory",
+                    tags: ["Time-Series", "Classification", "MAE"],
+                    desc: "무선 기지국 장비 통계 데이터를 활용한 인구 밀집도 예측 및 경보 유형 분류 대회 설계."
+                },
+                {
+                    title: "NH투자증권 빅데이터 경진대회",
+                    period: "2022.09 ~ 2022.12",
+                    company: "AIFactory",
+                    tags: ["Clustering", "K-means", "Data Analysis"],
+                    desc: "NH 고객 거래 데이터를 통한 고객군 분류 및 자산 변동률 분석. 군집별 특성과 나이 기반 보고서 작성."
+                },
+                {
+                    title: "DL E&C 안전장구 착용 탐지",
+                    period: "2022.09 ~ 2022.11",
+                    company: "AIFactory",
+                    tags: ["Object Detection", "COCO", "Macro F1"],
+                    desc: "Object Detection을 활용한 10개의 안전장비 착용 여부 탐지 대회 설계."
+                },
+                {
+                    title: "LG 입자 형태 분석 해커톤",
+                    period: "2022.07 ~ 2022.08",
+                    company: "AIFactory",
+                    tags: ["Instance Segmentation", "Mask R-CNN"],
+                    desc: "Mask R-CNN을 통한 유체상 입자 검출 대회 설계. IoU 반영 F1-Score 평가."
+                },
+                {
+                    title: "유전알고리즘 물류매칭",
+                    period: "2021.10 ~ 2021.12",
+                    company: "GSITM",
+                    tags: ["Genetic Algorithm", "DEAP", "Optimization"],
+                    desc: "DEAP 유전 알고리즘을 활용하여 최대 적재량 내 최대 이익률 상품 조합 추천 프로세스 개발."
+                },
+                {
+                    title: "편의점 판매량 예측 프로젝트",
+                    period: "2021.09 ~ 2022.09",
+                    company: "GSITM",
+                    tags: ["Time-Series", "Prophet", "Forecasting"],
+                    desc: "Meta의 Prophet을 사용하여 상품별 판매량 예측. 편의점별 재고 관리 효율화 방안 제시."
+                }
+            ],
+
+            personalProjects: [
+                {
+                    title: "Gemma 비서 (Personal)",
+                    tags: ["Gemma-7b", "SFT", "KakaoTalk"],
+                    desc: "Gemma-7b 모델을 SFT 학습시켜 '시청 가는 법', '주가 조회' 등 함수 호출 기능을 수행하고 카카오톡으로 결과를 전송하는 개인 비서."
+                },
+                {
+                    title: "LangChain 웹 서비스 (Personal)",
+                    tags: ["Streamlit", "LangChain", "Web"],
+                    desc: "LangChain KR 밋업 발표 주제. Streamlit을 활용하여 나만의 RAG 기반 장소 추천 및 보고서 자동 생성 웹 서비스 배포."
+                },
+                {
+                    title: "Llama2 Fine-tune & RAG",
+                    tags: ["Llama2", "SFTTrainer", "LoRA"],
+                    desc: "llama2 fine-tuning을 쉽게 하기 위한 방법 설계 및 RAG 프로세스 설계 방법 발표. YouTube 발표 영상 공개."
+                },
+                {
+                    title: "챗GPT 점메추 메뉴판",
+                    tags: ["ChatGPT", "LangChain", "RAG"],
+                    desc: "ChatGPT와 Langchain을 사용해서 PDF 기반 RAG 챗봇 시스템 구축. YouTube 발표 영상 공개."
+                },
+                {
+                    title: "MMPose Human Pose Estimation",
+                    tags: ["MMPose", "HRNet", "Gradio"],
+                    desc: "MMPose를 사용하여 MPII 데이터셋으로 사람의 key-point를 추론하는 과정 설명. YouTube 발표."
+                }
+            ],
+
+            skills: ["Python", "PyTorch", "TensorFlow", "LangChain", "RAG", "LLM Fine-tuning", "Docker", "MySQL", "GCP"],
+            
+            contact: {
+                email: "wowogur12@naver.com",
+                phone: "+82 010-4479-6775",
+                blog: "cjhyeok.tistory.com",
+                github: "github.com/choijhyeok"
+            }
+        };
+
+        // --- State Management ---
+        let currentFlow = null;
+        let currentStep = 0;
+        let waitingForInput = false;
+        let pendingAction = null;
+
+        // --- DOM Elements ---
+        const searchInput = document.getElementById('search-input');
+        const landingView = document.getElementById('landing-view');
+        const chatView = document.getElementById('chat-view');
+        const chatContainer = document.getElementById('chat-container');
+        const chatInputArea = document.getElementById('chat-input-area');
+        const chatInput = document.getElementById('chat-input');
+        const disabledInput = document.getElementById('disabled-input');
+
+        // --- Fixed Query ---
+        const fixedQuery = '최재혁 개발자에 대해 알려줘';
+        let inputIndex = 0;
+
+        // --- Event Listeners ---
+        searchInput.addEventListener('input', (e) => {
+            // 한 글자 입력할 때마다 fixedQuery의 다음 글자로 대체
+            if (inputIndex < fixedQuery.length) {
+                inputIndex++;
+                searchInput.value = fixedQuery.substring(0, inputIndex);
+            } else {
+                searchInput.value = fixedQuery;
+            }
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && inputIndex > 0) startFlow('full');
+        });
+        document.getElementById('send-btn').addEventListener('click', () => {
+            if (inputIndex > 0) startFlow('full');
+        });
+
+        // --- Chat Input Fixed Query ---
+        const fixedChatQuery = '네 확인해 주세요';
+        let chatInputIndex = 0;
+
+        chatInput.addEventListener('input', (e) => {
+            // 한 글자 입력할 때마다 fixedChatQuery의 다음 글자로 대체
+            if (chatInputIndex < fixedChatQuery.length) {
+                chatInputIndex++;
+                chatInput.value = fixedChatQuery.substring(0, chatInputIndex);
+            } else {
+                chatInput.value = fixedChatQuery;
+            }
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && chatInputIndex > 0) handleUserInput();
+        });
+        document.getElementById('chat-send-btn').addEventListener('click', () => {
+            if (chatInputIndex > 0) handleUserInput();
+        });
+
+        // --- Flow Control ---
+        function startFlow(flowType) {
+            currentFlow = flowType;
+            currentStep = 0;
+            
+            landingView.classList.add('hidden');
+            chatView.classList.remove('hidden');
+            
+            // User message (always show the same)
+            const userQuery = getFlowQuery(flowType);
+            addUserMessage(userQuery);
+            
+            setTimeout(() => processFlow(), 600);
+        }
+
+        function getFlowQuery(flowType) {
+            switch(flowType) {
+                case 'career': return '최재혁의 주요 경력을 요약해줘';
+                case 'project': return 'RAG 및 LLM 프로젝트 보여줘';
+                case 'contact': return '연락처와 기술 스택 알려줘';
+                default: return '최재혁 개발자에 대해 알려줘';
+            }
+        }
+
+        async function processFlow() {
+            switch(currentFlow) {
+                case 'career':
+                    await careerFlow();
+                    break;
+                case 'project':
+                    await projectFlow();
+                    break;
+                case 'contact':
+                    await contactFlow();
+                    break;
+                case 'full':
+                default:
+                    await fullFlow();
+                    break;
+            }
+        }
+
+        // --- Career Flow ---
+        async function careerFlow() {
+            const contentArea = createAIWrapper();
+            
+            // Step 1: Career intro
+            await typeText(contentArea, `**최재혁님의 주요 경력**을 정리해드리겠습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 총 **3개 회사**에서 AI/Data Science 관련 경력을 쌓았습니다.`);
+            
+            // Step 2: Experience cards
+            const expContainer = document.createElement('div');
+            expContainer.className = 'grid gap-3 mt-2 fade-in';
+            resumeData.experience.forEach(exp => {
+                const item = document.createElement('div');
+                item.className = 'flex flex-col md:flex-row md:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100';
+                item.innerHTML = `
+                    <div>
+                        <span class="font-bold text-gray-900 text-lg">${exp.company}</span>
+                        <span class="text-sm text-gray-600 ml-2">${exp.role}</span>
+                        <p class="text-xs text-gray-500 mt-1">${exp.desc}</p>
+                    </div>
+                    <div class="text-sm text-blue-600 font-medium mt-2 md:mt-0 whitespace-nowrap">${exp.period}</div>
+                `;
+                expContainer.appendChild(item);
+            });
+            contentArea.appendChild(expContainer);
+            await wait(500);
+
+            // Step 3: Career Summary
+            await typeText(contentArea, `\n**최재혁 | AI Engineer 주요 경력 요약**\n\n최재혁은 LLM·RAG·시계열 전반을 아우르는 실무 중심의 AI Engineer로,\n\n대규모 데이터 처리부터 모델 학습·평가·서비스화까지 전 과정을 직접 설계·구현해 온 경험을 보유하고 있습니다.`);
+            await wait(800);
+
+            // Step 4: Ask about projects
+            await askQuestion(contentArea, '\n프로젝트도 확인하시겠습니까?', 'showProjects');
+        }
+
+        // --- Project Flow ---
+        async function projectFlow() {
+            const contentArea = createAIWrapper();
+            
+            await typeText(contentArea, `**RAG 및 LLM 관련 프로젝트**를 중심으로 정리해드리겠습니다.\n\n최재혁님은 다양한 AI 프로젝트를 수행했으며, 특히 **LLM Fine-tuning, RAG 시스템 구축, Function Call** 등의 분야에서 전문성을 보유하고 있습니다.`);
+            
+            await showProjects(contentArea);
+            
+            await askQuestion(contentArea, '개인 프로젝트도 확인하시겠습니까?', 'showPersonalProjects');
+        }
+
+        // --- Contact Flow ---
+        async function contactFlow() {
+            const contentArea = createAIWrapper();
+            
+            await typeText(contentArea, `**최재혁님의 연락처 및 기술 스택**입니다.`);
+            
+            // Contact info
+            const contactDiv = document.createElement('div');
+            contactDiv.className = 'bg-gray-900 text-white p-4 rounded-xl mt-3 fade-in shadow-md';
+            contactDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-blue-300"><i class="fa-solid fa-address-card mr-2"></i>연락처</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400"></i> <a href="mailto:${resumeData.contact.email}" class="hover:text-blue-300 transition">${resumeData.contact.email}</a></div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-phone text-gray-400"></i> ${resumeData.contact.phone}</div>
+                    <div class="flex items-center gap-3"><i class="fa-brands fa-github text-gray-400"></i> <a href="https://${resumeData.contact.github}" target="_blank" class="hover:text-blue-300 transition">GitHub</a></div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-blog text-gray-400"></i> <a href="https://${resumeData.contact.blog}" target="_blank" class="hover:text-blue-300 transition">Tistory Blog</a></div>
+                </div>
+            `;
+            contentArea.appendChild(contactDiv);
+            await wait(300);
+
+            // Skills
+            const skillsDiv = document.createElement('div');
+            skillsDiv.className = 'mt-4 fade-in';
+            skillsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-code mr-2"></i>기술 스택</h3>
+                <div class="flex flex-wrap gap-2">
+                    ${resumeData.skills.map(s => `<span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">${s}</span>`).join('')}
+                </div>
+            `;
+            contentArea.appendChild(skillsDiv);
+            await wait(300);
+
+            // Certificates
+            const certDiv = document.createElement('div');
+            certDiv.className = 'mt-4 fade-in';
+            certDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-certificate mr-2"></i>자격증</h3>
+                <div class="grid gap-2">
+                    ${resumeData.certificates.map(c => `
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                            <span class="font-medium text-gray-800">${c.name}</span>
+                            <span class="text-xs text-gray-400">${c.id}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(certDiv);
+            await wait(300);
+
+            // Awards
+            const awardsDiv = document.createElement('div');
+            awardsDiv.className = 'mt-4 fade-in';
+            awardsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-trophy mr-2"></i>수상 경력</h3>
+                <div class="grid gap-2">
+                    ${resumeData.awards.map(a => `
+                        <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                            <div>
+                                <span class="font-medium text-gray-800">${a.title}</span>
+                                <span class="text-xs text-gray-500 ml-2">${a.org}</span>
+                            </div>
+                            <span class="text-xs text-gray-400">${a.period}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(awardsDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            await wait(500);
+
+            await askQuestion(contentArea, '주요 경력도 확인하시겠습니까?', 'showCareer');
+        }
+
+        // --- Full Flow ---
+        async function fullFlow() {
+            const contentArea = createAIWrapper();
+            
+            // Intro
+            await typeText(contentArea, resumeData.intro);
+            
+            // Experience summary
+            const expContainer = document.createElement('div');
+            expContainer.className = 'grid gap-3 mt-2 fade-in';
+            resumeData.experience.forEach(exp => {
+                const item = document.createElement('div');
+                item.className = 'flex flex-col md:flex-row md:items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100';
+                item.innerHTML = `
+                    <div>
+                        <span class="font-bold text-gray-900">${exp.company}</span>
+                        <span class="text-sm text-gray-600"> | ${exp.role}</span>
+                    </div>
+                    <div class="text-xs text-gray-400 mt-1 md:mt-0">${exp.period}</div>
+                `;
+                expContainer.appendChild(item);
+            });
+            contentArea.appendChild(expContainer);
+            await wait(500);
+
+            // Career Summary
+            await typeText(contentArea, `\n**최재혁 | AI Engineer 주요 경력 요약**\n\n최재혁은 LLM·RAG·시계열 전반을 아우르는 실무 중심의 AI Engineer로,\n\n대규모 데이터 처리부터 모델 학습·평가·서비스화까지 전 과정을 직접 설계·구현해 온 경험을 보유하고 있습니다.`);
+            await wait(800);
+
+            await askQuestion(contentArea, '\n프로젝트도 확인하시겠습니까?', 'showProjects');
+        }
+
+        // --- Ask Question with Input ---
+        async function askQuestion(contentArea, question, actionOnYes) {
+            await typeText(contentArea, `\n${question}`);
+            
+            pendingAction = actionOnYes;
+            waitingForInput = true;
+            
+            // Reset chat input index for new question
+            chatInputIndex = 0;
+            chatInput.value = '';
+            
+            // Show input area
+            disabledInput.classList.add('hidden');
+            chatInputArea.classList.remove('hidden');
+            chatInput.placeholder = '답변을 입력하세요...';
+            chatInput.focus();
+        }
+
+        // --- Handle User Input ---
+        async function handleUserInput() {
+            const userInput = chatInput.value.trim();
+            chatInput.value = '';
+            chatInputIndex = 0;
+            
+            // Always show "네 확인해 주세요" as user message
+            addUserMessage('네 확인해 주세요');
+            
+            waitingForInput = false;
+            chatInputArea.classList.add('hidden');
+            disabledInput.classList.remove('hidden');
+            
+            setTimeout(() => executeAction(pendingAction), 600);
+        }
+
+        async function executeAction(action) {
+            const contentArea = createAIWrapper();
+            
+            switch(action) {
+                case 'showProjects':
+                    await typeText(contentArea, `**주요 프로젝트 목록**입니다.`);
+                    await showProjects(contentArea);
+                    await typeText(contentArea, `\n**프로젝트 기반 핵심 역량**\n\n1️⃣ **LLM & RAG 전문성**: QLora Fine-tuning, Ragas 평가, VectorDB 구축 등 LLM 전 주기 경험\n\n2️⃣ **MLOps 설계 능력**: Docker 기반 자동화 파이프라인, Task Scheduler 연동으로 실무 배포 경험\n\n3️⃣ **CV & 시계열 다양성**: Object Detection, Instance Segmentation, Prophet 등 다양한 도메인 경험\n\n4️⃣ **대회 설계 & 평가 능력**: 10개 이상의 AI 경진대회 문제 출제 및 평가 시스템 설계`);
+                    await wait(800);
+                    await askQuestion(contentArea, '\n개인 프로젝트도 확인하시겠습니까?', 'showPersonalProjects');
+                    break;
+                    
+                case 'showPersonalProjects':
+                    await typeText(contentArea, `**개인 프로젝트 및 발표 활동**입니다.`);
+                    await showPersonalProjects(contentArea);
+                    await typeText(contentArea, `\n**개인 프로젝트 기반 차별화 포인트**\n\n1️⃣ **기술 공유 & 커뮤니티 기여**: LangChain KR 밋업 발표, YouTube 튜토리얼 제작 등 적극적인 지식 공유\n\n2️⃣ **실생활 문제 해결 능력**: Gemma 비서(카카오톡 연동), 점메추 챗봇 등 실용적인 AI 서비스 개발\n\n3️⃣ **자기주도 학습**: 업무 외 시간에도 지속적으로 신기술 학습 및 프로젝트화\n\n4️⃣ **End-to-End 구현 능력**: 모델 학습부터 Gradio/Streamlit 배포까지 전 과정 독립 수행`);
+                    await wait(800);
+                    await askQuestion(contentArea, '\n연락처와 기술 스택도 확인하시겠습니까?', 'showContact');
+                    break;
+                    
+                case 'showContact':
+                    await showContactInfo(contentArea);
+                    await typeText(contentArea, `\n더 궁금한 점이 있으시면 상단의 **Reset** 버튼을 눌러 다시 시작해주세요! 😊`);
+                    break;
+                    
+                case 'showCareer':
+                    await typeText(contentArea, `**주요 경력**입니다.`);
+                    const expContainer = document.createElement('div');
+                    expContainer.className = 'grid gap-3 mt-2 fade-in';
+                    resumeData.experience.forEach(exp => {
+                        const item = document.createElement('div');
+                        item.className = 'flex flex-col md:flex-row md:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-100';
+                        item.innerHTML = `
+                            <div>
+                                <span class="font-bold text-gray-900 text-lg">${exp.company}</span>
+                                <span class="text-sm text-gray-600 ml-2">${exp.role}</span>
+                                <p class="text-xs text-gray-500 mt-1">${exp.desc}</p>
+                            </div>
+                            <div class="text-sm text-blue-600 font-medium mt-2 md:mt-0 whitespace-nowrap">${exp.period}</div>
+                        `;
+                        expContainer.appendChild(item);
+                    });
+                    contentArea.appendChild(expContainer);
+                    await wait(500);
+                    await askQuestion(contentArea, '프로젝트도 확인하시겠습니까?', 'showProjects');
+                    break;
+            }
+        }
+
+        // --- Show Projects ---
+        async function showProjects(contentArea) {
+            const projGrid = document.createElement('div');
+            projGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 mt-2 fade-in';
+            
+            resumeData.projects.forEach((proj, idx) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = 'info-card p-4';
+                    const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
+                    
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">${proj.title}</h3>
+                            <span class="text-[10px] text-gray-400 whitespace-nowrap ml-2">${proj.period}</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
+                        <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                    `;
+                    projGrid.appendChild(card);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, idx * 150);
+            });
+            contentArea.appendChild(projGrid);
+            await wait(resumeData.projects.length * 150 + 500);
+        }
+
+        // --- Show Personal Projects ---
+        async function showPersonalProjects(contentArea) {
+            const projGrid = document.createElement('div');
+            projGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 mt-2 fade-in';
+            
+            resumeData.personalProjects.forEach((proj, idx) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = 'info-card p-4';
+                    const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
+                    
+                    card.innerHTML = `
+                        <h3 class="font-bold text-gray-800 text-sm mb-2">${proj.title}</h3>
+                        <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
+                        <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                    `;
+                    projGrid.appendChild(card);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, idx * 150);
+            });
+            contentArea.appendChild(projGrid);
+            await wait(resumeData.personalProjects.length * 150 + 500);
+        }
+
+        // --- Show Contact Info ---
+        async function showContactInfo(contentArea) {
+            await typeText(contentArea, `**최재혁님의 연락처 및 기술 스택**입니다.`);
+            
+            // Contact info
+            const contactDiv = document.createElement('div');
+            contactDiv.className = 'bg-gray-900 text-white p-4 rounded-xl mt-3 fade-in shadow-md';
+            contactDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-blue-300"><i class="fa-solid fa-address-card mr-2"></i>연락처</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400"></i> <a href="mailto:${resumeData.contact.email}" class="hover:text-blue-300 transition">${resumeData.contact.email}</a></div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-phone text-gray-400"></i> ${resumeData.contact.phone}</div>
+                    <div class="flex items-center gap-3"><i class="fa-brands fa-github text-gray-400"></i> <a href="https://${resumeData.contact.github}" target="_blank" class="hover:text-blue-300 transition">GitHub</a></div>
+                    <div class="flex items-center gap-3"><i class="fa-solid fa-blog text-gray-400"></i> <a href="https://${resumeData.contact.blog}" target="_blank" class="hover:text-blue-300 transition">Tistory Blog</a></div>
+                </div>
+            `;
+            contentArea.appendChild(contactDiv);
+            await wait(300);
+
+            // Skills
+            const skillsDiv = document.createElement('div');
+            skillsDiv.className = 'mt-4 fade-in';
+            skillsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-code mr-2"></i>기술 스택</h3>
+                <div class="flex flex-wrap gap-2">
+                    ${resumeData.skills.map(s => `<span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">${s}</span>`).join('')}
+                </div>
+            `;
+            contentArea.appendChild(skillsDiv);
+            await wait(300);
+
+            // Certificates
+            const certDiv = document.createElement('div');
+            certDiv.className = 'mt-4 fade-in';
+            certDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-certificate mr-2"></i>자격증</h3>
+                <div class="grid gap-2">
+                    ${resumeData.certificates.map(c => `
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                            <span class="font-medium text-gray-800">${c.name}</span>
+                            <span class="text-xs text-gray-400">${c.id}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(certDiv);
+            await wait(300);
+
+            // Awards
+            const awardsDiv = document.createElement('div');
+            awardsDiv.className = 'mt-4 fade-in';
+            awardsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-trophy mr-2"></i>수상 경력</h3>
+                <div class="grid gap-2">
+                    ${resumeData.awards.map(a => `
+                        <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                            <div>
+                                <span class="font-medium text-gray-800">${a.title}</span>
+                                <span class="text-xs text-gray-500 ml-2">${a.org}</span>
+                            </div>
+                            <span class="text-xs text-gray-400">${a.period}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(awardsDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            await wait(300);
+        }
+
+        // --- Helper Functions ---
+        function createAIWrapper() {
+            const aiWrapper = document.createElement('div');
+            aiWrapper.className = 'flex gap-4 fade-in mt-4 items-start max-w-full';
+            aiWrapper.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-[#10a37f] flex-shrink-0 flex items-center justify-center text-white text-sm shadow-sm">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div class="flex-1 space-y-3 overflow-hidden ai-content-area"></div>
+            `;
+            chatContainer.appendChild(aiWrapper);
+            return aiWrapper.querySelector('.ai-content-area');
+        }
+
+        function addUserMessage(text) {
+            const userMsg = document.createElement('div');
+            userMsg.className = 'flex justify-end fade-in';
+            userMsg.innerHTML = `<div class="user-msg text-sm md:text-base">${text}</div>`;
+            chatContainer.appendChild(userMsg);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function typeText(container, text) {
+            return new Promise(resolve => {
+                const p = document.createElement('p');
+                p.className = 'text-gray-800 leading-relaxed text-sm md:text-base';
+                container.appendChild(p);
+                
+                const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-black">$1</strong>').replace(/\n/g, '<br>');
+                
+                p.innerHTML = `<span class="cursor"></span>`;
+                
+                const words = formattedText.split(" ");
+                let wordIndex = 0;
+
+                const interval = setInterval(() => {
+                    if (wordIndex < words.length) {
+                        const word = words[wordIndex] + " ";
+                        p.innerHTML = p.innerHTML.replace('<span class="cursor"></span>', word + '<span class="cursor"></span>');
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                        wordIndex++;
+                    } else {
+                        clearInterval(interval);
+                        const cursor = p.querySelector('.cursor');
+                        if (cursor) cursor.remove();
+                        resolve();
+                    }
+                }, 40);
+            });
+        }
+
+        function wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
+</body>
+</html>

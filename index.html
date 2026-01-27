@@ -332,11 +332,11 @@
             background: #2a2a2a;
         }
 
-        /* Resume 버튼 */
+        /* Resume & Tech 버튼 */
         .resume-btn {
             position: fixed;
             top: 1rem;
-            right: 1rem;
+            right: 7.5rem;
             z-index: 50;
             display: flex;
             align-items: center;
@@ -355,6 +355,29 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
+
+        .tech-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+        .tech-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
     </style>
 </head>
 <body class="h-screen flex overflow-hidden">
@@ -362,6 +385,12 @@
     <a href="/resume" class="resume-btn">
         <i class="fa-solid fa-file-lines"></i>
         <span>Resume</span>
+    </a>
+
+    <!-- Tech Button -->
+    <a href="https://choijtech.github.io/" target="_blank" class="tech-btn">
+        <i class="fa-solid fa-laptop-code"></i>
+        <span>Tech</span>
     </a>
 
     <!-- Sidebar Open Button (접혔을 때만 보임) -->

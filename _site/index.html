@@ -64,16 +64,453 @@
             border-color: #d1d1d1;
             background: #fff;
         }
+
+        /* 프로젝트 모달 */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: #fff;
+            border-radius: 16px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+        .modal-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #e5e5e5;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            border-radius: 16px 16px 0 0;
+        }
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f3f3f3;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            transition: all 0.2s;
+        }
+        .modal-close:hover {
+            background: #e5e5e5;
+            color: #000;
+        }
+        .modal-body {
+            padding: 24px;
+        }
+        .modal-section {
+            margin-bottom: 20px;
+        }
+        .modal-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .modal-section-content {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.7;
+        }
+        .modal-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #555;
+            margin-right: 6px;
+            margin-bottom: 6px;
+        }
+        .modal-highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        .modal-list {
+            list-style: none;
+            padding: 0;
+        }
+        .modal-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #444;
+        }
+        .modal-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #10a37f;
+            font-weight: bold;
+        }
+
+        /* Thinking 패널 */
+        .thinking-panel {
+            background: #f7f7f8;
+            border: 1px solid #e5e5e5;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        .thinking-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .thinking-header:hover {
+            background: #ececec;
+        }
+        .thinking-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+        }
+        .thinking-spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #ccc;
+            border-top-color: #666;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .thinking-content {
+            padding: 0 14px 12px;
+            font-size: 12px;
+            color: #888;
+            line-height: 1.6;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .thinking-content.collapsed {
+            display: none;
+        }
+        .thinking-line {
+            padding: 2px 0;
+            opacity: 0;
+            animation: fadeInLine 0.3s forwards;
+        }
+        @keyframes fadeInLine {
+            to { opacity: 1; }
+        }
+
+        /* 사이드바 */
+        .sidebar {
+            width: 260px;
+            background: #171717;
+            color: #ececec;
+            transition: transform 0.3s ease;
+        }
+        .sidebar-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 14px;
+        }
+        .sidebar-btn:hover {
+            background: #2a2a2a;
+        }
+        .sidebar-btn.active {
+            background: #2a2a2a;
+        }
+        .sidebar-divider {
+            height: 1px;
+            background: #333;
+            margin: 8px 12px;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                z-index: 50;
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+        /* 사이드바 접기 */
+        .sidebar.collapsed {
+            width: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        .sidebar.collapsed .sidebar-content {
+            display: none;
+        }
+        .sidebar.collapsed .sidebar-header {
+            display: none;
+        }
+        /* 사이드바 열기 버튼 (접혔을 때만 보임) */
+        .sidebar-open-btn {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            z-index: 40;
+            width: 36px;
+            height: 36px;
+            background: #171717;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #ececec;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .sidebar-open-btn:hover {
+            background: #2a2a2a;
+        }
+        .sidebar-open-btn.visible {
+            display: flex;
+        }
+        .sidebar-toggle-btn {
+            width: 36px;
+            height: 36px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            color: #ececec;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+        .sidebar-toggle-btn:hover {
+            background: #2a2a2a;
+        }
+
+        /* Resume & Tech 버튼 */
+        .resume-btn {
+            position: fixed;
+            top: 1rem;
+            right: 7.5rem;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+        .resume-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .tech-btn {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+        .tech-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
     </style>
 </head>
-<body class="h-screen flex flex-col overflow-hidden">
+<body class="h-screen flex overflow-hidden">
+    <!-- Resume Button -->
+    <a href="/resume" class="resume-btn">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>Resume</span>
+    </a>
 
+    <!-- Tech Button -->
+    <a href="https://choijtech.github.io/" target="_blank" class="tech-btn">
+        <i class="fa-solid fa-laptop-code"></i>
+        <span>Tech</span>
+    </a>
+
+    <!-- Sidebar Open Button (접혔을 때만 보임) -->
+    <button id="sidebar-open-btn" class="sidebar-open-btn" title="사이드바 열기">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Mobile Menu Toggle -->
+    <button id="mobile-menu-btn" class="md:hidden fixed top-4 left-4 z-50 w-10 h-10 bg-gray-800 text-white rounded-lg flex items-center justify-center">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar flex flex-col h-full">
+        <div class="sidebar-header p-2 flex items-center justify-between">
+            <button id="sidebar-toggle" class="sidebar-toggle-btn" title="사이드바 접기">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <a href="index.html" class="sidebar-toggle-btn" title="New chat">
+                <i class="fa-regular fa-pen-to-square"></i>
+            </a>
+        </div>
+        
+        <!-- 메인화면용 컨텐츠 -->
+        <div id="sidebar-main" class="sidebar-content flex-1 overflow-y-auto px-3">
+            <div class="text-xs text-gray-500 px-3 py-2 font-medium">🎯 2026년 목표</div>
+            <div class="space-y-1">
+                <div class="sidebar-btn text-sm">
+                    <i class="fa-solid fa-robot text-red-400"></i>
+                    <span>Enterprise GenAI 실전 배포</span>
+                </div>
+                <div class="sidebar-btn text-sm">
+                    <i class="fa-solid fa-microphone text-blue-400"></i>
+                    <span>Realtime Voice Agent 고도화</span>
+                </div>
+                <div class="sidebar-btn text-sm">
+                    <i class="fa-solid fa-code-branch text-green-400"></i>
+                    <span>오픈소스 기여 확대</span>
+                </div>
+            </div>
+            <div class="sidebar-divider mt-4"></div>
+            <div class="text-xs text-gray-500 px-3 py-2 font-medium">💡 Core Strengths</div>
+            <div class="space-y-1">
+                <div class="sidebar-btn text-sm">
+                    <span>🏢 Enterprise AI PoC</span>
+                </div>
+                <div class="sidebar-btn text-sm">
+                    <span>📄 대규모 문서 RAG</span>
+                </div>
+                <div class="sidebar-btn text-sm">
+                    <span>🤖 Agent Workflow 설계</span>
+                </div>
+                <div class="sidebar-btn text-sm">
+                    <span>☁️ Azure 기반 인프라</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 채팅화면용 네비게이션 (동적 생성) -->
+        <div id="sidebar-chat" class="sidebar-content flex-1 overflow-y-auto px-3 hidden">
+            <div class="text-xs text-gray-500 px-3 py-2 font-medium">💬 현재 대화</div>
+            <div id="nav-buttons" class="space-y-1">
+                <!-- 동적으로 버튼 추가됨 -->
+            </div>
+        </div>
+
+        <!-- 프로필 섹션 -->
+        <div class="sidebar-content p-3 border-t border-gray-700">
+            <a href="https://www.linkedin.com/in/choijh0119" target="_blank" class="sidebar-btn hover:bg-blue-900/30">
+                <div class="w-8 h-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-sm">최</div>
+                <span class="flex-1">Choi Jhyeok</span>
+                <i class="fa-brands fa-linkedin text-blue-400"></i>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modal-title" class="text-xl font-bold text-gray-900"></h2>
+                    <p id="modal-period" class="text-sm text-gray-500 mt-1"></p>
+                </div>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <div class="modal-section-title">🏢 회사 / 역할</div>
+                    <div id="modal-role" class="modal-section-content"></div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">🎯 문제 상황</div>
+                    <div id="modal-problem" class="modal-section-content"></div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">💡 해결 방안</div>
+                    <div id="modal-solution" class="modal-section-content"></div>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">🏆 주요 성과</div>
+                    <ul id="modal-achievements" class="modal-list"></ul>
+                </div>
+                <div class="modal-section">
+                    <div class="modal-section-title">🛠 기술 스택</div>
+                    <div id="modal-tags" class="flex flex-wrap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col overflow-hidden">
     <!-- 1. Landing View -->
     <div id="landing-view" class="flex-1 flex flex-col items-center justify-center p-4 transition-all duration-500">
-        <div class="mb-6">
-            <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center text-white text-3xl shadow-lg">
-                <i class="fa-solid fa-brain"></i>
-            </div>
+        <!-- Spline 3D Animation -->
+        <div class="w-48 h-48 md:w-64 md:h-64 mb-4 rounded-full overflow-hidden relative">
+            <iframe src='https://my.spline.design/voiceinteractionanimation-DahqAQJQXUxvX6GTwPYAo2nC/' frameborder='0' width='150%' height='150%' style='pointer-events: none; position: absolute; top: -25%; left: -25%;'></iframe>
         </div>
         <h1 class="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">
             무엇을 도와드릴까요?
@@ -124,28 +561,42 @@
         </div>
     </div>
 
-    <!-- Javascript -->
+    </div> <!-- End Main Content Area -->
     <script>
         // --- Data Structure (User Resume) ---
         const resumeData = {
-            intro: `**AI Engineer 최재혁**님에 대한 분석 결과입니다.\n\n최재혁님은 **CV(Computer Vision), LLM, Time-Series** 등 다양한 도메인을 아우르는 AI 개발자입니다. 특히 최근에는 **LLM과 RAG(검색 증강 생성) 기술**을 활용하여 실제 비즈니스 문제를 해결하는 데 집중하고 있습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 이전에는 **AIFactory**와 **GSITM**에서 Data Scientist로 활약했습니다.`,
+            intro: `**AI Engineer 최재혁**님에 대한 분석 결과입니다.\n\nLLM, RAG, Agentic AI, 대규모 문서 처리 파이프라인을 중심으로 **End-to-End 생성형 AI 시스템을 설계·구현하는 AI Engineer**입니다.\n\nPoC 수준을 넘어 **실제 업무 시나리오와 운영 환경을 고려한 AI 서비스 구현**에 강점이 있습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 법률·금융·미디어·글로벌 고객 대상 **Enterprise GenAI PoC를 다수 수행**하고 있습니다.`,
             
             experience: [
-                { role: "AI Engineer", company: "KT", period: "2024.07 ~ 현재", desc: "LLM 및 AI 서비스 개발 및 운영" },
-                { role: "Data Scientist", company: "AIFactory", period: "2022.04 ~ 2024.05", desc: "RAG 시스템 구축, Docker 기반 MLOps 파이프라인 설계, 각종 AI 경진대회 문제 출제 및 평가 모델 개발" },
-                { role: "Data Scientist", company: "GSITM", period: "2021.07 ~ 2022.01", desc: "유전 알고리즘 기반 물류 최적화, 시계열 판매량 예측 프로젝트 수행" }
+                { 
+                    role: "AI Engineer", 
+                    company: "KT", 
+                    period: "2024.07 ~ 현재", 
+                    desc: "법률, 금융, 미디어, 글로벌 고객 대상 Enterprise GenAI PoC 다수 수행. RAG, Web Search Agent, Realtime Voice Agent 등 복합 Agent 시스템 설계. Azure 기반 인프라에서 End-to-End 구현." 
+                },
+                { 
+                    role: "Data Scientist", 
+                    company: "AIFactory", 
+                    period: "2022.04 ~ 2024.05", 
+                    desc: "LLM, CV, 시계열 기반 AI 경진대회 및 기업 PoC 설계·검증. LLM Fine-tuning, RAG 시스템 구축 및 성능 평가(RAGAS)." 
+                },
+                { 
+                    role: "Data Scientist", 
+                    company: "GSITM", 
+                    period: "2021.07 ~ 2022.01", 
+                    desc: "유통·물류 도메인 데이터 기반 예측 및 최적화 모델 개발. 현업 업무 적용을 고려한 수요 예측 및 매칭 알고리즘 구현." 
+                }
             ],
 
             education: [
-                { degree: "정보통계학과, 컴퓨터과학과 학사", school: "경상대학교", period: "2016.03 ~ 2022.02" },
-                { degree: "빅리더 아카데미 수료", school: "2020 데이터 청년 캠퍼스", period: "2020.06 ~ 2020.09" }
+                { degree: "정보통계학과 / 컴퓨터과학과 학사", school: "경상국립대학교", period: "2016.03 ~ 2022.02" }
             ],
 
             awards: [
-                { title: "전주시 빅데이터 공모전 최우수상", org: "전주시", period: "2021.04 ~ 2021.05" },
-                { title: "더존비즈온 중소,중견 빅데이터 장려상", org: "더존비즈온", period: "2020.09 ~ 2020.11" },
-                { title: "학술 창의력 경진대회 은상", org: "경상대학교 자연과학대학", period: "2020.09 ~ 2020.10" },
-                { title: "빅리더 아카데미 경남도지사상", org: "2020 데이터 청년 캠퍼스", period: "2020.06 ~ 2020.09" }
+                { title: "전주시 빅데이터 공모전 최우수상", org: "전주시", period: "2021" },
+                { title: "더존비즈온 중소·중견 빅데이터 장려상", org: "더존비즈온", period: "2020" },
+                { title: "학술 창의력 경진대회 은상", org: "경상대학교 자연과학대학", period: "2020" },
+                { title: "빅리더 아카데미 경남도지사상", org: "2020 데이터 청년 캠퍼스", period: "2020" }
             ],
 
             certificates: [
@@ -154,112 +605,142 @@
                 { name: "AICE Associate", id: "AICE_20230408_A00006" }
             ],
 
+            // KT 핵심 프로젝트
             projects: [
                 {
-                    title: "한국전력공사 사내 데이터 RAG 구축",
-                    period: "2024.01 ~ 2024.05",
-                    company: "AIFactory",
-                    tags: ["LLM", "RAG", "QLora", "Ragas"],
-                    desc: "Llama2, Gemma 등을 QLora로 Fine-tuning하고, Ragas로 성능을 평가하여 사내/외 데이터를 답변하는 챗봇 시스템 구축."
+                    title: "대규모 보험 약관 RAG 파이프라인 (메리츠)",
+                    period: "2025.05 ~ 2025.12",
+                    company: "KT",
+                    tags: ["RAG", "Azure Durable Functions", "PyMuPDF", "Azure AI Search"],
+                    desc: "약 28만 건 보험 약관 대상 대규모 RAG 파이프라인 설계·구현. End-to-End 인덱싱 자동화 및 Parent-Child RAG 아키텍처 적용.",
+                    details: {
+                        role: "AI Engineer (RAG 파이프라인 설계 및 구현)",
+                        problem: "28만 건의 보험 약관 문서를 효율적으로 검색하고 답변할 수 있는 대규모 RAG 시스템 필요",
+                        solution: "Azure Durable Functions 기반 End-to-End 인덱싱 자동화, PyMuPDF 기반 Table Stable Extract 및 커스텀 Chunker 구현, Parent-Child 구조의 RAG 아키텍처를 Azure AI Search에 적용",
+                        achievements: ["28만 건 문서 대상 대규모 인덱싱 자동화 구축", "PDF, PPT, Excel, JSON 등 다중 원천 Loader 직접 개발", "Parent-Child RAG로 검색 정확도 및 컨텍스트 품질 향상"]
+                    }
                 },
                 {
-                    title: "Docker 기반 시계열 예측 파이프라인",
-                    period: "2023.10 ~ 2023.12",
-                    company: "AIFactory",
-                    tags: ["Docker", "Python", "Automation"],
-                    desc: "데이터 갱신부터 모델 학습, 추론까지 자동으로 수행하는 컨테이너 환경 설계. Task Scheduler와 연동하여 프로세스 효율화."
+                    title: "AI Branch – 실시간 음성 AI 은행원 (신한은행)",
+                    period: "2025.01 ~ 2025.04",
+                    company: "KT",
+                    tags: ["GPT-4o-Realtime", "WebSocket", "Function Calling", "Azure Container App"],
+                    desc: "GPT-4o-Realtime API 기반 음성 입력 → 실시간 추론 → 음성 응답 AI 은행원 PoC. 대출 상품 추천 Agent 개발.",
+                    details: {
+                        role: "AI Engineer (Realtime Voice Agent 개발)",
+                        problem: "은행 창구에서 고객 응대를 AI가 실시간 음성으로 처리할 수 있는 시스템 필요",
+                        solution: "GPT-4o-Realtime API + WebSocket 기반 실시간 스트리밍 처리, Function Calling을 통한 대출 상품 추천 Agent 개발",
+                        achievements: ["실시간 음성 입력 → 추론 → 음성 응답 파이프라인 구현", "고객 정보 수집 후 맞춤형 대출 상품 추천", "Azure Container App 환경에 전체 시스템 배포"]
+                    }
                 },
                 {
-                    title: "디브릿지: 채팅형 서버 관제 서비스",
-                    period: "2023.07 ~ 2023.10",
-                    company: "AIFactory",
-                    tags: ["OpenAI API", "Function Call", "VectorDB"],
-                    desc: "자연어 질의를 통해 서버 상태를 모니터링하고 조치하는 Function Call 기반 챗봇 서비스. 11개의 관제 API 호출 가능."
+                    title: "Web Search Agent (Giga Genie / 태국 JTS)",
+                    period: "2024.09 ~ 2025.03",
+                    company: "KT",
+                    tags: ["LangGraph", "Bing Search", "Self-RAG", "Corrective-RAG"],
+                    desc: "Bing Search 기반 Web Search Agent PoC 다수 개발. Self-RAG/Corrective-RAG 적용으로 Hallucination 감소.",
+                    details: {
+                        role: "AI Engineer (Agent Workflow 설계)",
+                        problem: "웹 검색 기반 AI 답변 생성 시 Hallucination 문제 해결 필요",
+                        solution: "LangGraph 기반 Agent Workflow 설계, Self-RAG / Corrective-RAG 적용",
+                        achievements: ["평균 응답 시간 10초 이내 달성", "최대 정확도 94% 달성", "Gradio 기반 Demo App 개발"]
+                    }
                 },
                 {
-                    title: "어종 식별 및 분류 알고리즘 개발",
-                    period: "2023.10 ~ 2023.11",
+                    title: "법률 RAG 시스템 PoC (산림청)",
+                    period: "2024.08 ~ 2024.12",
+                    company: "KT",
+                    tags: ["LLM Fine-tuning", "RAG", "RAGAS", "pdf.js"],
+                    desc: "산림청 국유재산 관련 법령·판례 기반 RAG 시스템 PoC. RAGAS 기준 종합 90% 이상 달성.",
+                    details: {
+                        role: "AI Engineer (법률 RAG 시스템 설계)",
+                        problem: "법률 도메인 특화 RAG 시스템으로 높은 정확도의 법령·판례 검색 및 답변 필요",
+                        solution: "법률 도메인 LLM Fine-tuning + RAG 결합 구조 설계, pdf.js 기반 원문 하이라이팅 구현",
+                        achievements: ["RAGAS 기준 Context Precision/Recall/Faithfulness 종합 90% 이상", "Top-5 검색 정확도 93.51%", "Gradio 기반 Demo Web 및 원문 하이라이팅 구현"]
+                    }
+                }
+            ],
+
+            // AIFactory & GSITM 프로젝트
+            selectedProjects: [
+                {
+                    title: "LLM Fine-tuning 및 RAG 성능 평가",
                     company: "AIFactory",
-                    tags: ["Object Detection", "YoloV5", "Macro F1"],
-                    desc: "8가지 어종에 대한 Object-detection 대회 설계 및 출제. Yolo V5를 통한 어종 식별 모델 개발."
+                    tags: ["QLoRA", "DeepSpeed", "RAGAS"],
+                    desc: "LLaMA2, Gemma, EEVE 모델 QLoRA + DeepSpeed 기반 Fine-tuning 및 RAG 파이프라인 구축."
                 },
                 {
-                    title: "KT 통신망 안정성 확보 AI 해커톤",
-                    period: "2023.07 ~ 2023.09",
+                    title: "AI 경진대회 설계 (CV / 시계열)",
                     company: "AIFactory",
-                    tags: ["Time-Series", "Classification", "MAE"],
-                    desc: "무선 기지국 장비 통계 데이터를 활용한 인구 밀집도 예측 및 경보 유형 분류 대회 설계."
+                    tags: ["Object Detection", "Segmentation", "COCO"],
+                    desc: "Object Detection, Segmentation, Pose Estimation 문제 설계. 다수 기업·기관 대상 대회 출제 및 검증."
                 },
                 {
-                    title: "NH투자증권 빅데이터 경진대회",
-                    period: "2022.09 ~ 2022.12",
-                    company: "AIFactory",
-                    tags: ["Clustering", "K-means", "Data Analysis"],
-                    desc: "NH 고객 거래 데이터를 통한 고객군 분류 및 자산 변동률 분석. 군집별 특성과 나이 기반 보고서 작성."
-                },
-                {
-                    title: "DL E&C 안전장구 착용 탐지",
-                    period: "2022.09 ~ 2022.11",
-                    company: "AIFactory",
-                    tags: ["Object Detection", "COCO", "Macro F1"],
-                    desc: "Object Detection을 활용한 10개의 안전장비 착용 여부 탐지 대회 설계."
-                },
-                {
-                    title: "LG 입자 형태 분석 해커톤",
-                    period: "2022.07 ~ 2022.08",
-                    company: "AIFactory",
-                    tags: ["Instance Segmentation", "Mask R-CNN"],
-                    desc: "Mask R-CNN을 통한 유체상 입자 검출 대회 설계. IoU 반영 F1-Score 평가."
-                },
-                {
-                    title: "유전알고리즘 물류매칭",
-                    period: "2021.10 ~ 2021.12",
+                    title: "유통 상품 판매량 예측 시스템",
                     company: "GSITM",
-                    tags: ["Genetic Algorithm", "DEAP", "Optimization"],
-                    desc: "DEAP 유전 알고리즘을 활용하여 최대 적재량 내 최대 이익률 상품 조합 추천 프로세스 개발."
+                    tags: ["Prophet", "Time-Series", "Forecasting"],
+                    desc: "Meta Prophet 기반 상품별 판매량 예측 모델 개발 및 재고 관리 효율화 방안 제시."
                 },
                 {
-                    title: "편의점 판매량 예측 프로젝트",
-                    period: "2021.09 ~ 2022.09",
+                    title: "유전 알고리즘 기반 물류 매칭 최적화",
                     company: "GSITM",
-                    tags: ["Time-Series", "Prophet", "Forecasting"],
-                    desc: "Meta의 Prophet을 사용하여 상품별 판매량 예측. 편의점별 재고 관리 효율화 방안 제시."
+                    tags: ["DEAP", "Genetic Algorithm", "Optimization"],
+                    desc: "적재 중량·가격 조건을 고려한 최적 상품 조합 추천 알고리즘 개발."
                 }
             ],
 
             personalProjects: [
                 {
-                    title: "Gemma 비서 (Personal)",
+                    title: "Korean HWP/HWPX 문서 파싱 오픈소스",
+                    tags: ["Python", "HWP", "Open Source"],
+                    desc: "Python 기반 HWP/HWPX 문서 파싱 라이브러리 개발. Python 환경에서의 한글 문서 처리 한계 해결.",
+                    details: {
+                        role: "오픈소스 메인테이너",
+                        problem: "Python 환경에서 한글 문서(HWP/HWPX)를 파싱할 수 있는 라이브러리 부재",
+                        solution: "Python 기반 HWP/HWPX 문서 파싱 라이브러리 직접 개발 및 오픈소스로 공개",
+                        achievements: ["GitHub 레포 공개 (github.com/choijhyeok/python-hwplib)", "LinkedIn Post를 통한 커뮤니티 공유", "RAG 파이프라인에서 한글 문서 처리 가능"]
+                    }
+                },
+                {
+                    title: "Gemma Function Calling Assistant",
                     tags: ["Gemma-7b", "SFT", "KakaoTalk"],
-                    desc: "Gemma-7b 모델을 SFT 학습시켜 '시청 가는 법', '주가 조회' 등 함수 호출 기능을 수행하고 카카오톡으로 결과를 전송하는 개인 비서."
+                    desc: "Gemma 7B 모델 SFT 학습을 통한 Function Calling 구현. 외부 함수 실행 결과를 카카오톡으로 전달하는 개인 비서.",
+                    details: {
+                        role: "1인 개발 (Full-stack)",
+                        problem: "간단한 일상 질문(길찾기, 주가 조회 등)을 빠르게 처리할 수 있는 개인 AI 비서 필요",
+                        solution: "Gemma-7b를 SFT로 Fine-tuning하여 Function Calling 기능 구현, 카카오톡 API 연동",
+                        achievements: ["외부 함수 실행 결과 카카오톡 전달", "Gemma 7B SFT 학습 성공", "개인 비서 프로토타입 완성"]
+                    }
                 },
                 {
-                    title: "LangChain 웹 서비스 (Personal)",
-                    tags: ["Streamlit", "LangChain", "Web"],
-                    desc: "LangChain KR 밋업 발표 주제. Streamlit을 활용하여 나만의 RAG 기반 장소 추천 및 보고서 자동 생성 웹 서비스 배포."
+                    title: "LLaMA2 Fine-tuning & RAG Pipeline",
+                    tags: ["LLaMA2", "QLoRA", "Gradio"],
+                    desc: "LLaMA2 Fine-tuning 및 RAG 파이프라인 설계 방법 발표. QLoRA 기반 Instruction Fine-tuning (Colab T4 최적화).",
+                    details: {
+                        role: "발표자 / 오픈소스 기여자",
+                        problem: "LLM Fine-tuning이 어렵다는 인식을 깨고 쉽게 접근할 수 있도록 가이드 필요",
+                        solution: "QLoRA 기반 Instruction Fine-tuning 파이프라인 설계, Gradio GUI 제공",
+                        achievements: ["GitHub Repo 공개 (github.com/choijhyeok/easy_finetuner)", "YouTube Talk 공개", "Colab T4에서 학습 가능하도록 최적화"]
+                    }
                 },
                 {
-                    title: "Llama2 Fine-tune & RAG",
-                    tags: ["Llama2", "SFTTrainer", "LoRA"],
-                    desc: "llama2 fine-tuning을 쉽게 하기 위한 방법 설계 및 RAG 프로세스 설계 방법 발표. YouTube 발표 영상 공개."
-                },
-                {
-                    title: "챗GPT 점메추 메뉴판",
-                    tags: ["ChatGPT", "LangChain", "RAG"],
-                    desc: "ChatGPT와 Langchain을 사용해서 PDF 기반 RAG 챗봇 시스템 구축. YouTube 발표 영상 공개."
-                },
-                {
-                    title: "MMPose Human Pose Estimation",
-                    tags: ["MMPose", "HRNet", "Gradio"],
-                    desc: "MMPose를 사용하여 MPII 데이터셋으로 사람의 key-point를 추론하는 과정 설명. YouTube 발표."
+                    title: "Streamlit & LangChain 기반 RAG 서비스",
+                    tags: ["Streamlit", "LangChain", "RAG"],
+                    desc: "LangChain KR Meetup 발표. Streamlit 기반 RAG 서비스 배포 방법 및 HTML → PDF 자동 보고서 생성 파이프라인 시연.",
+                    details: {
+                        role: "발표자",
+                        problem: "LangChain을 활용한 실용적인 웹 서비스 개발 및 커뮤니티 지식 공유",
+                        solution: "Streamlit + LangChain으로 RAG 기반 서비스 개발, Vector DB 분리 및 QA Chain 구조 설명",
+                        achievements: ["LangChain KR Meetup (2024 Q1) 발표", "HTML → PDF 자동 보고서 생성 파이프라인 시연", "발표 자료 PPT 공개"]
+                    }
                 }
             ],
 
-            skills: ["Python", "PyTorch", "TensorFlow", "LangChain", "RAG", "LLM Fine-tuning", "Docker", "MySQL", "GCP"],
+            skills: ["Python", "JavaScript", "SQL", "RAG", "LangChain", "LangGraph", "Fine-tuning", "Function Calling", "RAGAS", "Azure Functions", "Azure AI Search", "Azure Container App", "Docker", "PyMuPDF", "OCR"],
             
             contact: {
                 email: "wowogur12@naver.com",
-                phone: "+82 010-4479-6775",
+                phone: "+82 10-4479-6775",
                 blog: "cjhyeok.tistory.com",
                 github: "github.com/choijhyeok"
             }
@@ -302,12 +783,100 @@
             if (inputIndex > 0) startFlow('full');
         });
 
+        // --- Chat Input Fixed Query ---
+        const fixedChatQuery = '네 확인해 주세요';
+        let chatInputIndex = 0;
+
+        chatInput.addEventListener('input', (e) => {
+            // 한 글자 입력할 때마다 fixedChatQuery의 다음 글자로 대체
+            if (chatInputIndex < fixedChatQuery.length) {
+                chatInputIndex++;
+                chatInput.value = fixedChatQuery.substring(0, chatInputIndex);
+            } else {
+                chatInput.value = fixedChatQuery;
+            }
+        });
+
         chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && chatInput.value.trim() !== "") handleUserInput();
+            if (e.key === 'Enter' && chatInputIndex > 0) handleUserInput();
         });
         document.getElementById('chat-send-btn').addEventListener('click', () => {
-            if (chatInput.value.trim() !== "") handleUserInput();
+            if (chatInputIndex > 0) handleUserInput();
         });
+
+        // --- Sidebar Control ---
+        const sidebar = document.getElementById('sidebar');
+        const sidebarMain = document.getElementById('sidebar-main');
+        const sidebarChat = document.getElementById('sidebar-chat');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const sidebarToggle = document.getElementById('sidebar-toggle');
+        const sidebarOpenBtn = document.getElementById('sidebar-open-btn');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // 사이드바 접기
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.add('collapsed');
+            sidebarOpenBtn.classList.add('visible');
+        });
+
+        // 사이드바 열기
+        sidebarOpenBtn.addEventListener('click', () => {
+            sidebar.classList.remove('collapsed');
+            sidebarOpenBtn.classList.remove('visible');
+        });
+
+        function switchSidebar(mode) {
+            if (mode === 'chat') {
+                sidebarMain.classList.add('hidden');
+                sidebarChat.classList.remove('hidden');
+                // 네비게이션 버튼 초기화
+                document.getElementById('nav-buttons').innerHTML = '';
+            } else {
+                sidebarMain.classList.remove('hidden');
+                sidebarChat.classList.add('hidden');
+            }
+        }
+
+        // 동적 네비게이션 버튼 추가
+        function addNavButton(id, icon, iconColor, label) {
+            const navButtons = document.getElementById('nav-buttons');
+            // 이미 있으면 추가 안함
+            if (document.getElementById(`nav-${id}`)) return;
+            
+            const btn = document.createElement('div');
+            btn.id = `nav-${id}`;
+            btn.className = 'sidebar-btn text-sm';
+            btn.onclick = () => jumpTo(id);
+            btn.innerHTML = `<i class="fa-solid ${icon} ${iconColor}"></i><span>${label}</span>`;
+            navButtons.appendChild(btn);
+        }
+
+        function jumpTo(section) {
+            // 모바일에서 사이드바 닫기
+            sidebar.classList.remove('open');
+            
+            // 이미 채팅 뷰면 해당 섹션으로 스크롤
+            if (!chatView.classList.contains('hidden')) {
+                const sectionId = `section-${section}`;
+                const el = document.getElementById(sectionId);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    return;
+                }
+            }
+            
+            // 아니면 해당 플로우 시작
+            switch(section) {
+                case 'career': startFlow('career'); break;
+                case 'project': startFlow('project'); break;
+                case 'personal': startFlow('project'); break;
+                case 'contact': startFlow('contact'); break;
+                default: startFlow('full');
+            }
+        }
 
         // --- Flow Control ---
         function startFlow(flowType) {
@@ -316,6 +885,7 @@
             
             landingView.classList.add('hidden');
             chatView.classList.remove('hidden');
+            switchSidebar('chat');
             
             // User message (always show the same)
             const userQuery = getFlowQuery(flowType);
@@ -354,9 +924,20 @@
         // --- Career Flow ---
         async function careerFlow() {
             const contentArea = createAIWrapper();
+            contentArea.id = 'section-career';
+            addNavButton('career', 'fa-briefcase', 'text-blue-400', '주요 경력');
+            
+            // Thinking
+            await showThinking(contentArea, [
+                '최재혁 경력 데이터 검색 중...',
+                'KT, AIFactory, GSITM 재직 이력 확인',
+                'Enterprise GenAI PoC 경험 분석',
+                'RAG, Agent, Realtime Voice 프로젝트 정리',
+                '경력 요약 생성 중...'
+            ]);
             
             // Step 1: Career intro
-            await typeText(contentArea, `**최재혁님의 주요 경력**을 정리해드리겠습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, 총 **3개 회사**에서 AI/Data Science 관련 경력을 쌓았습니다.`);
+            await typeText(contentArea, `**최재혁님의 주요 경력**을 정리해드리겠습니다.\n\n현재 **KT**에서 AI Engineer로 재직 중이며, **Enterprise GenAI PoC**를 전문으로 수행하고 있습니다.\n\n총 **3개 회사**에서 AI/Data Science 관련 경력을 쌓았습니다.`);
             
             // Step 2: Experience cards
             const expContainer = document.createElement('div');
@@ -378,27 +959,48 @@
             await wait(500);
 
             // Step 3: Career Summary
-            await typeText(contentArea, `\n\n**최재혁 | AI Engineer 주요 경력 요약**\n\n최재혁은 LLM·RAG·시계열 전반을 아우르는 실무 중심의 AI Engineer로,\n\n대규모 데이터 처리부터 모델 학습·평가·서비스화까지 전 과정을 직접 설계·구현해 온 경험을 보유하고 있습니다.`);
+            await typeText(contentArea, `\n\n**최재혁 | AI Engineer 핵심 역량**\n\nLLM·RAG·Agentic AI·대규모 문서 처리 파이프라인을 중심으로\n\n**End-to-End 생성형 AI 시스템**을 설계·구현하는 AI Engineer입니다.\n\nPoC 수준을 넘어 **실제 업무 시나리오와 운영 환경**을 고려한 AI 서비스 구현에 강점이 있습니다.`);
             await wait(800);
 
             // Step 4: Ask about projects
-            await askQuestion(contentArea, '\n프로젝트도 확인하시겠습니까?', 'showProjects');
+            await askQuestion(contentArea, '\nKT 핵심 프로젝트도 확인하시겠습니까?', 'showProjects');
         }
 
         // --- Project Flow ---
         async function projectFlow() {
             const contentArea = createAIWrapper();
+            contentArea.id = 'section-project';
+            addNavButton('project', 'fa-robot', 'text-purple-400', '주요 프로젝트');
             
-            await typeText(contentArea, `**RAG 및 LLM 관련 프로젝트**를 중심으로 정리해드리겠습니다.\n\n최재혁님은 다양한 AI 프로젝트를 수행했으며, 특히 **LLM Fine-tuning, RAG 시스템 구축, Function Call** 등의 분야에서 전문성을 보유하고 있습니다.`);
+            // Thinking
+            await showThinking(contentArea, [
+                'KT Enterprise GenAI PoC 검색 중...',
+                '메리츠 보험 RAG (28만건) 확인',
+                '신한은행 AI Branch Realtime Voice 분석',
+                'Web Search Agent, 법률 RAG 정리',
+                '프로젝트 목록 생성 중...'
+            ]);
+            
+            await typeText(contentArea, `**KT 핵심 프로젝트 및 주요 경력 프로젝트**를 정리해드리겠습니다.\n\n최재혁님은 **대규모 RAG 파이프라인, Realtime Voice Agent, Web Search Agent** 등 다양한 Enterprise GenAI PoC를 수행했습니다.`);
             
             await showProjects(contentArea);
             
-            await askQuestion(contentArea, '개인 프로젝트도 확인하시겠습니까?', 'showPersonalProjects');
+            await askQuestion(contentArea, '개인 프로젝트 및 오픈소스 활동도 확인하시겠습니까?', 'showPersonalProjects');
         }
 
         // --- Contact Flow ---
         async function contactFlow() {
             const contentArea = createAIWrapper();
+            contentArea.id = 'section-contact';
+            addNavButton('contact', 'fa-address-card', 'text-orange-400', '연락처 & Skills');
+            
+            // Thinking
+            await showThinking(contentArea, [
+                '연락처 정보 검색 중...',
+                '기술 스택 분석: Azure, RAG, LangGraph...',
+                '자격증 정보 확인',
+                '수상 경력 정리 중...'
+            ]);
             
             await typeText(contentArea, `**최재혁님의 연락처 및 기술 스택**입니다.`);
             
@@ -444,22 +1046,54 @@
                 </div>
             `;
             contentArea.appendChild(certDiv);
+            await wait(300);
+
+            // Awards
+            const awardsDiv = document.createElement('div');
+            awardsDiv.className = 'mt-4 fade-in';
+            awardsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-trophy mr-2"></i>수상 경력</h3>
+                <div class="grid gap-2">
+                    ${resumeData.awards.map(a => `
+                        <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                            <div>
+                                <span class="font-medium text-gray-800">${a.title}</span>
+                                <span class="text-xs text-gray-500 ml-2">${a.org}</span>
+                            </div>
+                            <span class="text-xs text-gray-400">${a.period}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(awardsDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
             await wait(500);
 
             await askQuestion(contentArea, '주요 경력도 확인하시겠습니까?', 'showCareer');
         }
 
-        // --- Full Flow ---
+        // --- fullFlow 함수 교체 ---
         async function fullFlow() {
             const contentArea = createAIWrapper();
+            contentArea.id = 'section-intro';
+            addNavButton('intro', 'fa-user', 'text-cyan-400', '소개');
             
-            // Intro
+            // Thinking
+            await showThinking(contentArea, [
+                '최재혁 개발자 정보 검색 중...',
+                'KT에서 AI Engineer로 재직 중 확인...',
+                'Enterprise GenAI PoC 전문가 경험 분석',
+                'RAG, Agentic AI, Realtime Voice 기술 스택 확인',
+                'Azure 기반 인프라 구축 경험 정리',
+                '프로필 요약 생성 중...'
+            ]);
+            
+            // 1. 인사말
             await typeText(contentArea, resumeData.intro);
             
-            // Experience summary
+            // 2. 경력 카드
             const expContainer = document.createElement('div');
-            expContainer.className = 'grid gap-3 mt-2 fade-in';
+            expContainer.className = 'grid gap-3 mt-3 mb-3 fade-in';
             resumeData.experience.forEach(exp => {
                 const item = document.createElement('div');
                 item.className = 'flex flex-col md:flex-row md:items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100';
@@ -473,9 +1107,16 @@
                 expContainer.appendChild(item);
             });
             contentArea.appendChild(expContainer);
-            await wait(500);
+            await wait(600);
 
-            await askQuestion(contentArea, '프로젝트도 확인하시겠습니까?', 'showProjects');
+            // 3. 경력 요약
+            const summaryText = "**최재혁 | AI Engineer 핵심 역량**\n\nLLM·RAG·Agentic AI·대규모 문서 처리 파이프라인을 중심으로 End-to-End 생성형 AI 시스템을 설계·구현합니다.\n\nPoC 수준을 넘어 실제 업무 시나리오와 운영 환경을 고려한 AI 서비스 구현에 강점이 있습니다.";
+            await typeText(contentArea, summaryText);
+            
+            await wait(800);
+
+            // 4. 질문
+            await askQuestion(contentArea, 'KT 핵심 프로젝트도 확인하시겠습니까?', 'showProjects');
         }
 
         // --- Ask Question with Input ---
@@ -484,6 +1125,10 @@
             
             pendingAction = actionOnYes;
             waitingForInput = true;
+            
+            // Reset chat input index for new question
+            chatInputIndex = 0;
+            chatInput.value = '';
             
             // Show input area
             disabledInput.classList.add('hidden');
@@ -496,9 +1141,10 @@
         async function handleUserInput() {
             const userInput = chatInput.value.trim();
             chatInput.value = '';
+            chatInputIndex = 0;
             
-            // Always show "네" as user message
-            addUserMessage('네');
+            // Always show "네 확인해 주세요" as user message
+            addUserMessage('네 확인해 주세요');
             
             waitingForInput = false;
             chatInputArea.classList.add('hidden');
@@ -512,23 +1158,73 @@
             
             switch(action) {
                 case 'showProjects':
+                    contentArea.id = 'section-project';
+                    addNavButton('project', 'fa-robot', 'text-purple-400', '주요 프로젝트');
+                    
+                    // Thinking
+                    await showThinking(contentArea, [
+                        'KT 핵심 프로젝트 검색 중...',
+                        '메리츠 보험 RAG (28만 건) 확인',
+                        '신한은행 AI Branch 분석',
+                        'Web Search Agent, 법률 RAG 정리',
+                        'AIFactory, GSITM 프로젝트 정리 중...'
+                    ]);
+                    
                     await typeText(contentArea, `**주요 프로젝트 목록**입니다.`);
                     await showProjects(contentArea);
-                    await askQuestion(contentArea, '개인 프로젝트도 확인하시겠습니까?', 'showPersonalProjects');
+                    await typeText(contentArea, `\n**프로젝트 기반 핵심 역량**\n\n1. **대규모 RAG 파이프라인**: 28만 건 문서 대상 End-to-End 인덱싱 자동화, Parent-Child RAG 아키텍처\n\n2. **Realtime Voice Agent**: GPT-4o-Realtime API + WebSocket 기반 실시간 음성 AI 시스템\n\n3. **Agent Workflow 설계**: LangGraph 기반 Self-RAG / Corrective-RAG 적용, Hallucination 감소\n\n4. **Azure 기반 인프라**: Azure Functions, AI Search, Container App 환경 구축 경험`);
+                    await wait(800);
+                    await askQuestion(contentArea, '\n개인 프로젝트 및 오픈소스 활동도 확인하시겠습니까?', 'showPersonalProjects');
                     break;
                     
                 case 'showPersonalProjects':
-                    await typeText(contentArea, `**개인 프로젝트 및 발표 활동**입니다.`);
+                    contentArea.id = 'section-personal';
+                    addNavButton('personal', 'fa-laptop-code', 'text-green-400', '개인 프로젝트');
+                    
+                    // Thinking
+                    await showThinking(contentArea, [
+                        '개인 프로젝트 검색 중...',
+                        'HWP/HWPX 오픈소스 파서 확인',
+                        'LangChain KR 밋업 발표 이력 확인',
+                        'Gemma Function Calling, LLaMA2 Fine-tuning 정리',
+                        '차별화 포인트 생성 중...'
+                    ]);
+                    
+                    await typeText(contentArea, `**개인 프로젝트 및 오픈소스 활동**입니다.`);
                     await showPersonalProjects(contentArea);
-                    await askQuestion(contentArea, '연락처와 기술 스택도 확인하시겠습니까?', 'showContact');
+                    await typeText(contentArea, `\n**개인 프로젝트 기반 차별화 포인트**\n\n1. **오픈소스 기여**: Korean HWP/HWPX 파서 개발 및 GitHub 공개\n\n2. **기술 커뮤니티 기여**: LangChain KR Meetup 발표, YouTube 튜토리얼 제작\n\n3. **실생활 문제 해결**: Gemma 기반 Function Calling 개인 비서 개발\n\n4. **End-to-End 구현 능력**: 모델 학습부터 Gradio/Streamlit 배포까지 전 과정 독립 수행`);
+                    await wait(800);
+                    await askQuestion(contentArea, '\n연락처와 기술 스택도 확인하시겠습니까?', 'showContact');
                     break;
                     
                 case 'showContact':
+                    contentArea.id = 'section-contact';
+                    addNavButton('contact', 'fa-address-card', 'text-orange-400', '연락처 & Skills');
+                    
+                    // Thinking
+                    await showThinking(contentArea, [
+                        '연락처 정보 검색 중...',
+                        '기술 스택 분석: Azure, RAG, LangGraph...',
+                        '자격증 정보 확인',
+                        '수상 경력 정리 중...'
+                    ]);
+                    
                     await showContactInfo(contentArea);
                     await typeText(contentArea, `\n더 궁금한 점이 있으시면 상단의 **Reset** 버튼을 눌러 다시 시작해주세요! 😊`);
                     break;
                     
                 case 'showCareer':
+                    contentArea.id = 'section-career';
+                    addNavButton('career', 'fa-briefcase', 'text-blue-400', '주요 경력');
+                    
+                    // Thinking
+                    await showThinking(contentArea, [
+                        '경력 데이터 검색 중...',
+                        'KT AI Engineer 재직 정보 확인',
+                        'Enterprise GenAI PoC 경험 분석',
+                        '경력 카드 생성 중...'
+                    ]);
+                    
                     await typeText(contentArea, `**주요 경력**입니다.`);
                     const expContainer = document.createElement('div');
                     expContainer.className = 'grid gap-3 mt-2 fade-in';
@@ -554,14 +1250,21 @@
 
         // --- Show Projects ---
         async function showProjects(contentArea) {
-            const projGrid = document.createElement('div');
-            projGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 mt-2 fade-in';
+            // KT 핵심 프로젝트 섹션
+            const ktSection = document.createElement('div');
+            ktSection.className = 'mb-6';
+            ktSection.innerHTML = `<h3 class="font-bold text-lg mb-3 text-gray-800 flex items-center gap-2">
+                <span class="w-2 h-2 bg-red-500 rounded-full"></span>KT Key Projects
+            </h3>`;
+            
+            const ktGrid = document.createElement('div');
+            ktGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 fade-in';
             
             resumeData.projects.forEach((proj, idx) => {
                 setTimeout(() => {
                     const card = document.createElement('div');
-                    card.className = 'info-card p-4';
-                    const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
+                    card.className = 'info-card p-4 cursor-pointer border-l-4 border-red-500';
+                    const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-red-50 text-red-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
                     
                     card.innerHTML = `
                         <div class="flex justify-between items-start mb-2">
@@ -570,14 +1273,96 @@
                         </div>
                         <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
                         <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                        <div class="text-[10px] text-red-500 mt-2 flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> 자세히 보기
+                        </div>
                     `;
-                    projGrid.appendChild(card);
+                    
+                    card.addEventListener('click', () => openProjectModal(proj));
+                    ktGrid.appendChild(card);
                     chatContainer.scrollTop = chatContainer.scrollHeight;
                 }, idx * 150);
             });
-            contentArea.appendChild(projGrid);
-            await wait(resumeData.projects.length * 150 + 500);
+            
+            ktSection.appendChild(ktGrid);
+            contentArea.appendChild(ktSection);
+            await wait(resumeData.projects.length * 150 + 300);
+
+            // AIFactory & GSITM Selected Projects 섹션
+            const selectedSection = document.createElement('div');
+            selectedSection.className = 'mt-4';
+            selectedSection.innerHTML = `<h3 class="font-bold text-lg mb-3 text-gray-800 flex items-center gap-2">
+                <span class="w-2 h-2 bg-blue-500 rounded-full"></span>Selected Projects (AIFactory / GSITM)
+            </h3>`;
+            
+            const selectedGrid = document.createElement('div');
+            selectedGrid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3 fade-in';
+            
+            resumeData.selectedProjects.forEach((proj, idx) => {
+                setTimeout(() => {
+                    const card = document.createElement('div');
+                    card.className = 'info-card p-4';
+                    const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
+                    
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-gray-800 text-sm">${proj.title}</h3>
+                            <span class="text-[10px] text-gray-400 whitespace-nowrap ml-2">${proj.company}</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
+                        <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                    `;
+                    
+                    selectedGrid.appendChild(card);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, idx * 150);
+            });
+            
+            selectedSection.appendChild(selectedGrid);
+            contentArea.appendChild(selectedSection);
+            await wait(resumeData.selectedProjects.length * 150 + 500);
         }
+
+        // --- Modal Functions ---
+        function openProjectModal(proj) {
+            const modal = document.getElementById('project-modal');
+            document.getElementById('modal-title').textContent = proj.title;
+            document.getElementById('modal-period').textContent = `${proj.company} | ${proj.period}`;
+            
+            if (proj.details) {
+                document.getElementById('modal-role').textContent = proj.details.role;
+                document.getElementById('modal-problem').textContent = proj.details.problem;
+                document.getElementById('modal-solution').textContent = proj.details.solution;
+                
+                const achievementsList = document.getElementById('modal-achievements');
+                achievementsList.innerHTML = proj.details.achievements.map(a => `<li>${a}</li>`).join('');
+            } else {
+                document.getElementById('modal-role').textContent = proj.company;
+                document.getElementById('modal-problem').textContent = '-';
+                document.getElementById('modal-solution').textContent = proj.desc;
+                document.getElementById('modal-achievements').innerHTML = '<li>상세 정보 준비 중</li>';
+            }
+            
+            document.getElementById('modal-tags').innerHTML = proj.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('project-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // 모달 외부 클릭 시 닫기
+        document.getElementById('project-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'project-modal') closeModal();
+        });
+
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
 
         // --- Show Personal Projects ---
         async function showPersonalProjects(contentArea) {
@@ -587,14 +1372,21 @@
             resumeData.personalProjects.forEach((proj, idx) => {
                 setTimeout(() => {
                     const card = document.createElement('div');
-                    card.className = 'info-card p-4';
+                    card.className = 'info-card p-4 cursor-pointer';
                     const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-purple-50 text-purple-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
                     
                     card.innerHTML = `
                         <h3 class="font-bold text-gray-800 text-sm mb-2">${proj.title}</h3>
                         <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
                         <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                        <div class="text-[10px] text-purple-500 mt-2 flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> 자세히 보기
+                        </div>
                     `;
+                    
+                    // 카드 클릭 시 모달 열기
+                    card.addEventListener('click', () => openPersonalProjectModal(proj));
+                    
                     projGrid.appendChild(card);
                     chatContainer.scrollTop = chatContainer.scrollHeight;
                 }, idx * 150);
@@ -603,13 +1395,41 @@
             await wait(resumeData.personalProjects.length * 150 + 500);
         }
 
+        // --- Personal Project Modal ---
+        function openPersonalProjectModal(proj) {
+            const modal = document.getElementById('project-modal');
+            document.getElementById('modal-title').textContent = proj.title;
+            document.getElementById('modal-period').textContent = '개인 프로젝트 / 발표 활동';
+            
+            if (proj.details) {
+                document.getElementById('modal-role').textContent = proj.details.role;
+                document.getElementById('modal-problem').textContent = proj.details.problem;
+                document.getElementById('modal-solution').textContent = proj.details.solution;
+                
+                const achievementsList = document.getElementById('modal-achievements');
+                achievementsList.innerHTML = proj.details.achievements.map(a => `<li>${a}</li>`).join('');
+            } else {
+                document.getElementById('modal-role').textContent = '개인 프로젝트';
+                document.getElementById('modal-problem').textContent = '-';
+                document.getElementById('modal-solution').textContent = proj.desc;
+                document.getElementById('modal-achievements').innerHTML = '<li>상세 정보 준비 중</li>';
+            }
+            
+            document.getElementById('modal-tags').innerHTML = proj.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
         // --- Show Contact Info ---
         async function showContactInfo(contentArea) {
-            await typeText(contentArea, `**연락처 및 기술 스택**입니다.`);
+            await typeText(contentArea, `**최재혁님의 연락처 및 기술 스택**입니다.`);
             
+            // Contact info
             const contactDiv = document.createElement('div');
             contactDiv.className = 'bg-gray-900 text-white p-4 rounded-xl mt-3 fade-in shadow-md';
             contactDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-blue-300"><i class="fa-solid fa-address-card mr-2"></i>연락처</h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div class="flex items-center gap-3"><i class="fa-solid fa-envelope text-gray-400"></i> <a href="mailto:${resumeData.contact.email}" class="hover:text-blue-300 transition">${resumeData.contact.email}</a></div>
                     <div class="flex items-center gap-3"><i class="fa-solid fa-phone text-gray-400"></i> ${resumeData.contact.phone}</div>
@@ -618,15 +1438,55 @@
                 </div>
             `;
             contentArea.appendChild(contactDiv);
-            
+            await wait(300);
+
+            // Skills
             const skillsDiv = document.createElement('div');
             skillsDiv.className = 'mt-4 fade-in';
             skillsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-code mr-2"></i>기술 스택</h3>
                 <div class="flex flex-wrap gap-2">
                     ${resumeData.skills.map(s => `<span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">${s}</span>`).join('')}
                 </div>
             `;
             contentArea.appendChild(skillsDiv);
+            await wait(300);
+
+            // Certificates
+            const certDiv = document.createElement('div');
+            certDiv.className = 'mt-4 fade-in';
+            certDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-certificate mr-2"></i>자격증</h3>
+                <div class="grid gap-2">
+                    ${resumeData.certificates.map(c => `
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100">
+                            <span class="font-medium text-gray-800">${c.name}</span>
+                            <span class="text-xs text-gray-400">${c.id}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(certDiv);
+            await wait(300);
+
+            // Awards
+            const awardsDiv = document.createElement('div');
+            awardsDiv.className = 'mt-4 fade-in';
+            awardsDiv.innerHTML = `
+                <h3 class="font-bold text-lg mb-3 text-gray-800"><i class="fa-solid fa-trophy mr-2"></i>수상 경력</h3>
+                <div class="grid gap-2">
+                    ${resumeData.awards.map(a => `
+                        <div class="flex justify-between items-center p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                            <div>
+                                <span class="font-medium text-gray-800">${a.title}</span>
+                                <span class="text-xs text-gray-500 ml-2">${a.org}</span>
+                            </div>
+                            <span class="text-xs text-gray-400">${a.period}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            contentArea.appendChild(awardsDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
             await wait(300);
         }
@@ -645,6 +1505,63 @@
             return aiWrapper.querySelector('.ai-content-area');
         }
 
+        // --- Thinking Panel ---
+        async function showThinking(contentArea, thinkingSteps) {
+            const panel = document.createElement('div');
+            panel.className = 'thinking-panel';
+            
+            const header = document.createElement('div');
+            header.className = 'thinking-header';
+            header.innerHTML = `
+                <div class="thinking-title">
+                    <div class="thinking-spinner"></div>
+                    <span>생각하는 중...</span>
+                </div>
+                <i class="fa-solid fa-chevron-down text-gray-400 text-xs"></i>
+            `;
+            
+            const content = document.createElement('div');
+            content.className = 'thinking-content';
+            
+            panel.appendChild(header);
+            panel.appendChild(content);
+            contentArea.appendChild(panel);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+            
+            // 토글 기능
+            header.addEventListener('click', () => {
+                content.classList.toggle('collapsed');
+                const icon = header.querySelector('.fa-chevron-down, .fa-chevron-up');
+                icon.className = content.classList.contains('collapsed') 
+                    ? 'fa-solid fa-chevron-up text-gray-400 text-xs'
+                    : 'fa-solid fa-chevron-down text-gray-400 text-xs';
+            });
+            
+            // 단계별 thinking 표시
+            for (let i = 0; i < thinkingSteps.length; i++) {
+                const line = document.createElement('div');
+                line.className = 'thinking-line';
+                line.textContent = thinkingSteps[i];
+                content.appendChild(line);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                await wait(400 + Math.random() * 300);
+            }
+            
+            // 완료 표시
+            await wait(300);
+            header.innerHTML = `
+                <div class="thinking-title">
+                    <i class="fa-solid fa-check text-green-500"></i>
+                    <span>생각 완료</span>
+                    <span class="text-xs text-gray-400">${thinkingSteps.length}단계</span>
+                </div>
+                <i class="fa-solid fa-chevron-up text-gray-400 text-xs"></i>
+            `;
+            content.classList.add('collapsed');
+            
+            await wait(200);
+        }
+
         function addUserMessage(text) {
             const userMsg = document.createElement('div');
             userMsg.className = 'flex justify-end fade-in';
@@ -653,32 +1570,59 @@
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
+        // --- 기존 typeText 함수를 이걸로 교체하세요 ---
+        // --- 텍스트 타이핑 효과 함수 (HTML 태그 깨짐 방지 버전) ---
         function typeText(container, text) {
             return new Promise(resolve => {
                 const p = document.createElement('p');
                 p.className = 'text-gray-800 leading-relaxed text-sm md:text-base';
                 container.appendChild(p);
-                
-                const formattedText = text.replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-black">$1</strong>').replace(/\n/g, '<br>');
-                
-                p.innerHTML = `<span class="cursor"></span>`;
-                
-                const words = formattedText.split(" ");
-                let wordIndex = 0;
 
+                // 커서 생성
+                const cursor = document.createElement('span');
+                cursor.className = 'cursor';
+                p.appendChild(cursor);
+
+                // 1. Markdown을 HTML로 변환
+                // **굵게** -> Tailwind 클래스가 적용된 strong 태그
+                // \n -> br 태그
+                const htmlContent = text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-black">$1</strong>')
+                    .replace(/\n/g, '<br>');
+
+                let i = 0;
+                
+                // 2. 한 글자씩 타이핑 (HTML 태그는 통째로 추가)
                 const interval = setInterval(() => {
-                    if (wordIndex < words.length) {
-                        const word = words[wordIndex] + " ";
-                        p.innerHTML = p.innerHTML.replace('<span class="cursor"></span>', word + '<span class="cursor"></span>');
-                        chatContainer.scrollTop = chatContainer.scrollHeight;
-                        wordIndex++;
-                    } else {
+                    if (i >= htmlContent.length) {
                         clearInterval(interval);
-                        const cursor = p.querySelector('.cursor');
-                        if (cursor) cursor.remove();
+                        cursor.remove(); // 타이핑 끝나면 커서 제거
                         resolve();
+                        return;
                     }
-                }, 40);
+
+                    const char = htmlContent[i];
+
+                    // 태그의 시작('<')을 만나면 닫는 괄호('>')까지 찾아서 한 번에 추가
+                    if (char === '<') {
+                        const closeIdx = htmlContent.indexOf('>', i);
+                        if (closeIdx !== -1) {
+                            const tag = htmlContent.substring(i, closeIdx + 1);
+                            cursor.insertAdjacentHTML('beforebegin', tag);
+                            i = closeIdx + 1; // 인덱스를 태그 끝 다음으로 이동
+                        } else {
+                            i++; // 혹시 닫는 태그가 없으면 그냥 진행
+                        }
+                    } else {
+                        // 일반 텍스트는 한 글자씩 추가
+                        cursor.insertAdjacentHTML('beforebegin', char);
+                        i++;
+                    }
+
+                    // 스크롤을 항상 하단으로 유지
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                }, 20); // 타이핑 속도 (숫자가 작을수록 빠름, 15~30 추천)
             });
         }
 
