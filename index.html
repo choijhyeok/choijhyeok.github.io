@@ -665,27 +665,55 @@
             selectedProjects: [
                 {
                     title: "LLM Fine-tuning 및 RAG 성능 평가",
+                    period: "2024.01 ~ 2024.05",
                     company: "AIFactory",
                     tags: ["QLoRA", "DeepSpeed", "RAGAS"],
-                    desc: "LLaMA2, Gemma, EEVE 모델 QLoRA + DeepSpeed 기반 Fine-tuning 및 RAG 파이프라인 구축."
+                    desc: "LLaMA2, Gemma, EEVE 모델 QLoRA + DeepSpeed 기반 Fine-tuning 및 RAG 파이프라인 구축.",
+                    details: {
+                        role: "AI Engineer (LLM Fine-tuning & RAG 평가)",
+                        problem: "한국전력공사의 사내 데이터를 활용한 RAG 시스템 구축 및 최적 LLM 모델 선정 필요",
+                        solution: "LLaMA2, Gemma, EEVE 모델에 QLoRA + DeepSpeed Zero 2를 적용하여 A6000 GPU 2장에서 병렬 학습 수행. RAGAS의 faithfulness score 및 answer relevancy score를 기준으로 최적 모델 선정",
+                        achievements: ["사외 데이터 크롤링 자동화 (Selenium, undetected_chromedriver)", "QLoRA + DeepSpeed 병렬 학습 파이프라인 구축", "RAGAS 평가를 통한 최적 RAG 모델 선정"]
+                    }
                 },
                 {
                     title: "AI 경진대회 설계 (CV / 시계열)",
+                    period: "2022.04 ~ 2024.05",
                     company: "AIFactory",
                     tags: ["Object Detection", "Segmentation", "COCO"],
-                    desc: "Object Detection, Segmentation, Pose Estimation 문제 설계. 다수 기업·기관 대상 대회 출제 및 검증."
+                    desc: "Object Detection, Segmentation, Pose Estimation 문제 설계. 다수 기업·기관 대상 대회 출제 및 검증.",
+                    details: {
+                        role: "대회 설계자 / 검증자",
+                        problem: "기업 및 기관의 실제 업무 데이터를 활용한 AI 경진대회 문제 설계 및 평가 지표 구축 필요",
+                        solution: "Object Detection, Segmentation, Pose Estimation 등 CV 도메인 문제 설계. train-test 분리 시 class 불균형 비율 유지, COCO format label 설정, Macro F1 score 평가 지표 적용",
+                        achievements: ["다수 기업·기관 대상 AI 대회 출제 및 검증", "YOLO v5 기반 어종 식별 Object Detection 모델 개발", "평가 지표 설계 (NMS 적용 시에만 정상 작동)"]
+                    }
                 },
                 {
                     title: "유통 상품 판매량 예측 시스템",
+                    period: "2021.07 ~ 2022.01",
                     company: "GSITM",
                     tags: ["Prophet", "Time-Series", "Forecasting"],
-                    desc: "Meta Prophet 기반 상품별 판매량 예측 모델 개발 및 재고 관리 효율화 방안 제시."
+                    desc: "Meta Prophet 기반 상품별 판매량 예측 모델 개발 및 재고 관리 효율화 방안 제시.",
+                    details: {
+                        role: "Data Scientist (시계열 예측 모델 개발)",
+                        problem: "편의점별 제고량 관리 프로세스를 효율화하기 위한 상품별 판매량 예측 모델 필요",
+                        solution: "Meta Prophet 기반 시계열 예측 모델 개발. 상품별, 점포별 판매량 패턴 분석 및 예측. Docker 기반 예측 파이프라인 자동화 구축",
+                        achievements: ["편의점별 제고량 관리 프로세스 설계", "Docker 기반 시계열 예측 자동화 파이프라인 구축", "5가지 시계열 모델 데이터 갱신·학습·추론 스케줄링"]
+                    }
                 },
                 {
                     title: "유전 알고리즘 기반 물류 매칭 최적화",
+                    period: "2021.07 ~ 2022.01",
                     company: "GSITM",
                     tags: ["DEAP", "Genetic Algorithm", "Optimization"],
-                    desc: "적재 중량·가격 조건을 고려한 최적 상품 조합 추천 알고리즘 개발."
+                    desc: "적재 중량·가격 조건을 고려한 최적 상품 조합 추천 알고리즘 개발.",
+                    details: {
+                        role: "Data Scientist (최적화 알고리즘 개발)",
+                        problem: "물류 매칭 시 적재 중량, 가격 등 제약 조건을 고려한 최적 상품 조합 추천 필요",
+                        solution: "DEAP(Distributed Evolutionary Algorithms in Python) 라이브러리를 활용한 유전 알고리즘 기반 최적화 알고리즘 개발. 적재 중량·가격 조건을 fitness 함수로 정의하여 최적 조합 탐색",
+                        achievements: ["유전 알고리즘 기반 물류 매칭 최적화 시스템 구축", "제약 조건(중량, 가격)을 고려한 최적 조합 추천", "물류 업무 효율화 방안 제시"]
+                    }
                 }
             ],
 
@@ -1301,7 +1329,7 @@
             resumeData.selectedProjects.forEach((proj, idx) => {
                 setTimeout(() => {
                     const card = document.createElement('div');
-                    card.className = 'info-card p-4';
+                    card.className = 'info-card p-4 cursor-pointer border-l-4 border-blue-500';
                     const tagsHtml = proj.tags.map(t => `<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-1 rounded-md font-medium mr-1">${t}</span>`).join('');
                     
                     card.innerHTML = `
@@ -1311,8 +1339,12 @@
                         </div>
                         <p class="text-xs text-gray-500 mb-3 leading-relaxed">${proj.desc}</p>
                         <div class="flex flex-wrap gap-1">${tagsHtml}</div>
+                        <div class="text-[10px] text-blue-500 mt-2 flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> 자세히 보기
+                        </div>
                     `;
                     
+                    card.addEventListener('click', () => openProjectModal(proj));
                     selectedGrid.appendChild(card);
                     chatContainer.scrollTop = chatContainer.scrollHeight;
                 }, idx * 150);
